@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 
-import { TabsPage } from '../pages/tabs/tabs';
+import { LoginPage } from '../pages/login/login';
 
 import { AuthService } from '../providers/auth.service'
 
@@ -11,7 +11,7 @@ import { AuthService } from '../providers/auth.service'
   template: `<ion-nav [root]="rootPage"></ion-nav>`
 })
 export class MyApp {
-  rootPage = TabsPage;
+  rootPage = LoginPage;
 
   constructor(platform: Platform, public auth: AuthService) {
     platform.ready().then(() => {
