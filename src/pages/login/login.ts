@@ -18,6 +18,10 @@ export class LoginPage {
     this.navCtrl.push(TabsPage);
   }
 
+  loadSignupPage(){
+    alert("Loading signup page");
+  }
+
   ionViewDidLoad() {
     console.log('Hello Login Page');
   }

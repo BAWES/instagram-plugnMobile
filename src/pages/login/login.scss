@@ -31,4 +31,13 @@ page-login {
             padding: 10px;
         }
     }
+
+    ion-footer{
+        text-align: center;
+        cursor: pointer;
+
+        span{
+            font-weight:bold;
+        }
+    }
 }
