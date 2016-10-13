@@ -11,6 +11,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class AuthService {
 
+  public isLoggedIn = false;
+
   constructor(public http: Http) {
     console.log('Constructed the Auth Service, now ready to check login status');
   }
