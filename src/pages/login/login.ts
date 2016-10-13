@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-/*
-  Generated class for the Login page.
+import { TabsPage } from '../tabs/tabs';
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
+/*
+  Login Page
 */
 @Component({
   selector: 'page-login',
@@ -14,6 +13,10 @@ import { NavController } from 'ionic-angular';
 export class LoginPage {
 
   constructor(public navCtrl: NavController) {}
+
+  navigate(){
+    this.navCtrl.push(TabsPage);
+  }
 
   ionViewDidLoad() {
     console.log('Hello Login Page');

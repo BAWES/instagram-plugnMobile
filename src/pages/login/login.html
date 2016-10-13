@@ -1,21 +1,38 @@
 
-<ion-content class='loginArea' padding>
-  <img src="assets/brand/logo.png" />
-  <ion-title>Agent Login</ion-title>
+<ion-content class='contentArea' padding>
+  <div class='brand'>
+    <img src="assets/brand/logo.png" />
+    <h2>Agent Login</h2>
+  </div>
 
-  <button ion-button icon-left block color="danger">
-    <ion-icon name="logo-googleplus"></ion-icon>
-    Log in with Google
-  </button>
+  <ion-card>
 
-  <button ion-button icon-left block>
-    <ion-icon name="logo-windows"></ion-icon>
-    Log in with Live
-  </button>
+    <ion-card-content class='authArea'>
+      <button (click)="navigate()"
+      class='addspace' ion-button icon-left block color="danger">
+        <ion-icon name="logo-googleplus"></ion-icon>
+        Log in with Google
+      </button>
 
-  <button ion-button icon-left block color="dark">
-    <ion-icon name="home"></ion-icon>
-    Log in with Slack
-  </button>
+      <button (click)="navigate()"
+      ion-button icon-left block>
+        <ion-icon name="logo-windows"></ion-icon>
+        Log in with Live
+      </button>
+
+      <button (click)="navigate()"
+      ion-button block color="dark">
+        Log in with Slack
+      </button>
+
+      <span class="or-wrapper">
+        <span class="or-text">or</span>
+      </span>
+
+
+
+    </ion-card-content>
+
+  </ion-card>
 
 </ion-content>
