@@ -30,7 +30,7 @@ export class LoginPage {
 
   authGoogle(){
     console.log("Attempting to auth google");
-    this.loadUrl("https://agent.plugn.io");
+    this.loadUrl("https://agent.plugn.io/authmobile/google");
   }
 
   loadUrl(url: string){
@@ -38,7 +38,7 @@ export class LoginPage {
         this.browser = new InAppBrowser(url, "_self", "location=yes,zoom=no");
 
         // Keep track of urls loaded
-        this.browserLoadEvents = this.browser.on("loadstart");
+        this.browserLoadEvents = this.browser.on("loadstop");
         this.browserLoadEvents = this.browserLoadEvents.map(res => res.url).subscribe(url => {
           this.doActionBasedOnUrl(url);
         });
@@ -54,7 +54,24 @@ export class LoginPage {
   }
 
   doActionBasedOnUrl(url){
-    console.log("Doing stuff on url", url);
+    console.log("Analyzing url", url);
+    //Handle Google auth
+    if(url.indexOf("google?code=") !== -1){
+
+      console.log("Found Google Success Page, outputting response");
+      this.browser.executeScript({
+        code: "localStorage.getItem('response')"
+      }).then(resp => alert(resp));
+
+      //Change above function in Backend to return a valid access token
+      //Now need to store the returned access token in the AuthService
+      
+      
+      //This access token will now be used to validate successful login
+      //That same validation function will be used after we exchange normal login (user/pass) for token
+
+      //this.browser.close();
+    }
   }
 
   loadSignupPage(){
