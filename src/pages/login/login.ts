@@ -29,8 +29,18 @@ export class LoginPage {
   }
 
   authGoogle(){
-    console.log("Attempting to auth google");
+    console.log("Attempting to auth Google");
     this.loadUrl("https://agent.plugn.io/authmobile/google");
+  }
+
+  authWindowsLive(){
+    console.log("Attempting to auth Windows Live");
+    this.loadUrl("https://agent.plugn.io/authmobile/live");
+  }
+
+  authSlack(){
+    console.log("Attempting to auth Slack");
+    this.loadUrl("https://agent.plugn.io/authmobile/slack");
   }
 
   loadUrl(url: string){
@@ -55,22 +65,19 @@ export class LoginPage {
 
   doActionBasedOnUrl(url){
     console.log("Analyzing url", url);
-    //Handle Google auth
-    if(url.indexOf("google?code=") !== -1){
+    if(url.indexOf("?code=") !== -1){
 
-      console.log("Found Google Success Page, outputting response");
       this.browser.executeScript({
         code: "localStorage.getItem('response')"
-      }).then(resp => alert(resp));
+      }).then(resp => {
+        this.browser.close();
+        alert(resp);
+      });
 
       //Change above function in Backend to return a valid access token
       //Now need to store the returned access token in the AuthService
-      
-      
-      //This access token will now be used to validate successful login
-      //That same validation function will be used after we exchange normal login (user/pass) for token
 
-      //this.browser.close();
+      // See if we can refactor the functionality presented here into AuthService class
     }
   }
 
