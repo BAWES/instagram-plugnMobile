@@ -8,19 +8,19 @@
   <ion-card>
 
     <ion-card-content class='authArea'>
-      <button (click)="authGoogle()"
+      <button (click)="authorizeVia('Google')"
       class='addspace' ion-button icon-left block color="danger">
         <ion-icon name="logo-googleplus"></ion-icon>
         Log in with Google
       </button>
 
-      <button (click)="authWindowsLive()"
+      <button (click)="authorizeVia('Live')"
       ion-button icon-left block>
         <ion-icon name="logo-windows"></ion-icon>
         Log in with Live
       </button>
 
-      <button (click)="authSlack()"
+      <button (click)="authorizeVia('Slack')"
       ion-button block color="dark">
         Log in with Slack
       </button>

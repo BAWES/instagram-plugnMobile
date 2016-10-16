@@ -15,39 +15,39 @@ import { TabsPage } from '../tabs/tabs';
 export class LoginPage {
 
 
-  constructor(public navCtrl: NavController, private platform: Platform, private auth: AuthService) {}
+  constructor(public navCtrl: NavController, private platform: Platform, private auth: AuthService) {
+    
+  }
+
+  ionViewDidLoad() {
+    //console.log('Hello Login Page');
+  }
+
+  /**
+   * Begin Authorization process via Oauth2
+   * 
+   * @param {string} oauthName
+   */
+  authorizeVia(oauthName: string){
+    switch(oauthName){
+      case "Google":
+        this.auth.authGoogle();
+        break;
+      case "Live":
+        this.auth.authWindowsLive();
+        break;
+      case "Slack":
+        this.auth.authSlack();
+        break;
+    }
+  }
 
   navigate(){
     this.navCtrl.push(TabsPage);
   }
 
-  /**
-   * Proceed with Authorizing Google
-   */
-  authGoogle(){
-    this.auth.processAuthFromUrl("https://agent.plugn.io/authmobile/google");
-  }
-
-  /**
-   * Proceed with Authorizing Windows Live
-   */
-  authWindowsLive(){
-    this.auth.processAuthFromUrl("https://agent.plugn.io/authmobile/live");
-  }
-
-  /**
-   * Proceed with Authorizing Slack
-   */
-  authSlack(){
-    this.auth.processAuthFromUrl("https://agent.plugn.io/authmobile/slack");
-  }
-
   loadSignupPage(){
     alert("Loading signup page");
-  }
-
-  ionViewDidLoad() {
-    console.log('Hello Login Page');
   }
 
 }

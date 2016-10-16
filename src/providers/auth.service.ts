@@ -62,18 +62,17 @@ export class AuthService {
           // Browser closed, unsubscribe from previous observables
           this.browserLoadEvents.unsubscribe();
           this.browserCloseEvents.unsubscribe();
-          console.log("Window closed, unsubscribed from observables");
         });
     });
   }
 
   /**
    * Parse url input, then do action based on that input
+   * This function takes the access token from server response
    * 
    * @param {string} url
    */
   doActionBasedOnUrl(url: string){
-    console.log("Analyzing url", url);
     if(url.indexOf("?code=") !== -1){
 
       this.browser.executeScript({
