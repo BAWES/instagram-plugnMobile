@@ -19,7 +19,7 @@ export class AuthService {
   private browserCloseEvents;
 
   constructor(public http: Http, private platform: Platform) {
-    console.log('Constructed the Auth Service, now ready to check login status');
+    //console.log('Constructed the Auth Service, now ready to check login status');
   }
 
   /**

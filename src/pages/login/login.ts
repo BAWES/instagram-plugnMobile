@@ -24,6 +24,16 @@ export class LoginPage {
   }
 
   /**
+   * Attempts to login with the provided email and password
+   * @param {string} email
+   * @param {string} password
+   */
+  login(email, password){
+
+    console.log(email);
+  }
+
+  /**
    * Begin Authorization process via Oauth2
    * 
    * @param {string} oauthName

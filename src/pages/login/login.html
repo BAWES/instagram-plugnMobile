@@ -29,18 +29,20 @@
         <span class="or-text">or</span>
       </span>
 
-      <section class="loginForm">
+      <form>
         <ion-item>
-          <ion-input placeholder="Your Email Address" type="text"></ion-input>
+          <ion-input #email placeholder="Your Email Address" type="email" required></ion-input>
         </ion-item>
 
         <ion-item>
-          <ion-input placeholder="Your Password" type="password"></ion-input>
+          <ion-input #password placeholder="Your Password" type="password" required></ion-input>
         </ion-item>
-      </section>
+      </form>
 
 
-      <button round ion-button>
+      <button round ion-button 
+        type="submit"
+        (click)='login(email,password)'>
         Sign in
       </button>
 
