@@ -29,38 +29,27 @@
         <span class="or-text">or</span>
       </span>
 
-      <div [hidden]="email.valid || email.pristine" 
-             class="alert alert-danger">
-            Email is required
-          </div>
-
-      <form>
+      <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm" novalidate>
         <ion-item>
-          <ion-input #email="ngModel"
-            [(ngModel)]="loginModel.email"
+          <ion-input type="email"
+            ngModel
             name="email"
-            placeholder="Your Email Address" type="email" required>
+            placeholder="Your Email Address" required>
           </ion-input>
-
-          
-
         </ion-item>        
 
         <ion-item>
-          <ion-input
-            [(ngModel)]="loginModel.password"
+          <ion-input type="password"
+            ngModel
             name="password"
-            placeholder="Your Password" type="password" required>
+            placeholder="Your Password" required>
           </ion-input>
         </ion-item>
+
+        <button ion-button round type="submit" [disabled]="!loginForm.valid">
+          Sign in
+        </button>
       </form>
-
-
-      <button round ion-button 
-        type="submit"
-        (click)='login()'>
-        Sign in
-      </button>
 
     </ion-card-content>
     
