@@ -14,6 +14,7 @@ import { TabsPage } from '../tabs/tabs';
 })
 export class LoginPage {
 
+  public loginModel = {email: '', password: ''};
 
   constructor(public navCtrl: NavController, private platform: Platform, private auth: AuthService) {
     
@@ -25,12 +26,9 @@ export class LoginPage {
 
   /**
    * Attempts to login with the provided email and password
-   * @param {string} email
-   * @param {string} password
    */
-  login(email, password){
-
-    console.log(email);
+  login(){
+    console.log(this.loginModel);
   }
 
   /**

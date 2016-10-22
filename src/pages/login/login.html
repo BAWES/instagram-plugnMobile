@@ -29,20 +29,36 @@
         <span class="or-text">or</span>
       </span>
 
+      <div [hidden]="email.valid || email.pristine" 
+             class="alert alert-danger">
+            Email is required
+          </div>
+
       <form>
         <ion-item>
-          <ion-input #email placeholder="Your Email Address" type="email" required></ion-input>
-        </ion-item>
+          <ion-input #email="ngModel"
+            [(ngModel)]="loginModel.email"
+            name="email"
+            placeholder="Your Email Address" type="email" required>
+          </ion-input>
+
+          
+
+        </ion-item>        
 
         <ion-item>
-          <ion-input #password placeholder="Your Password" type="password" required></ion-input>
+          <ion-input
+            [(ngModel)]="loginModel.password"
+            name="password"
+            placeholder="Your Password" type="password" required>
+          </ion-input>
         </ion-item>
       </form>
 
 
       <button round ion-button 
         type="submit"
-        (click)='login(email,password)'>
+        (click)='login()'>
         Sign in
       </button>
 
