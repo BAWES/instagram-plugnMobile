@@ -21,7 +21,7 @@ export class LoginPage {
   constructor(public navCtrl: NavController, private platform: Platform, private fb: FormBuilder, private auth: AuthService) {
     // Initialize the Login Form
     this.loginForm = fb.group({
-      emailInput: ["khalid@bawes.net", Validators.required],
+      emailInput: ["", Validators.required],
       passwordInput: ["", Validators.required]
     });
   }

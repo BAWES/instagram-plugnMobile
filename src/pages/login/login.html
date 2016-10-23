@@ -33,14 +33,18 @@
 
         <ion-item>
           <ion-input type="email"
-            formControlName="emailInput"
+            [formControl]="loginForm.controls['emailInput']"
             placeholder="Your Email Address">
           </ion-input>
-        </ion-item>        
+        </ion-item>
+
+        <ion-item *ngIf="!loginForm.controls['emailInput'].valid">
+          Please input email
+        </ion-item>
 
         <ion-item>
           <ion-input type="password"
-            formControlName="passwordInput"
+            [formControl]="loginForm.controls['passwordInput']"
             placeholder="Your Password">
           </ion-input>
         </ion-item>
