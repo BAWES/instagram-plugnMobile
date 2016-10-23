@@ -29,20 +29,19 @@
         <span class="or-text">or</span>
       </span>
 
-      <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm" novalidate>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+
         <ion-item>
           <ion-input type="email"
-            ngModel
-            name="email"
-            placeholder="Your Email Address" required>
+            formControlName="emailInput"
+            placeholder="Your Email Address">
           </ion-input>
         </ion-item>        
 
         <ion-item>
           <ion-input type="password"
-            ngModel
-            name="password"
-            placeholder="Your Password" required>
+            formControlName="passwordInput"
+            placeholder="Your Password">
           </ion-input>
         </ion-item>
 

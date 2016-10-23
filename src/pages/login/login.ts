@@ -5,6 +5,8 @@ import { AuthService } from '../../providers/auth.service';
 
 import { TabsPage } from '../tabs/tabs';
 
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 /*
   Login Page
 */
@@ -14,8 +16,14 @@ import { TabsPage } from '../tabs/tabs';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, private platform: Platform, private auth: AuthService) {
-    
+  public loginForm: FormGroup;
+
+  constructor(public navCtrl: NavController, private platform: Platform, private fb: FormBuilder, private auth: AuthService) {
+    // Initialize the Login Form
+    this.loginForm = fb.group({
+      emailInput: ["khalid@bawes.net", Validators.required],
+      passwordInput: ["", Validators.required]
+    });
   }
 
   ionViewDidLoad() {
@@ -25,8 +33,11 @@ export class LoginPage {
   /**
    * Attempts to login with the provided email and password
    */
-  onSubmit(form){
-    console.log(form.value);
+  onSubmit(){
+    // console.log(JSON.stringify(form.errors));
+    // console.log(form.dirty);
+    // console.log(form.valid);
+    console.log(JSON.stringify(this.loginForm.value));
   }
 
   /**
