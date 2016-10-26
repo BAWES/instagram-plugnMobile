@@ -35,10 +35,6 @@ export class LoginPage {
     //console.log('Hello Login Page');
   }
 
-  logForm(){
-    console.log(this.loginForm);
-  }
-
   /**
    * Attempts to login with the provided email and password
    */
