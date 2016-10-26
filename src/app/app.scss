@@ -28,7 +28,12 @@
 
         margin-bottom: 12px;
         font-size:1.1em;
+
+        &.ng-touched.ng-dirty.ng-invalid{
+            border: 1px solid #fa424a;
+        }
     }
+   
     input:focus{
         border: 1px solid #ccc;
     }
