@@ -30,29 +30,24 @@
       </span>
 
       <!-- Login Form -->
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="classicInput" novalidate>
 
-        <ion-item>
-          <ion-input type="email"
-            [formControl]="loginForm.controls['emailInput']"
-            placeholder="Your Email Address">
-          </ion-input>
-        </ion-item>
+        <input type="email"
+          formControlName="email"
+          placeholder="Your Email Address"/>
 
-        <ion-item *ngIf="!loginForm.controls['emailInput'].valid">
-          Please input email
-        </ion-item>
+        <input type="password"
+          formControlName="password"
+          placeholder="Your Password"/>
 
-        <ion-item>
-          <ion-input type="password"
-            [formControl]="loginForm.controls['passwordInput']"
-            placeholder="Your Password">
-          </ion-input>
-        </ion-item>
+        <div text-center>
+          <button ion-button block outline color="dark" type="submit" [disabled]="!loginForm.valid"
+            [style.background-color]="loginForm.valid?'black':'white'"
+            [style.color]="loginForm.valid?'white':'black'">
+            Sign in
+          </button>
+        </div>
 
-        <button ion-button round type="submit" [disabled]="!loginForm.valid">
-          Sign in
-        </button>
       </form>
       <!-- END Login Form -->
 

@@ -18,16 +18,25 @@ export class LoginPage {
 
   public loginForm: FormGroup;
 
-  constructor(public navCtrl: NavController, private platform: Platform, private fb: FormBuilder, private auth: AuthService) {
+  constructor(
+    public navCtrl: NavController, 
+    private platform: Platform, 
+    private fb: FormBuilder, 
+    private auth: AuthService) 
+  {
     // Initialize the Login Form
     this.loginForm = fb.group({
-      emailInput: ["", Validators.required],
-      passwordInput: ["", Validators.required]
+      email: ["", Validators.required],
+      password: ["", Validators.required]
     });
   }
 
   ionViewDidLoad() {
     //console.log('Hello Login Page');
+  }
+
+  logForm(){
+    console.log(this.loginForm);
   }
 
   /**
