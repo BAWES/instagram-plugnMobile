@@ -1,38 +1,40 @@
+// Core
 import { Component } from '@angular/core';
 import { NavController, Platform } from 'ionic-angular';
-
-import { AuthService } from '../../providers/auth.service';
-
-import { TabsPage } from '../tabs/tabs';
-
+// Services
+import { AuthService } from '../../../providers/auth.service';
+// Pages
+import { LoginPage } from '../login/login';
+// Forms
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 /*
-  Login Page
+  Register Page
 */
 @Component({
-  selector: 'page-login',
-  templateUrl: 'login.html'
+  selector: 'page-register',
+  templateUrl: 'register.html'
 })
-export class LoginPage {
+export class RegisterPage {
 
-  public loginForm: FormGroup;
+  public registerForm: FormGroup;
 
   constructor(
     public navCtrl: NavController, 
     private platform: Platform, 
     private fb: FormBuilder, 
-    private auth: AuthService) 
+    private auth: AuthService,
+    ) 
   {
-    // Initialize the Login Form
-    this.loginForm = fb.group({
+    // Initialize the Registration Form
+    this.registerForm = fb.group({
       email: ["", Validators.required],
       password: ["", Validators.required]
     });
   }
 
   ionViewDidLoad() {
-    //console.log('Hello Login Page');
+    console.log('Hello Register Page');
   }
 
   /**
@@ -42,7 +44,7 @@ export class LoginPage {
     // console.log(JSON.stringify(form.errors));
     // console.log(form.dirty);
     // console.log(form.valid);
-    console.log(JSON.stringify(this.loginForm.value));
+    console.log(JSON.stringify(this.registerForm.value));
   }
 
   /**
@@ -65,11 +67,11 @@ export class LoginPage {
   }
 
   navigate(){
-    this.navCtrl.push(TabsPage);
+    //this.navCtrl.push(TabsPage);
   }
 
-  loadSignupPage(){
-    alert("Loading signup page");
+  loadLoginPage(){
+    this.navCtrl.setRoot(LoginPage);
   }
 
 }

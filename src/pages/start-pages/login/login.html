@@ -2,10 +2,14 @@
 <ion-content class='contentArea' padding>
   <div class='brand'>
     <img src="assets/brand/logo.png" />
-    <h2>Agent Login</h2>
   </div>
 
   <ion-card class='loginCard'>
+    {{ keyboard.isKeyboardOpen }}
+
+    <button ion-button (click)="runtest()" *ngIf="keyboard.isKeyboardOpen">
+      Keyboard Height: {{ keyboard.keyboardHeight }}
+    </button>
 
     <ion-card-content class='authArea'>
       <button (click)="authorizeVia('Google')"

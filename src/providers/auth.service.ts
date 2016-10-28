@@ -14,11 +14,11 @@ export class AuthService {
 
   public isLoggedIn = false;
 
-  private browser: InAppBrowser;
-  private browserLoadEvents;
-  private browserCloseEvents;
+  private _browser: InAppBrowser;
+  private _browserLoadEvents;
+  private _browserCloseEvents;
 
-  constructor(public http: Http, private platform: Platform) {
+  constructor(private _http: Http, private _platform: Platform) {
     //console.log('Constructed the Auth Service, now ready to check login status');
   }
 
@@ -48,20 +48,20 @@ export class AuthService {
    * @param {string} url
    */
   processAuthFromUrl(url: string){
-    this.platform.ready().then(() => {
-        this.browser = new InAppBrowser(url, "_self", "location=yes,zoom=no");
+    this._platform.ready().then(() => {
+        this._browser = new InAppBrowser(url, "_self", "location=yes,zoom=no");
 
         // Keep track of urls loaded
-        this.browserLoadEvents = this.browser.on("loadstop");
-        this.browserLoadEvents = this.browserLoadEvents.map(res => res.url).subscribe(url => {
+        this._browserLoadEvents = this._browser.on("loadstop");
+        this._browserLoadEvents = this._browserLoadEvents.map(res => res.url).subscribe(url => {
           this.doActionBasedOnUrl(url);
         });
 
         // Keep track of browser if closed
-        this.browserCloseEvents = this.browser.on("exit").first().subscribe(resp => {
+        this._browserCloseEvents = this._browser.on("exit").first().subscribe(resp => {
           // Browser closed, unsubscribe from previous observables
-          this.browserLoadEvents.unsubscribe();
-          this.browserCloseEvents.unsubscribe();
+          this._browserLoadEvents.unsubscribe();
+          this._browserCloseEvents.unsubscribe();
         });
     });
   }
@@ -75,10 +75,10 @@ export class AuthService {
   doActionBasedOnUrl(url: string){
     if(url.indexOf("?code=") !== -1){
 
-      this.browser.executeScript({
+      this._browser.executeScript({
         code: "localStorage.getItem('response')"
       }).then(resp => {
-        this.browser.close();
+        this._browser.close();
         alert(resp);
       });
     }
