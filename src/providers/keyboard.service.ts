@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ApplicationRef } from '@angular/core';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/first';
 
@@ -14,7 +14,7 @@ export class KeyboardService {
   public isKeyboardOpen = false;
   public keyboardHeight = 0;
 
-  constructor(private _platform: Platform) {
+  constructor(private ref:ApplicationRef, private _platform: Platform) {
     /**
      * Initialize Keyboard service if this is a native device
      */
@@ -30,11 +30,17 @@ export class KeyboardService {
     Keyboard.onKeyboardShow().subscribe(e => {
       this.isKeyboardOpen = true;
       this.keyboardHeight = e.keyboardHeight;
+
+      // Force Change Detection in Angular
+      this.ref.tick();
     });
 
     // Subscribe to Keyboard Closed Events
     Keyboard.onKeyboardHide().subscribe(e => {
       this.isKeyboardOpen = false;
+
+      // Force Change Detection in Angular
+      this.ref.tick();
     });
   }
 

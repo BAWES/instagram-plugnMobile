@@ -8,8 +8,6 @@ import { KeyboardService } from '../../../providers/keyboard.service';
 import { RegisterPage } from '../register/register';
 // Forms
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-// Native 
-import { Keyboard } from 'ionic-native';
 
 /*
   Login Page
@@ -28,7 +26,7 @@ export class LoginPage {
     public navCtrl: NavController, 
     private _fb: FormBuilder, 
     private _auth: AuthService,
-    public keyboard: KeyboardService
+    public keyboard: KeyboardService,
     ){}
 
 
@@ -38,20 +36,9 @@ export class LoginPage {
       email: ["", Validators.required],
       password: ["", Validators.required]
     });
-
-    this.infiniteLoop();
-  }
-
-  infiniteLoop(){
-    this.randomBoolean = ! this.randomBoolean;
     
-    setTimeout(()=>{
-      this.infiniteLoop();
-    }, 1000);
-  }
 
-  runtest(){
-    console.log("Running test");
+    //this.infiniteLoop();
   }
 
   ionViewDidLeave(){

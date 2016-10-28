@@ -5,13 +5,6 @@
   </div>
 
   <ion-card class='loginCard'>
-    {{ keyboard.isKeyboardOpen }}
-
-    <ion-title> {{ randomBoolean }} </ion-title>
-
-    <button ion-button (click)="runtest()" *ngIf="keyboard.isKeyboardOpen">
-      Keyboard Height: {{ keyboard.keyboardHeight }}
-    </button>
 
     <ion-card-content class='authArea'>
       <button (click)="authorizeVia('Google')"

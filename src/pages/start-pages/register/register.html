@@ -10,18 +10,18 @@
       <button (click)="authorizeVia('Google')"
       class='addspace' ion-button icon-left block color="google">
         <ion-icon name="logo-googleplus"></ion-icon>
-        Log in with Google
+        Sign up with Google
       </button>
 
       <button (click)="authorizeVia('Live')"
       ion-button icon-left block>
         <ion-icon name="logo-windows"></ion-icon>
-        Log in with Live
+        Sign up with Live
       </button>
 
       <button (click)="authorizeVia('Slack')"
       ion-button block color="dark">
-        Log in with Slack
+        Sign up with Slack
       </button>
 
       <span class="or-wrapper">
@@ -43,7 +43,7 @@
           <button ion-button block outline color="dark" type="submit" [disabled]="!registerForm.valid"
             [style.background-color]="registerForm.valid?'black':'white'"
             [style.color]="registerForm.valid?'white':'black'">
-            Sign in
+            Create Account
           </button>
         </div>
 
