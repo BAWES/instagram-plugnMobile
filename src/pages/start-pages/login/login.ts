@@ -22,8 +22,7 @@ export class LoginPage {
 
   public loginForm: FormGroup;
 
-  public isKeyboardOpen = false;
-  public keyboardHeight = 0;
+  public randomBoolean = false;
 
   constructor(
     public navCtrl: NavController, 
@@ -39,6 +38,16 @@ export class LoginPage {
       email: ["", Validators.required],
       password: ["", Validators.required]
     });
+
+    this.infiniteLoop();
+  }
+
+  infiniteLoop(){
+    this.randomBoolean = ! this.randomBoolean;
+    
+    setTimeout(()=>{
+      this.infiniteLoop();
+    }, 1000);
   }
 
   runtest(){

@@ -7,6 +7,8 @@
   <ion-card class='loginCard'>
     {{ keyboard.isKeyboardOpen }}
 
+    <ion-title> {{ randomBoolean }} </ion-title>
+
     <button ion-button (click)="runtest()" *ngIf="keyboard.isKeyboardOpen">
       Keyboard Height: {{ keyboard.keyboardHeight }}
     </button>
