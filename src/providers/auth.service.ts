@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';
+import { Http, Headers } from '@angular/http';
+
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/first';
+import 'rxjs/add/operator/map';
 
 import { Platform } from 'ionic-angular';
 import { InAppBrowser } from 'ionic-native';
+
+import { ConfigService } from './config.service';
 
 /*
   Handles all Auth functions
@@ -13,13 +17,37 @@ import { InAppBrowser } from 'ionic-native';
 export class AuthService {
 
   public isLoggedIn = false;
+  private _accessToken;
 
   private _browser: InAppBrowser;
   private _browserLoadEvents;
   private _browserCloseEvents;
 
-  constructor(private _http: Http, private _platform: Platform) {
-    //console.log('Constructed the Auth Service, now ready to check login status');
+  private _urlBasicAuth: string = "/auth/login";
+
+  constructor(
+    private _http: Http,
+    private _platform: Platform,
+    private _config: ConfigService
+    ) {}
+
+  /**
+   * Basic auth, exchanges access details for a bearer access token to use in 
+   * subsequent requests.
+   * @param  {string} email
+   * @param  {string} password
+   */
+  basicAuth(email: string, password: string): Observable<any>{
+    // Add Basic Auth Header with Base64 encoded email and password
+    const authHeader = new Headers();
+    authHeader.append("Authorization", "Basic "+ btoa(`${email}:${password}`));
+
+    const url = this._config.apiBaseUrl+this._urlBasicAuth;
+    console.log(url);
+    
+    return this._http.get(url, {
+      headers: authHeader
+    }).first();
   }
 
   /**

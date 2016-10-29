@@ -1,6 +1,4 @@
 import { Injectable, ApplicationRef } from '@angular/core';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/first';
 
 import { Platform } from 'ionic-angular';
 import { Keyboard } from 'ionic-native';

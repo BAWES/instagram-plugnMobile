@@ -14,6 +14,7 @@ import { RegisterPage } from '../pages/start-pages/register/register';
 // Providers / Services
 import { AuthService } from '../providers/auth.service'
 import { KeyboardService } from '../providers/keyboard.service'
+import { ConfigService } from '../providers/config.service'
 
 export const pages = [
     MyApp,
@@ -34,8 +35,9 @@ export const pages = [
     IonicModule.forRoot(MyApp)
   ],
   providers: [
-    AuthService,
-    KeyboardService
+    AuthService, //Handles all Authorization
+    KeyboardService, //Handles all Keyboard Activity
+    ConfigService //Handles Environment-specific Variables
   ],
   bootstrap: [IonicApp]
 })

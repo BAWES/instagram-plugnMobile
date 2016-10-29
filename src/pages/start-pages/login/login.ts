@@ -54,7 +54,15 @@ export class LoginPage {
     // console.log(JSON.stringify(form.errors));
     // console.log(form.dirty);
     // console.log(form.valid);
-    console.log(JSON.stringify(this.loginForm.value));
+    const email = this.loginForm.value.email;
+    const password = this.loginForm.value.password;
+
+    this._auth.basicAuth(email, password).subscribe(res => {
+      console.log(JSON.stringify(res));
+    }, err => {
+        console.log("Error");
+        console.log(JSON.stringify(err)); //gives the object object
+    });
   }
 
   /**
