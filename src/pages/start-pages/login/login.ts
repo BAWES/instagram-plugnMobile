@@ -8,6 +8,7 @@ import { KeyboardService } from '../../../providers/keyboard.service';
 import { RegisterPage } from '../register/register';
 // Forms
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CustomValidator } from '../../../validators/custom.validator';
 
 /*
   Login Page
@@ -33,12 +34,10 @@ export class LoginPage {
   ionViewDidLoad() {
     // Initialize the Login Form
     this.loginForm = this._fb.group({
-      email: ["", Validators.required],
+      email: ["", [Validators.required, CustomValidator.emailValidator]],
       password: ["", Validators.required]
     });
     
-
-    //this.infiniteLoop();
   }
 
   ionViewDidLeave(){
