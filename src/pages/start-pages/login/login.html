@@ -47,6 +47,10 @@
             [style.color]="loginForm.valid?'white':'black'">
             Sign in
           </button>
+
+          <button ion-button small clear *ngIf="!keyboard.isKeyboardOpen">
+            Forgot password?
+          </button>
         </div>
 
       </form>
@@ -60,7 +64,7 @@
 
 </ion-content>
 
-<ion-footer (click)="loadSignupPage()">
+<ion-footer *ngIf="!keyboard.isKeyboardOpen" (click)="loadSignupPage()">
   <ion-toolbar>
     Don't have an account? <span>Sign up.</span>
   </ion-toolbar>
