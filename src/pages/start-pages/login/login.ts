@@ -1,6 +1,6 @@
 // Core
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController, AlertController } from 'ionic-angular';
 // Services
 import { AuthService } from '../../../providers/auth.service';
 import { KeyboardService } from '../../../providers/keyboard.service';
@@ -21,12 +21,15 @@ export class LoginPage {
 
   public loginForm: FormGroup;
 
-  public randomBoolean = false;
+  // Disable submit button if loading response
+  public isLoading = false;
 
   constructor(
     public navCtrl: NavController, 
     private _fb: FormBuilder, 
     private _auth: AuthService,
+    private _loadingCtrl: LoadingController,
+    private _alertCtrl: AlertController,
     public keyboard: KeyboardService,
     ){}
 
@@ -50,17 +53,37 @@ export class LoginPage {
    * Attempts to login with the provided email and password
    */
   onSubmit(){
+    this.isLoading = true;
+
+    let loader = this._loadingCtrl.create({
+      content: "Please wait...",
+    });
+    loader.present();
+
+
     // console.log(JSON.stringify(form.errors));
     // console.log(form.dirty);
     // console.log(form.valid);
     const email = this.loginForm.value.email;
     const password = this.loginForm.value.password;
+    
 
     this._auth.basicAuth(email, password).subscribe(res => {
+      loader.dismiss();
       console.log(JSON.stringify(res));
+      
     }, err => {
-        console.log("Error");
-        console.log(JSON.stringify(err)); //gives the object object
+      loader.dismiss();
+      console.log(JSON.stringify(err));
+      
+      // Incorrect email or password
+      if(err.status == 401){
+        let alert = this._alertCtrl.create({
+          title: 'Invalid email or password',
+          buttons: ['Try again']
+        });
+        alert.present();
+      }
     });
   }
 
