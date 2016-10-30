@@ -1,6 +1,6 @@
 // Core
 import { Component } from '@angular/core';
-import { NavController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 // Services
 import { AuthService } from '../../../providers/auth.service';
 import { KeyboardService } from '../../../providers/keyboard.service';
@@ -79,11 +79,26 @@ export class LoginPage {
       
       // Incorrect email or password
       if(err.status == 401){
-        let alert = this._alertCtrl.create({
-          title: 'Invalid email or password',
-          buttons: ['Try again']
-        });
-        alert.present();
+        this._numberOfLoginAttempts++;
+
+        // Check how many login attempts this user made, offer to reset password
+        if(this._numberOfLoginAttempts > 2){
+          let alert = this._alertCtrl.create({
+            title: 'Trouble Logging In?',
+            message: "If you've forgotten your password, we can help you get back into your account.",
+            buttons: ['Try Again', 'Forgot Password'],
+          });
+          alert.present();
+        }
+        else{
+          let alert = this._alertCtrl.create({
+            title: 'Invalid email or password',
+            message: 'The details you entered are incorrect. Please try again.',
+            buttons: ['Try Again'],
+          });
+          alert.present();
+        }
+        
       }
     });
   }
