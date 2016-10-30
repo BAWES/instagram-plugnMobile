@@ -24,11 +24,17 @@ export class LoginPage {
   // Disable submit button if loading response
   public isLoading = false;
 
+  // Store old email and password to make sure user won't make same mistake twice
+  public oldEmailInput = "";
+  public oldPasswordInput = "";
+
+  // Store number of invalid password attempts to suggest reset password 
+  private _numberOfLoginAttempts = 0;
+
   constructor(
     public navCtrl: NavController, 
     private _fb: FormBuilder, 
     private _auth: AuthService,
-    private _loadingCtrl: LoadingController,
     private _alertCtrl: AlertController,
     public keyboard: KeyboardService,
     ){}
@@ -53,27 +59,22 @@ export class LoginPage {
    * Attempts to login with the provided email and password
    */
   onSubmit(){
-    this.isLoading = true;
-
-    let loader = this._loadingCtrl.create({
-      content: "Please wait...",
-    });
-    loader.present();
-
-
     // console.log(JSON.stringify(form.errors));
     // console.log(form.dirty);
     // console.log(form.valid);
-    const email = this.loginForm.value.email;
-    const password = this.loginForm.value.password;
+
+    this.isLoading = true;
+
+    const email = this.oldEmailInput = this.loginForm.value.email;
+    const password = this.oldPasswordInput = this.loginForm.value.password;
     
 
     this._auth.basicAuth(email, password).subscribe(res => {
-      loader.dismiss();
+      this.isLoading = false;
       console.log(JSON.stringify(res));
       
     }, err => {
-      loader.dismiss();
+      this.isLoading = false;
       console.log(JSON.stringify(err));
       
       // Incorrect email or password

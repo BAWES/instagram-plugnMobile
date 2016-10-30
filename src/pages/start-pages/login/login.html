@@ -33,21 +33,25 @@
       <!-- Login Form -->
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="classicInput" novalidate>
 
-        <input type="email"
+        <input type="email" #emailInput
           formControlName="email"
           placeholder="Your Email Address"/>
 
-        <input type="password"
+        <input type="password" #passwordInput
           formControlName="password"
           placeholder="Your Password"/>
 
         <div text-center>
-          <button ion-button block outline color="dark" type="submit" [disabled]="!loginForm.valid && !isLoading"
-            [style.background-color]="loginForm.valid && !isLoading ? 'black':'white'"
-            [style.color]="loginForm.valid && !isLoading ?'white':'black'">
+          <button ion-button block outline color="dark" type="submit" 
+            [disabled]="!loginForm.valid || isLoading || 
+                        (emailInput.value == oldEmailInput && passwordInput.value == oldPasswordInput)"
+            [style.background-color]="!loginForm.valid || isLoading || 
+                        (emailInput.value == oldEmailInput && passwordInput.value == oldPasswordInput)? 'white':'black'"
+            [style.color]="!loginForm.valid || isLoading || 
+                        (emailInput.value == oldEmailInput && passwordInput.value == oldPasswordInput)?'black':'white'">
             
             <ion-spinner *ngIf="isLoading"></ion-spinner>
-            <span  *ngIf="!isLoading">Sign in</span>
+            <span *ngIf="!isLoading">Sign in</span>
 
           </button>
 
