@@ -89,7 +89,16 @@ export class LoginPage {
           });
           alert.present();
         }
-        
+      }else{
+        /**
+         * Error not accounted for. Show Message
+         */
+        let alert = this._alertCtrl.create({
+            title: 'Unable to Log In',
+            message: "There seems to be an issue connecting to Plugn servers. Please contact us if the issue persists.",
+            buttons: ['Ok'],
+          });
+          alert.present();
       }
     });
   }
