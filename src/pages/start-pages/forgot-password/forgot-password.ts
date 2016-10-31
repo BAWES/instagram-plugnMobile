@@ -6,19 +6,18 @@ import { AuthService } from '../../../providers/auth.service';
 import { KeyboardService } from '../../../providers/keyboard.service';
 // Pages
 import { RegisterPage } from '../register/register';
-import { ForgotPasswordPage } from '../forgot-password/forgot-password';
 // Forms
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidator } from '../../../validators/custom.validator';
 
 /*
-  Login Page
+  Forgot Password Page
 */
 @Component({
-  selector: 'page-login',
-  templateUrl: 'login.html'
+  selector: 'page-forgot-password',
+  templateUrl: 'forgot-password.html'
 })
-export class LoginPage {
+export class ForgotPasswordPage {
 
   public loginForm: FormGroup;
 
@@ -47,14 +46,17 @@ export class LoginPage {
     this.loginForm = this._fb.group({
       email: ["", [Validators.required, CustomValidator.emailValidator]],
       password: ["", Validators.required]
-    }); 
+    });  
   }
-
 
   /**
    * Attempts to login with the provided email and password
    */
   onSubmit(){
+    // console.log(JSON.stringify(form.errors));
+    // console.log(form.dirty);
+    // console.log(form.valid);
+
     this.isLoading = true;
 
     const email = this.oldEmailInput = this.loginForm.value.email;
@@ -115,7 +117,8 @@ export class LoginPage {
   }
 
   loadForgotPasswordPage(){
-    this.navCtrl.push(ForgotPasswordPage);
+    console.log("attempting to load forgot password page");
+    //this.navCtrl.push(TabsPage);
   }
 
   loadSignupPage(){

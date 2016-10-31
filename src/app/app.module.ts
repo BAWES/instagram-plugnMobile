@@ -10,6 +10,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 // Start Pages
 import { LoginPage } from '../pages/start-pages/login/login';
 import { RegisterPage } from '../pages/start-pages/register/register';
+import { ForgotPasswordPage } from '../pages/start-pages/forgot-password/forgot-password';
 
 // Providers / Services
 import { AuthService } from '../providers/auth.service'
@@ -25,7 +26,8 @@ export const pages = [
 
     // Start-Pages
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    ForgotPasswordPage
   ];
 
 @NgModule({
