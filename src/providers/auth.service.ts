@@ -25,6 +25,7 @@ export class AuthService {
 
   private _urlBasicAuth: string = "/auth/login";
   private _urlResetPassword: string = "/auth/reset-password";
+  private _urlCreateAccount: string = "/auth/create-account";
 
   constructor(
     private _http: Http,
@@ -48,6 +49,18 @@ export class AuthService {
     return this._http.get(url, {
       headers: authHeader
     }).first();
+  }
+
+  /**
+   * Creates user account manually based on input
+   * @param  {string} fullname
+   * @param  {string} email
+   * @param  {string} password
+   */
+  createAccount(fullname:string, email: string, password: string): Observable<any>{
+    const url = this._config.apiBaseUrl+this._urlCreateAccount;
+    
+    return this._http.get(url).first();
   }
 
   /**

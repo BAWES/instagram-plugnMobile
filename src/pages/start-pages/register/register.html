@@ -33,24 +33,25 @@
       </div>
 
       <!-- Signup Form -->
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="classicInput" novalidate>
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="classicInput" novalidate>
 
-        <input type="email" #emailInput
+        <input type="text"
+          formControlName="fullname"
+          placeholder="Your Full Name"/>
+
+        <input type="email"
           formControlName="email"
           placeholder="Your Email Address"/>
 
-        <input type="password" #passwordInput
+        <input type="password"
           formControlName="password"
           placeholder="Your Password"/>
 
         <div text-center>
           <button ion-button block outline color="dark" type="submit" 
-            [disabled]="!loginForm.valid || isLoading || 
-                        (emailInput.value == oldEmailInput && passwordInput.value == oldPasswordInput)"
-            [style.background-color]="!loginForm.valid || isLoading || 
-                        (emailInput.value == oldEmailInput && passwordInput.value == oldPasswordInput)? 'white':'black'"
-            [style.color]="!loginForm.valid || isLoading || 
-                        (emailInput.value == oldEmailInput && passwordInput.value == oldPasswordInput)?'black':'white'">
+            [disabled]="!signupForm.valid || isLoading"
+            [style.background-color]="!signupForm.valid || isLoading ? 'white':'black'"
+            [style.color]="!signupForm.valid || isLoading ? 'black':'white'">
             
             <ion-spinner *ngIf="isLoading"></ion-spinner>
             <span *ngIf="!isLoading">Create Account</span>
@@ -62,10 +63,7 @@
       <!-- END Signup Form -->
 
     </ion-card-content>
-    
   </ion-card>
-
-  
 
 </ion-content>
 
