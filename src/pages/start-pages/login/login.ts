@@ -77,7 +77,15 @@ export class LoginPage {
           let alert = this._alertCtrl.create({
             title: 'Trouble Logging In?',
             message: "If you've forgotten your password, we can help you get back into your account.",
-            buttons: ['Try Again', 'Forgot Password'],
+            buttons: [
+              {
+                text: 'Forgot Password',
+                handler: () => {
+                  this.loadForgotPasswordPage();
+                }
+              }, 
+                'Try Again'
+              ],
           });
           alert.present();
         }
