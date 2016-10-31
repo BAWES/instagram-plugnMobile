@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Headers, Response, RequestOptions } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/first';
@@ -76,11 +76,11 @@ export class AuthService {
    * @param  {string} email
    */
   resetPassword(emailInput: string): Observable<any>{
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
+    const headers = new Headers({'Content-Type': 'application/json'});
+    //headers.append('Content-Type', 'application/json');
     const url = this._config.apiBaseUrl+this._urlRequestResetPassword;
-    
-    return this._http.post(url, JSON.stringify({email: emailInput}), headers)
+
+    return this._http.post(url, JSON.stringify({'email': emailInput}), {headers: headers})
               .first()
               .map((res: Response) => res.json());
   }
