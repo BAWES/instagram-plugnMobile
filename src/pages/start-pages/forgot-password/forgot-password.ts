@@ -48,6 +48,7 @@ export class ForgotPasswordPage {
 
     this._auth.resetPassword(email).subscribe(res => {
       this.isLoading = false;
+      console.log(res);
       console.log(JSON.stringify(res));
       
     }, err => {
