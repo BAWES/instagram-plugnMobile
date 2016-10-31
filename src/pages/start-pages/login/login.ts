@@ -1,6 +1,6 @@
 // Core
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, ModalController } from 'ionic-angular';
 // Services
 import { AuthService } from '../../../providers/auth.service';
 import { KeyboardService } from '../../../providers/keyboard.service';
@@ -36,6 +36,7 @@ export class LoginPage {
     private _fb: FormBuilder, 
     private _auth: AuthService,
     private _alertCtrl: AlertController,
+    private _modalCtrl: ModalController,
     public keyboard: KeyboardService,
     ){}
 
@@ -122,12 +123,13 @@ export class LoginPage {
     }
   }
 
-  navigate(){
+  loadForgotPasswordPage(){
+    console.log("attempting to load forgot password page");
     //this.navCtrl.push(TabsPage);
   }
 
   loadSignupPage(){
-    this.navCtrl.setRoot(RegisterPage);
+    this.navCtrl.push(RegisterPage);
   }
 
 }

@@ -71,7 +71,7 @@ export class RegisterPage {
   }
 
   loadLoginPage(){
-    this.navCtrl.setRoot(LoginPage);
+    this.navCtrl.pop();
   }
 
 }

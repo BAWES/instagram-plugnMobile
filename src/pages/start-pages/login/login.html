@@ -55,7 +55,9 @@
 
           </button>
 
-          <button ion-button small clear *ngIf="!keyboard.isKeyboardOpen">
+          <button type="button" ion-button small clear 
+            *ngIf="!keyboard.isKeyboardOpen" 
+            (click)="loadForgotPasswordPage()" >
             Forgot password?
           </button>
         </div>
