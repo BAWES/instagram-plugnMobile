@@ -24,6 +24,7 @@ export class AuthService {
   private _browserCloseEvents;
 
   private _urlBasicAuth: string = "/auth/login";
+  private _urlResetPassword: string = "/auth/reset-password";
 
   constructor(
     private _http: Http,
@@ -43,11 +44,21 @@ export class AuthService {
     authHeader.append("Authorization", "Basic "+ btoa(`${email}:${password}`));
 
     const url = this._config.apiBaseUrl+this._urlBasicAuth;
-    console.log(url);
     
     return this._http.get(url, {
       headers: authHeader
     }).first();
+  }
+
+  /**
+   * Sends a password reset email
+   * @param  {string} email
+   * @param  {string} password
+   */
+  resetPassword(email: string): Observable<any>{
+    const url = this._config.apiBaseUrl+this._urlResetPassword;
+    
+    return this._http.get(url).first();
   }
 
   /**

@@ -1,8 +1,10 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Create Account</ion-title>
+  </ion-navbar>
+</ion-header>
 
 <ion-content class='contentArea' padding>
-  <div class='brand'>
-    <img src="assets/brand/logo.png" />
-  </div>
 
   <ion-card class='loginCard'>
 
@@ -11,18 +13,18 @@
         <button (click)="authorizeVia('Google')"
         class='addspace' ion-button icon-left block color="google">
           <ion-icon name="logo-googleplus"></ion-icon>
-          Log in with Google
+          Sign up with Google
         </button>
 
         <button (click)="authorizeVia('Live')"
         ion-button icon-left block>
           <ion-icon name="logo-windows"></ion-icon>
-          Log in with Live
+          Sign up with Live
         </button>
 
         <button (click)="authorizeVia('Slack')"
         ion-button block color="dark">
-          Log in with Slack
+          Sign up with Slack
         </button>
 
         <span class="or-wrapper">
@@ -30,7 +32,7 @@
         </span>
       </div>
 
-      <!-- Login Form -->
+      <!-- Signup Form -->
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="classicInput" novalidate>
 
         <input type="email" #emailInput
@@ -51,13 +53,13 @@
                         (emailInput.value == oldEmailInput && passwordInput.value == oldPasswordInput)?'black':'white'">
             
             <ion-spinner *ngIf="isLoading"></ion-spinner>
-            <span *ngIf="!isLoading">Sign in</span>
+            <span *ngIf="!isLoading">Create Account</span>
 
           </button>
         </div>
 
       </form>
-      <!-- END Login Form -->
+      <!-- END Signup Form -->
 
     </ion-card-content>
     

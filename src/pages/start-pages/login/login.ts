@@ -1,6 +1,6 @@
 // Core
 import { Component } from '@angular/core';
-import { NavController, AlertController, ModalController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 // Services
 import { AuthService } from '../../../providers/auth.service';
 import { KeyboardService } from '../../../providers/keyboard.service';
@@ -37,7 +37,6 @@ export class LoginPage {
     private _fb: FormBuilder, 
     private _auth: AuthService,
     private _alertCtrl: AlertController,
-    private _modalCtrl: ModalController,
     public keyboard: KeyboardService,
     ){}
 
