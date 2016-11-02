@@ -37,11 +37,29 @@ export class AuthService {
 
   setAccessToken(token: string){
     this._accessToken = token;
+    this.isLoggedIn = true;
+
+    // Save Token in LocalStorage
+    window.localStorage.setItem('bearer', token);
 
     alert(token);
   }
+  
   getAccessToken():string{
-    return this._accessToken;
+    // Return Access Token if set already
+    if(this._accessToken){
+      
+      return this._accessToken;
+    }
+
+    // Check Local Storage and Try Again
+    if(localStorage.getItem("bearer")){
+      this.setAccessToken(localStorage.getItem("bearer"));
+      return this.getAccessToken();
+    }
+
+    // No Access Token
+    return "No Access Token Found";
   }
 
   /**
