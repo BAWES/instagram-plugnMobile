@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import { Http, Headers, Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/first';
@@ -33,6 +33,16 @@ export class AuthService {
     private _platform: Platform,
     private _config: ConfigService
     ) {}
+
+
+  setAccessToken(token: string){
+    this._accessToken = token;
+
+    alert(token);
+  }
+  getAccessToken():string{
+    return this._accessToken;
+  }
 
   /**
    * Basic auth, exchanges access details for a bearer access token to use in 
@@ -156,7 +166,8 @@ export class AuthService {
         code: "localStorage.getItem('response')"
       }).then(resp => {
         this._browser.close();
-        alert(resp);
+        
+        this.setAccessToken(resp);
       });
     }
   }
