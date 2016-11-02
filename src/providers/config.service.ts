@@ -12,10 +12,8 @@ export class ConfigService {
   public apiBaseUrl: string;
 
   constructor(private _platform: Platform) {
-
     // Initiate dev environment on computer while 
     // running the production on mobile
-
     _platform.ready().then(() => {
       if (_platform.is('cordova')) {
         this.initProdEnvironment();
@@ -23,7 +21,6 @@ export class ConfigService {
         this.initDevEnvironment();
       }
     });
-
     
   }
   

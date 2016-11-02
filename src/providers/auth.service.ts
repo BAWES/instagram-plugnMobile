@@ -35,6 +35,10 @@ export class AuthService {
     ) {}
 
 
+  /**
+   * Set the access token
+   * @param {string} token
+   */
   setAccessToken(token: string){
     this._accessToken = token;
     this.isLoggedIn = true;
@@ -45,10 +49,13 @@ export class AuthService {
     alert(token);
   }
   
-  getAccessToken():string{
+  /**
+   * Get Access Token from Service or LocalStorage
+   * @returns {string} token
+   */
+  getAccessToken(): string{
     // Return Access Token if set already
     if(this._accessToken){
-      
       return this._accessToken;
     }
 
@@ -58,8 +65,8 @@ export class AuthService {
       return this.getAccessToken();
     }
 
-    // No Access Token
-    return "No Access Token Found";
+    // No Access Token Available
+    return "";
   }
 
   /**
