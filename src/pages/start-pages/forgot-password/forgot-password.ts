@@ -48,12 +48,39 @@ export class ForgotPasswordPage {
 
     this._auth.resetPassword(email).subscribe(res => {
       this.isLoading = false;
-      console.log(res);
-      console.log(JSON.stringify(res));
+
+      if(res.operation == "success"){
+        let alert = this._alertCtrl.create({
+          title: 'Reset Email Sent',
+          message: res.message,
+          buttons: [{
+            text: 'Cool',
+            handler: data => {
+              this.navCtrl.pop();
+            }
+          }],
+        });
+        alert.present();
+      }else if(res.operation == "error"){
+        let alert = this._alertCtrl.create({
+          title: 'Unable to Reset Password',
+          message: res.message,
+          buttons: ['Ok'],
+        });
+        alert.present();
+      }
       
     }, err => {
       this.isLoading = false;
-      console.log(JSON.stringify(err));
+      /**
+       * Error not accounted for. Show Message
+       */
+      let alert = this._alertCtrl.create({
+        title: 'Unable to Reset Password',
+        message: "There seems to be an issue connecting to Plugn servers. Please contact us if the issue persists.",
+        buttons: ['Ok'],
+      });
+      alert.present();
 
     });
   }
