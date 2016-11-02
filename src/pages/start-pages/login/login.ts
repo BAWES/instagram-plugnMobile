@@ -62,7 +62,6 @@ export class LoginPage {
 
     this._auth.basicAuth(email, password).subscribe(res => {
       this.isLoading = false;
-      console.log(JSON.stringify(res));
 
       if(res.operation == "success"){
         let alert = this._alertCtrl.create({
@@ -79,11 +78,9 @@ export class LoginPage {
               'Try Again',
               {
                 text: 'Re-send Email',
-                handler: () => {
-                  console.log("attempting to re-send verification");
-                }
+                handler: () => this.resendVerificationEmail(email)
               }
-              ],
+            ],
           });
           alert.present();
       }else if(res.operation == "error"){
@@ -143,6 +140,41 @@ export class LoginPage {
   }
 
   /**
+   * Resend Verification Email to Specified Email
+   * @param  {string} email
+   */
+  resendVerificationEmail(email: string){
+    this._auth.resendVerificationEmail(email).subscribe(res => {
+
+      if(res.operation == "success"){
+        let alert = this._alertCtrl.create({
+          title: 'Verification Email Sent',
+          message: res.message,
+          buttons: ['Ok'],
+        });
+        alert.present();
+      }else if(res.operation == "error"){
+        let alert = this._alertCtrl.create({
+          title: 'Unable to resend email',
+          message: res.message,
+          buttons: ['Ok'],
+        });
+        alert.present();
+      }
+    }, err => {
+      /**
+       * Error not accounted for. Show Message
+       */
+      let alert = this._alertCtrl.create({
+        title: 'Unable to Resend Verification Email',
+        message: "There seems to be an issue connecting to Plugn servers. Please contact us if the issue persists.",
+        buttons: ['Ok'],
+      });
+      alert.present();
+    });
+  }
+
+  /**
    * Begin Authorization process via Oauth2
    * 
    * @param {string} oauthName
@@ -160,6 +192,8 @@ export class LoginPage {
         break;
     }
   }
+
+  
 
   loadForgotPasswordPage(){
     this.navCtrl.push(ForgotPasswordPage);
