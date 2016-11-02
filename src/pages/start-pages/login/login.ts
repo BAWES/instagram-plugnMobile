@@ -63,10 +63,41 @@ export class LoginPage {
     this._auth.basicAuth(email, password).subscribe(res => {
       this.isLoading = false;
       console.log(JSON.stringify(res));
+
+      if(res.operation == "success"){
+        let alert = this._alertCtrl.create({
+          title: 'Login Successful',
+          message: res.message,
+          buttons: ['Perfect'],
+        });
+        alert.present();
+      }else if(res.operation == "error" && res.errorType == "email-not-verified"){
+        let alert = this._alertCtrl.create({
+            title: 'Email not verified',
+            message: res.message,
+            buttons: [
+              'Try Again',
+              {
+                text: 'Re-send Email',
+                handler: () => {
+                  console.log("attempting to re-send verification");
+                }
+              }
+              ],
+          });
+          alert.present();
+      }else if(res.operation == "error"){
+        let alert = this._alertCtrl.create({
+          title: 'Unable to Log In',
+          message: res.message,
+          buttons: ['Ok'],
+        });
+        alert.present();
+      }
+
       
     }, err => {
       this.isLoading = false;
-      console.log(JSON.stringify(err));
       
       // Incorrect email or password
       if(err.status == 401){
@@ -92,7 +123,7 @@ export class LoginPage {
         else{
           let alert = this._alertCtrl.create({
             title: 'Invalid email or password',
-            message: 'The details you entered are incorrect. Please try again.',
+            message: 'The information entered is incorrect. Please try again.',
             buttons: ['Try Again'],
           });
           alert.present();
