@@ -60,13 +60,14 @@ export class AuthService {
    * @param  {string} password
    */
   createAccount(fullname:string, email: string, password: string): Observable<any>{
+    const headers = new Headers({'Content-Type': 'application/json'});
     const url = this._config.apiBaseUrl+this._urlCreateAccount;
     
     return this._http.post(url, JSON.stringify({
         'fullname': fullname,
         'email': email,
         'password': password,
-      }))
+      }), {headers: headers})
       .first()
       .map((res: Response) => res.json());
   }
@@ -77,7 +78,6 @@ export class AuthService {
    */
   resetPassword(emailInput: string): Observable<any>{
     const headers = new Headers({'Content-Type': 'application/json'});
-    //headers.append('Content-Type', 'application/json');
     const url = this._config.apiBaseUrl+this._urlRequestResetPassword;
 
     return this._http.post(url, JSON.stringify({'email': emailInput}), {headers: headers})

@@ -54,10 +54,39 @@ export class RegisterPage {
     this._auth.createAccount(fullname, email, password).subscribe(res => {
       this.isLoading = false;
       console.log(JSON.stringify(res));
+
+      if(res.operation == "success"){
+        let alert = this._alertCtrl.create({
+          title: 'Thanks, you are almost done',
+          message: res.message,
+          buttons: [{
+            text: 'Awesome',
+            handler: data => {
+              this.navCtrl.pop();
+            }
+          }],
+        });
+        alert.present();
+      }else if(res.operation == "error"){
+        let alert = this._alertCtrl.create({
+          title: 'Unable to Create Account',
+          message: res.message,
+          buttons: ['Ok'],
+        });
+        alert.present();
+      }
       
     }, err => {
       this.isLoading = false;
-      console.log(JSON.stringify(err));
+      /**
+       * Error not accounted for. Show Message
+       */
+      let alert = this._alertCtrl.create({
+        title: 'Unable to Reset Password',
+        message: "There seems to be an issue connecting to Plugn servers. Please contact us if the issue persists.",
+        buttons: ['Ok'],
+      });
+      alert.present();
       
     });
   }
