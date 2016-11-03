@@ -2,8 +2,13 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/empty';
+import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
+
+import { Events } from 'ionic-angular';
 
 import { InAppBrowser } from 'ionic-native';
 
@@ -19,14 +24,38 @@ export class AuthHttpService {
   constructor(
     private _http: Http,
     private _auth: AuthService,
-    private _config: ConfigService
+    private _config: ConfigService,
+    private _events: Events
     ) {}
-    
+
   /**
-   * TODO !! Map responses to all verbs or something to check if a token is invalid
-   * As in if there's any error. Maybe with a (catch) observable verb?
-   * If the token is invalid, we need to log the user out and redirect to login page
+   * Requests via GET verb
+   * @param {string} endpointUrl
+   * @returns {Observable<any>}
    */
+  get(endpointUrl: string): Observable<any>{
+    const url = this._config.apiBaseUrl + endpointUrl;
+
+    return this._http.get(url, {headers: this._buildAuthHeaders()})
+              .catch(this._handleError)
+              .first()
+              .map((res: Response) => res.json());
+  }
+
+  /**
+   * Requests via POST verb
+   * @param {string} endpointUrl
+   * @param {*} params
+   * @returns {Observable<any>}
+   */
+  post(endpointUrl: string, params: any): Observable<any>{
+    const url = this._config.apiBaseUrl + endpointUrl;
+
+    return this._http.post(url, JSON.stringify(params), {headers: this._buildAuthHeaders()})
+              .catch(this._handleError)
+              .first()
+              .map((res: Response) => res.json());
+  }
 
   /**
    * Build the Auth Headers for All Verb Requests
@@ -44,31 +73,19 @@ export class AuthHttpService {
     return headers;
   }
 
-  /**
-   * Requests via GET verb
-   * @param {string} endpointUrl
-   * @returns {Observable<any>}
-   */
-  get(endpointUrl: string): Observable<any>{
-    const url = this._config.apiBaseUrl + endpointUrl;
 
-    return this._http.get(url, {headers: this._buildAuthHeaders()})
-              .first()
-              .map((res: Response) => res.json());
-  }
+  private _handleError(error: any) {
+      let errMsg = (error.message) ? error.message :
+          error.status ? `${error.status} - ${error.statusText}` : 'Server error';
 
-  /**
-   * Requests via POST verb
-   * @param {string} endpointUrl
-   * @param {*} params
-   * @returns {Observable<any>}
-   */
-  post(endpointUrl: string, params: any): Observable<any>{
-    const url = this._config.apiBaseUrl + endpointUrl;
+      alert(errMsg);
 
-    return this._http.post(url, JSON.stringify(params), {headers: this._buildAuthHeaders()})
-              .first()
-              .map((res: Response) => res.json());
+      if (error.status === 401) {
+          this._events.publish('user:loginExpired', 'TokenExpired');
+          return Observable.empty<Response>();
+      }
+
+      return Observable.throw(errMsg);
   }
 
 }
