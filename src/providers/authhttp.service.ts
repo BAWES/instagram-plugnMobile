@@ -21,7 +21,12 @@ export class AuthHttpService {
     private _auth: AuthService,
     private _config: ConfigService
     ) {}
-  
+    
+  /**
+   * TODO !! Map responses to all verbs or something to check if a token is invalid
+   * As in if there's any error. Maybe with a (catch) observable verb?
+   * If the token is invalid, we need to log the user out and redirect to login page
+   */
 
   /**
    * Build the Auth Headers for All Verb Requests
