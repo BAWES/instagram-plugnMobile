@@ -5,7 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 
-import { Platform } from 'ionic-angular';
+import { Platform, Events } from 'ionic-angular';
 import { InAppBrowser } from 'ionic-native';
 
 import { ConfigService } from './config.service';
@@ -31,9 +31,22 @@ export class AuthService {
   constructor(
     private _http: Http,
     private _platform: Platform,
-    private _config: ConfigService
-    ) {}
+    private _config: ConfigService,
+    private _events: Events
+    ) {
+      this._updateLoginStatus();
+    }
 
+  /**
+   * Sets this.isLoggedIn based on availability of BEARER Access Token
+   */
+  private _updateLoginStatus(){
+    if(this.getAccessToken()){
+      this.isLoggedIn = true;
+    }else{
+      this.isLoggedIn = false;
+    }
+  }
 
   /**
    * Set the access token
@@ -41,19 +54,22 @@ export class AuthService {
    */
   setAccessToken(token: string){
     this._accessToken = token;
-    this.isLoggedIn = true;
+
+    // Update Public Login Status
+    this._updateLoginStatus();
 
     // Save Token in LocalStorage
     window.localStorage.setItem('bearer', token);
 
-    alert(token);
+    // Log User In by Triggering Event that Access Token has been Set 
+    this._events.publish('user:loginSuccessful', 'TokenSet');
   }
   
   /**
    * Get Access Token from Service or LocalStorage
    * @returns {string} token
    */
-  getAccessToken(): string{
+  getAccessToken(){
     // Return Access Token if set already
     if(this._accessToken){
       return this._accessToken;
@@ -66,7 +82,7 @@ export class AuthService {
     }
 
     // No Access Token Available
-    return "";
+    return false;
   }
 
   /**
@@ -166,7 +182,7 @@ export class AuthService {
         // Keep track of urls loaded
         this._browserLoadEvents = this._browser.on("loadstop");
         this._browserLoadEvents = this._browserLoadEvents.map(res => res.url).subscribe(url => {
-          this.doActionBasedOnUrl(url);
+          this._doActionBasedOnUrl(url);
         });
 
         // Keep track of browser if closed
@@ -184,7 +200,7 @@ export class AuthService {
    * 
    * @param {string} url
    */
-  doActionBasedOnUrl(url: string){
+  private _doActionBasedOnUrl(url: string){
     if(url.indexOf("?code=") !== -1){
 
       this._browser.executeScript({

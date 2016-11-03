@@ -22,7 +22,6 @@ export class MyApp implements OnInit{
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      
       if (platform.is('cordova')) {
         StatusBar.styleDefault();
       }
@@ -35,7 +34,6 @@ export class MyApp implements OnInit{
    * Using Ng2 Lifecycle hooks because view lifecycle events don't trigger for Bootstrapped MyApp Component
    */
   ngOnInit(){
-
     // Figure out which page to load on app start [Based on Auth]
     if(this.auth.isLoggedIn){
       this.rootPage = TabsPage;
