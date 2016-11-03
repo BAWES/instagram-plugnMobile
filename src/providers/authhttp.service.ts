@@ -8,8 +8,6 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 
-import { InAppBrowser } from 'ionic-native';
-
 import { ConfigService } from './config.service';
 import { AuthService } from './auth.service';
 
