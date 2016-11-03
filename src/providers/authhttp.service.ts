@@ -74,6 +74,10 @@ export class AuthHttpService {
   }
 
 
+  /**
+   * Handles Caught Errors from All Authorized Requests Made to Server
+   * @returns {Observable} 
+   */
   private _handleError(error: any) {
       let errMsg = (error.message) ? error.message :
           error.status ? `${error.status} - ${error.statusText}` : 'Server error';
