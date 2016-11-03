@@ -49,6 +49,18 @@ export class AuthService {
   }
 
   /**
+   * Logs a user out by setting logged in to false and clearing token from localStorage
+   * @param {string} [reason]
+   */
+  logout(reason?: string){
+    window.localStorage.removeItem('bearer');
+    this._accessToken = null;
+    this.isLoggedIn = false;
+
+    this._events.publish('user:logout', reason?reason:false);
+  }
+
+  /**
    * Set the access token
    * @param {string} token
    */
@@ -62,7 +74,7 @@ export class AuthService {
     window.localStorage.setItem('bearer', token);
 
     // Log User In by Triggering Event that Access Token has been Set 
-    this._events.publish('user:loginSuccessful', 'TokenSet');
+    this._events.publish('user:login', 'TokenSet');
   }
   
   /**

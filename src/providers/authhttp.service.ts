@@ -8,8 +8,6 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 
-import { Events } from 'ionic-angular';
-
 import { InAppBrowser } from 'ionic-native';
 
 import { ConfigService } from './config.service';
@@ -25,7 +23,6 @@ export class AuthHttpService {
     private _http: Http,
     private _auth: AuthService,
     private _config: ConfigService,
-    private _events: Events
     ) {}
 
   /**
@@ -85,7 +82,7 @@ export class AuthHttpService {
       alert(errMsg);
 
       if (error.status === 401) {
-          this._events.publish('user:loginExpired', 'TokenExpired');
+          this._auth.logout('Session expired, please log back in.');
           return Observable.empty<Response>();
       }
 
