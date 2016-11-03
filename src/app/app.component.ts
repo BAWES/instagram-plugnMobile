@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Platform, Events } from 'ionic-angular';
+import { Platform, Events, ToastController } from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 
 import { TabsPage } from '../pages/tabs/tabs';
@@ -17,7 +17,8 @@ export class MyApp implements OnInit{
   constructor(
     platform: Platform, 
     private _auth: AuthService,
-    private _events: Events
+    private _events: Events,
+    private _toastCtrl: ToastController
     ) {
     
     /**
@@ -50,12 +51,28 @@ export class MyApp implements OnInit{
 
     // On Logout Event, set root to Login Page
     this._events.subscribe('user:logout', (userEventData) => {
-      let logoutReason = userEventData[0];
-      console.log('User logged out. Reason: '+logoutReason);
 
+      // Set root to Login Page
       this.rootPage = LoginPage;
+
+      // Show Toast Message explaining logout reason if there's one set
+      let logoutReason = userEventData[0];
+      if(logoutReason){
+        this.presentToast(logoutReason);
+      }
+      
     });
 
+  }
+
+  presentToast(content: string) {
+    let toast = this._toastCtrl.create({
+      message: content,
+      position: 'bottom',
+      duration: 3000,
+    });
+
+    toast.present();
   }
 
 }
