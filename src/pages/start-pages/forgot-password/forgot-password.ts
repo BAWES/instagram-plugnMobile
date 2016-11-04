@@ -28,14 +28,16 @@ export class ForgotPasswordPage {
     private _auth: AuthService,
     private _alertCtrl: AlertController,
     public keyboard: KeyboardService,
-    ){}
+    ){
+      // Initialize the Password Reset Form
+      this.resetForm = this._fb.group({
+        email: ["", [Validators.required, CustomValidator.emailValidator]],
+      });  
+    }
 
 
   ionViewDidLoad() {
-    // Initialize the Password Reset Form
-    this.resetForm = this._fb.group({
-      email: ["", [Validators.required, CustomValidator.emailValidator]],
-    });  
+    
   }
 
   /**

@@ -28,16 +28,18 @@ export class RegisterPage {
     private _auth: AuthService,
     private _alertCtrl: AlertController,
     public keyboard: KeyboardService,
-    ){}
+    ){
+      // Initialize the Registration Form
+      this.signupForm = this._fb.group({
+        fullname: ["", [Validators.required]],
+        email: ["", [Validators.required, CustomValidator.emailValidator]],
+        password: ["", Validators.required]
+      }); 
+    }
 
 
   ionViewDidLoad() {
-    // Initialize the Registration Form
-    this.signupForm = this._fb.group({
-      fullname: ["", [Validators.required]],
-      email: ["", [Validators.required, CustomValidator.emailValidator]],
-      password: ["", Validators.required]
-    }); 
+    
   }
 
 

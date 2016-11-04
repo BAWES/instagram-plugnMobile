@@ -38,15 +38,16 @@ export class LoginPage {
     private _auth: AuthService,
     private _alertCtrl: AlertController,
     public keyboard: KeyboardService,
-    ){}
-
+    ){
+      // Initialize the Login Form
+      this.loginForm = this._fb.group({
+        email: ["", [Validators.required, CustomValidator.emailValidator]],
+        password: ["", Validators.required]
+      });
+    }
 
   ionViewDidLoad() {
-    // Initialize the Login Form
-    this.loginForm = this._fb.group({
-      email: ["", [Validators.required, CustomValidator.emailValidator]],
-      password: ["", Validators.required]
-    }); 
+    
   }
 
 
