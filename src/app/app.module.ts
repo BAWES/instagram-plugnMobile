@@ -6,6 +6,7 @@ import { MyApp } from './app.component';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
+import { PopoverPage } from '../pages/popover/popover';
 import { TabsPage } from '../pages/tabs/tabs';
 import { NavigationPage } from '../pages/navigation/navigation';
 // Start Pages
@@ -25,6 +26,7 @@ export const pages = [
     AboutPage,
     ContactPage,
     HomePage,
+    PopoverPage,
     TabsPage,
     NavigationPage,
 

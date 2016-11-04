@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 
-import { NavController } from 'ionic-angular';
+import { NavController, PopoverController } from 'ionic-angular';
 
 import { AuthService } from '../../providers/auth.service'
+
+import { PopoverPage } from '../popover/popover';
 
 @Component({
   selector: 'page-home',
@@ -10,8 +12,18 @@ import { AuthService } from '../../providers/auth.service'
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController, private _auth: AuthService,) {
+  constructor(
+    public navCtrl: NavController, 
+    private _auth: AuthService,
+    public popoverCtrl: PopoverController) {
 
+  }
+
+  presentPopover(myEvent) {
+    let popover = this.popoverCtrl.create(PopoverPage);
+    popover.present({
+      ev: myEvent
+    });
   }
 
   logout(){
