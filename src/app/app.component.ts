@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Platform, Events, ToastController } from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 
-import { TabsPage } from '../pages/tabs/tabs';
+import { NavigationPage } from '../pages/navigation/navigation';
 import { LoginPage } from '../pages/start-pages/login/login';
 
 import { AuthService } from '../providers/auth.service'
@@ -41,12 +41,12 @@ export class MyApp implements OnInit{
   ngOnInit(){
     // Figure out which page to load on app start [Based on Auth]
     if(this._auth.isLoggedIn){
-      this.rootPage = TabsPage;
+      this.rootPage = NavigationPage;
     }else this.rootPage = LoginPage;
 
     // On Login Event, set root to Internal app page
     this._events.subscribe('user:login', (userEventData) => {
-      this.rootPage = TabsPage;
+      this.rootPage = NavigationPage;
     });
 
     // On Logout Event, set root to Login Page

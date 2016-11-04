@@ -7,6 +7,7 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { NavigationPage } from '../pages/navigation/navigation';
 // Start Pages
 import { LoginPage } from '../pages/start-pages/login/login';
 import { RegisterPage } from '../pages/start-pages/register/register';
@@ -19,10 +20,13 @@ import { ConfigService } from '../providers/config.service'
 
 export const pages = [
     MyApp,
+
+    // App Pages
     AboutPage,
     ContactPage,
     HomePage,
     TabsPage,
+    NavigationPage,
 
     // Start-Pages
     LoginPage,

@@ -1,0 +1,22 @@
+<ion-menu [content]="loggedInContent">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Pages</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <button ion-item (click)="openPage(1)">
+        Home
+      </button>
+      <button ion-item (click)="openPage(2)">
+        About
+      </button>
+      <button ion-item (click)="openPage(3)">
+        Contact
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-nav #loggedInContent [root]="rootPage"></ion-nav>
