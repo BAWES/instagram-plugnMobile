@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, ApplicationRef } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
@@ -32,7 +32,8 @@ export class AuthService {
     private _http: Http,
     private _platform: Platform,
     private _config: ConfigService,
-    private _events: Events
+    private _events: Events,
+    private _ref:ApplicationRef
     ) {
       this._updateLoginStatus();
     }
@@ -221,6 +222,7 @@ export class AuthService {
         this._browser.close();
         
         this.setAccessToken(resp);
+        this._ref.tick();
       });
     }
   }
