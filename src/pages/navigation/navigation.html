@@ -1,19 +1,24 @@
 <ion-menu [content]="loggedInContent">
   <ion-header>
-    <ion-toolbar>
-      <ion-title>Pages</ion-title>
+    <ion-toolbar text-center>
+      <img margin style='height:45px;' src="assets/brand/logo-dark.png" />
     </ion-toolbar>
   </ion-header>
   <ion-content>
     <ion-list>
+
+      <ion-list-header>Managed Accounts</ion-list-header>
+
+      <ion-list-header>Personal</ion-list-header>
+
       <button ion-item (click)="openPage(1)">
-        Home
+        My Activity
       </button>
       <button ion-item (click)="openPage(2)">
-        About
+        Settings
       </button>
       <button ion-item (click)="openPage(3)">
-        Contact
+        Logout
       </button>
     </ion-list>
   </ion-content>
