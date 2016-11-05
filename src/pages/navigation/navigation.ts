@@ -4,6 +4,8 @@ import { HomePage } from '../home/home';
 import { AboutPage } from '../about/about';
 import { ContactPage } from '../contact/contact';
 
+import { AuthService } from '../../providers/auth.service'
+
 @Component({
   selector: 'page-navigation',
   templateUrl: 'navigation.html'
@@ -12,7 +14,7 @@ export class NavigationPage {
 
   rootPage: any = HomePage;
 
-  constructor() {
+  constructor(private _auth: AuthService) {
 
   }
 
@@ -28,6 +30,10 @@ export class NavigationPage {
         this.rootPage = ContactPage;
         break;
     }
+  }
+
+  logout(){
+    this._auth.logout();
   }
 
 }
