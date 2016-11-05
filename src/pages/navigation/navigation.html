@@ -1,5 +1,5 @@
 <!-- Menu Left -->
-<ion-menu side="left" type="overlay" [content]="loggedInContent">
+<ion-menu #menuLeft side="left" type="overlay" [content]="loggedInContent">
   <ion-header>
     <ion-toolbar text-center>
       <img margin style='height:45px;' src="assets/brand/logo-dark.png" />
@@ -55,7 +55,7 @@
 
 
 <!-- Menu Right -->
-<ion-menu side="right" type="overlay" [content]="loggedInContent">
+<ion-menu #menuRight side="right" type="overlay" [content]="loggedInContent">
   <ion-header>
     <ion-toolbar text-center>
       <img margin style='width:100px; height:100px;
@@ -115,7 +115,7 @@
 
   </ion-content>
   <ion-footer padding>
-      <button ion-button block outline (click)="close()" color="dark">
+      <button ion-button block outline (click)="menuRight.close();menuLeft.open();" color="dark">
         Switch Account
       </button>
     </ion-footer>
