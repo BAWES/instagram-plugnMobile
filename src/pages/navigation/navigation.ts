@@ -5,10 +5,11 @@ import { AboutPage } from '../about/about';
 import { ContactPage } from '../contact/contact';
 
 @Component({
+  selector: 'page-navigation',
   templateUrl: 'navigation.html'
 })
 export class NavigationPage {
-  
+
   rootPage: any = HomePage;
 
   constructor() {

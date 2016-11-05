@@ -1,0 +1,47 @@
+page-navigation {
+    // Menu
+    // --------------------------------------------------
+
+    $menu-width-right:                 304px !default;
+    $menu-small-right-width:           $menu-width-right - 40px !default;
+
+    ion-menu[side=right] > .menu-inner {
+      width: $menu-width-right;
+    }
+
+    @media (max-width: 340px) {
+      .menu-inner {
+        width: $menu-small-right-width;
+      }
+    }
+
+    // Card for Stat Count Design
+    ion-card.statCount{
+      position:relative; 
+      cursor:pointer;
+      height:90px;
+      background: rgb(35, 41, 54); 
+      color:white;
+
+      .number{
+        position:absolute; 
+        top:17%; left:10%; 
+        font-size:1.6em; 
+        font-weight: bold;
+      }
+
+      .card-title{
+        position:absolute;
+        top:50%; left:10%;
+        font-size:1.3em; 
+      }
+
+      ion-icon{
+        color:white;
+        position:absolute;
+        font-size:2.5em; 
+        right:5%;
+        top:15%;
+      }
+    }
+}

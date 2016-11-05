@@ -1,4 +1,5 @@
-<ion-menu [content]="loggedInContent">
+<!-- Menu Left -->
+<ion-menu side="left" type="overlay" [content]="loggedInContent">
   <ion-header>
     <ion-toolbar text-center>
       <img margin style='height:45px;' src="assets/brand/logo-dark.png" />
@@ -50,6 +51,74 @@
       </button>
     </ion-list>
   </ion-content>
+</ion-menu>
+
+
+<!-- Menu Right -->
+<ion-menu side="right" type="overlay" [content]="loggedInContent">
+  <ion-header>
+    <ion-toolbar text-center>
+      <img margin style='width:100px; height:100px;
+        border-radius: 200px;
+        -moz-border-radius: 200px;
+        -webkit-border-radius: 200px' 
+          src="https://scontent.cdninstagram.com/t51.2885-19/s150x150/14350631_651391715024543_658582329_a.jpg"/> 
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+
+    <ion-list>
+      
+      <ion-item text-wrap>
+        <ion-title>Khalid Al-Mutawa</ion-title>
+        Time Traveler Snapchat: khalidmnet Founder of BAWES - Built Awesome Plugn.io / StudentHub.co
+      </ion-item>
+
+      
+      <button ion-item detail-none (click)="close()">
+        <ion-icon item-left name="images"></ion-icon> Media <ion-badge item-right>260</ion-badge>
+      </button>
+      <button ion-item detail-none (click)="close()">
+        <ion-icon item-left name="walk"></ion-icon> Following <ion-badge item-right>538</ion-badge>
+      </button>
+      <button ion-item detail-none (click)="close()">
+        <ion-icon item-left name="people"></ion-icon> Followers <ion-badge item-right>23k</ion-badge>
+      </button>
+      <button ion-item detail-none (click)="close()">
+        <ion-icon item-left name="pulse"></ion-icon> Agent Activity
+      </button>
+    </ion-list>
+
+    <ion-card class="statCount">
+      <div class="number rotate">260</div>
+      <ion-icon name="images"></ion-icon>
+      <div class='card-title'>
+        Media
+      </div>
+    </ion-card>
+
+    <ion-card class="statCount">
+      <div class="number rotate">538</div>
+      <ion-icon name="walk"></ion-icon>
+      <div class='card-title'>
+        Following
+      </div>
+    </ion-card>
+
+    <ion-card class="statCount">
+      <div class="number rotate">23.5k</div>
+      <ion-icon name="people"></ion-icon>
+      <div class='card-title'>
+        Followers
+      </div>
+    </ion-card>
+
+  </ion-content>
+  <ion-footer padding>
+      <button ion-button block outline (click)="close()" color="dark">
+        Switch Account
+      </button>
+    </ion-footer>
 </ion-menu>
 
 <ion-nav #loggedInContent [root]="rootPage"></ion-nav>
