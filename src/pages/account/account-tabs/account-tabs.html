@@ -22,16 +22,7 @@
   </ion-navbar>
 </ion-header>
 
-
-
-<ion-content padding>
-  <h2>Welcome to Plugn.io!</h2>
-  <p>
-    Stuff will be loaded here
-  </p>
-
-  <button ion-button (click)="loadAboutPage()">
-    Test Nav Persistence
-  </button>
-
-</ion-content>
+<ion-tabs color="light">
+  <ion-tab [root]="tab1Root" tabTitle="Media" tabIcon="home"></ion-tab>
+  <ion-tab [root]="tab2Root" tabTitle="Conversation" tabIcon="text"></ion-tab>
+</ion-tabs>

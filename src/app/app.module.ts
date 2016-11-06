@@ -2,17 +2,19 @@ import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-// Inner Pages
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
-import { HomePage } from '../pages/home/home';
-import { PopoverPage } from '../pages/popover/popover';
-import { TabsPage } from '../pages/tabs/tabs';
-import { NavigationPage } from '../pages/navigation/navigation';
-// Start Pages
+
+// Start Pages [Logged Out]
 import { LoginPage } from '../pages/start-pages/login/login';
 import { RegisterPage } from '../pages/start-pages/register/register';
 import { ForgotPasswordPage } from '../pages/start-pages/forgot-password/forgot-password';
+
+// Main Navigation once Logged In
+import { NavigationPage } from '../pages/navigation/navigation';
+
+// Account Management Pages via Conversation / Media View
+import { AccountTabsPage } from '../pages/account/account-tabs/account-tabs';
+import { ConversationPage } from '../pages/account/conversation/conversation';
+import { MediaPage } from '../pages/account/media/media';
 
 // Providers / Services
 import { AuthService } from '../providers/auth.service'
@@ -22,13 +24,13 @@ import { ConfigService } from '../providers/config.service'
 export const pages = [
     MyApp,
 
-    // App Pages
-    AboutPage,
-    ContactPage,
-    HomePage,
-    PopoverPage,
-    TabsPage,
+    // Main Nav Page [Logged In]
     NavigationPage,
+
+    // Account Mgmt Pages Media/Conv View 
+    AccountTabsPage,
+    ConversationPage,
+    MediaPage,
 
     // Start-Pages
     LoginPage,

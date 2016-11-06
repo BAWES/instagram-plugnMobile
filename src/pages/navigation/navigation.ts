@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 
-import { HomePage } from '../home/home';
-import { AboutPage } from '../about/about';
-import { ContactPage } from '../contact/contact';
+import { AuthService } from '../../providers/auth.service';
 
-import { AuthService } from '../../providers/auth.service'
+import { AccountTabsPage } from '../account/account-tabs/account-tabs';
 
 @Component({
   selector: 'page-navigation',
@@ -12,24 +10,14 @@ import { AuthService } from '../../providers/auth.service'
 })
 export class NavigationPage {
 
-  rootPage: any = HomePage;
+  rootPage: any = AccountTabsPage;
 
   constructor(private _auth: AuthService) {
 
   }
 
   openPage(page){
-    switch(page){
-      case 1:
-        this.rootPage = HomePage;
-        break;
-      case 2:
-        this.rootPage = AboutPage;
-        break;
-      case 3:
-        this.rootPage = ContactPage;
-        break;
-    }
+    console.log("Attempting to open page");
   }
 
   logout(){
