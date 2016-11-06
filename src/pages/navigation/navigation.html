@@ -37,9 +37,10 @@
         </ion-avatar>
         @plugn.io
       </button>
-
       <button ion-item (click)="openPage(1)">
-        <ion-icon name="add" item-left></ion-icon>
+        <ion-avatar item-left>
+          <img src="assets/insta-logo.png">
+        </ion-avatar>
         Add Instagram Account
       </button>
     </ion-list>
@@ -66,7 +67,7 @@
 
 
 <!-- Menu Right -->
-<ion-menu #menuRight side="right" type="reveal" [content]="loggedInContent">
+<ion-menu #menuRight side="right" type="overlay" [content]="loggedInContent">
   <ion-header>
     <ion-toolbar text-center>
       <img margin style='width:100px; height:100px;
