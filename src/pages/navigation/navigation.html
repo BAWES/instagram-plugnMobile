@@ -6,6 +6,9 @@
     </ion-toolbar>
   </ion-header>
   <ion-content>
+
+    
+    
     <ion-list>
 
       <ion-list-header>Managed Accounts</ion-list-header>
@@ -35,6 +38,14 @@
         @plugn.io
       </button>
 
+      <button ion-item (click)="openPage(1)">
+        <ion-icon name="add" item-left></ion-icon>
+        Add Instagram Account
+      </button>
+    </ion-list>
+    
+
+    <ion-list>
       <ion-list-header>Personal</ion-list-header>
 
       <button ion-item (click)="openPage(1)">
