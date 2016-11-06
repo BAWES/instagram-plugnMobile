@@ -34,12 +34,20 @@ page-navigation {
         font-size:1.3em; 
       }
 
-      ion-icon{
+      ion-icon.main{
         color:black;
         position:absolute;
         font-size:2.5em; 
         right:5%;
-        top:15%;
+        top:5%;
+      }
+
+      ion-icon.forward{
+        color:lightgrey;
+        position:absolute;
+        font-size:2.2em;
+        right:5%;
+        bottom: 5%;
       }
     }
 }

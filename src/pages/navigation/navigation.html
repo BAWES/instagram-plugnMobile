@@ -67,50 +67,40 @@
   </ion-header>
   <ion-content>
 
-    <ion-list>
-      
-      <ion-item text-wrap>
-        <ion-title>Khalid Al-Mutawa</ion-title>
-        Time Traveler Snapchat: khalidmnet Founder of BAWES - Built Awesome Plugn.io / StudentHub.co
-      </ion-item>
-
-      
-      <button ion-item detail-none (click)="close()">
-        <ion-icon item-left name="images"></ion-icon> Media <ion-badge color="light" item-right>260</ion-badge>
-      </button>
-      <button ion-item detail-none (click)="close()">
-        <ion-icon item-left name="walk"></ion-icon> Following <ion-badge color="light" item-right>538</ion-badge>
-      </button>
-      <button ion-item detail-none (click)="close()">
-        <ion-icon item-left name="people"></ion-icon> Followers <ion-badge color="light" item-right>23k</ion-badge>
-      </button>
-      <button ion-item detail-none (click)="close()">
-        <ion-icon item-left name="pulse"></ion-icon> Agent Activity
-      </button>
-    </ion-list>
-
     <ion-card class="statCount">
       <div class="number rotate">23.5k</div>
-      <ion-icon name="people"></ion-icon>
+      <ion-icon class='main' name="people"></ion-icon>
       <div class='card-title'>
         Followers
       </div>
+      <ion-icon class='forward' name="ios-arrow-forward"></ion-icon>
     </ion-card>
 
     <ion-card class="statCount">
       <div class="number rotate">538</div>
-      <ion-icon name="walk"></ion-icon>
+      <ion-icon class='main' name="walk"></ion-icon>
       <div class='card-title'>
         Following
       </div>
+      <ion-icon class='forward' name="ios-arrow-forward"></ion-icon>
     </ion-card>
 
     <ion-card class="statCount">
       <div class="number rotate">260</div>
-      <ion-icon name="images"></ion-icon>
+      <ion-icon class='main' name="images"></ion-icon>
       <div class='card-title'>
         Media
       </div>
+      <ion-icon class='forward' name="ios-arrow-forward"></ion-icon>
+    </ion-card>
+
+    <ion-card class="statCount">
+      <div class="number rotate">34 min ago</div>
+      <ion-icon class='main' name="pulse"></ion-icon>
+      <div class='card-title'>
+        Last Agent Activity
+      </div>
+      <ion-icon class='forward' name="ios-arrow-forward"></ion-icon>
     </ion-card>
 
   </ion-content>
