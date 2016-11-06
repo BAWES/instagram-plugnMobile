@@ -1,3 +1,11 @@
 page-account-tabs {
-
+    .tabs-ios .tab-button:hover:not(.disable-hover), .tabs-ios .tab-button[aria-selected=true]{
+        color:black;
+    }
+    .tabs-md .tab-button[aria-selected=true]{
+        color: black;
+    }
+    .tabs-wp .tab-button[aria-selected=true]{
+        color: black;
+    }
 }
