@@ -6,6 +6,13 @@
 
 
 <ion-content>
+
+  <!-- Swipe to Refresh -->
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Unhandled Media -->
   <ion-list>
     <ion-list-header>
       Unhandled Media
@@ -37,7 +44,7 @@
 
   </ion-list>
 
-  <!-- Unhandled Media -->
+  <!-- Media -->
   <ion-list>
     <ion-list-header>
       Media
@@ -104,6 +111,5 @@
     </button>
 
   </ion-list>
-
 
 </ion-content>
