@@ -20,8 +20,6 @@ page-navigation {
       position:relative; 
       cursor:pointer;
       height:90px;
-      background: rgb(35, 41, 54); 
-      color:white;
 
       .number{
         position:absolute; 
@@ -37,7 +35,7 @@ page-navigation {
       }
 
       ion-icon{
-        color:white;
+        color:black;
         position:absolute;
         font-size:2.5em; 
         right:5%;
