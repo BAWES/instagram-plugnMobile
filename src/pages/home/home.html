@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
 
-    <button ion-button menuToggle>
+    <button ion-button menuToggle="left">
       <ion-icon name="menu"></ion-icon>
     </button>
 
@@ -29,5 +29,9 @@
   <p>
     Stuff will be loaded here
   </p>
+
+  <button ion-button (click)="loadAboutPage()">
+    Test Nav Persistence
+  </button>
 
 </ion-content>

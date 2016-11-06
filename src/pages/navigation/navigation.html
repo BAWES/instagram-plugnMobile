@@ -1,5 +1,5 @@
 <!-- Menu Left -->
-<ion-menu #menuLeft side="left" type="overlay" [content]="loggedInContent">
+<ion-menu #menuLeft side="left" type="overlay" persistent="true" [content]="loggedInContent">
   <ion-header>
     <ion-toolbar text-center>
       <img margin style='height:45px;' src="assets/brand/logo-dark.png" />
@@ -67,7 +67,7 @@
 
 
 <!-- Menu Right -->
-<ion-menu #menuRight side="right" type="overlay" [content]="loggedInContent">
+<ion-menu #menuRight side="right" type="overlay" persistent="true" [content]="loggedInContent">
   <ion-header>
     <ion-toolbar text-center>
       <img margin style='width:100px; height:100px;
