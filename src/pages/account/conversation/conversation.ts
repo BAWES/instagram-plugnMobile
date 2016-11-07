@@ -19,4 +19,13 @@ export class ConversationPage {
     console.log('Hello ConversationPage Page');
   }
 
+  doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      refresher.complete();
+    }, 2000);
+  }
+
 }
