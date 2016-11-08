@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { MediaPage } from '../media/media'
-import { ConversationPage } from '../conversation/conversation'
+
+// Pages
+import { MediaPage } from '../media/media';
+import { ConversationPage } from '../conversation/conversation';
+
+// Services
+import { AccountService } from '../../../providers/logged-in/account.service';
 
 /*
-  Generated class for the AccountTabs tabs.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular 2 DI.
+  AccountTabs tabs.
 */
 @Component({
   selector: 'page-account-tabs',
@@ -18,7 +20,7 @@ export class AccountTabsPage {
   tab1Root: any = MediaPage;
   tab2Root: any = ConversationPage;
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, public accounts: AccountService) {
 
   }
 

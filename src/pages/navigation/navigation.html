@@ -68,20 +68,21 @@
 
 
 <!-- Menu Right -->
-<ion-menu #menuRight side="right" type="overlay" persistent="true" [content]="loggedInContent">
+<ion-menu #menuRight *ngIf="accounts.activeAccount"
+  side="right" type="overlay" persistent="true" [content]="loggedInContent">
   <ion-header>
     <ion-toolbar text-center>
       <img margin style='width:100px; height:100px;
         border-radius: 200px;
         -moz-border-radius: 200px;
         -webkit-border-radius: 200px' 
-          src="https://scontent.cdninstagram.com/t51.2885-19/s150x150/14350631_651391715024543_658582329_a.jpg"/> 
+          src="{{ accounts.activeAccount.user_profile_pic }}"/> 
     </ion-toolbar>
   </ion-header>
   <ion-content>
 
     <ion-card class="statCount">
-      <div class="number rotate">23.5k</div>
+      <div class="number">{{ accounts.activeAccount.user_follower_count }}</div>
       <ion-icon class='main' name="people"></ion-icon>
       <div class='card-title'>
         Followers
@@ -90,7 +91,7 @@
     </ion-card>
 
     <ion-card class="statCount">
-      <div class="number rotate">538</div>
+      <div class="number">{{ accounts.activeAccount.user_following_count }}</div>
       <ion-icon class='main' name="walk"></ion-icon>
       <div class='card-title'>
         Following
@@ -99,7 +100,7 @@
     </ion-card>
 
     <ion-card class="statCount">
-      <div class="number rotate">260</div>
+      <div class="number">{{ accounts.activeAccount.user_media_count }}</div>
       <ion-icon class='main' name="images"></ion-icon>
       <div class='card-title'>
         Media
@@ -108,7 +109,7 @@
     </ion-card>
 
     <ion-card class="statCount">
-      <div class="number rotate">34 min ago</div>
+      <div class="number">{{ accounts.activeAccount.lastAgentActivity }}</div>
       <ion-icon class='main' name="pulse"></ion-icon>
       <div class='card-title'>
         Last Agent Activity

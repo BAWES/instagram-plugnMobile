@@ -17,8 +17,8 @@ export class NavigationPage {
   rootPage: any = AccountTabsPage;
 
   constructor(
+    public accounts: AccountService,
     private _auth: AuthService,
-    private _accounts: AccountService,
     private _menu: MenuController) { }
 
   openPage(page){

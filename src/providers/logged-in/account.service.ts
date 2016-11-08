@@ -10,6 +10,7 @@ import { AuthHttpService } from './authhttp.service';
 @Injectable()
 export class AccountService {
 
+  public activeAccount; // The account currently being viewed by agent
   public managedAccounts; // Array of managed accounts stored here
 
   private _accountEndpoint: string = "/accounts";
@@ -30,6 +31,11 @@ export class AccountService {
   private _populateManagedAccounts(){
     this._authhttp.get(this._accountEndpoint).subscribe(jsonResponse => {
       this.managedAccounts = jsonResponse;
+
+      // Sets the currently active account for initial viewing (if exists)
+      if(!this.activeAccount && this.managedAccounts[0]){
+        this.activeAccount = this.managedAccounts[0];
+      }
     });
   }
 
