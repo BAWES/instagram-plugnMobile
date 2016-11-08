@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MenuController } from 'ionic-angular';
 
 import { AuthService } from '../../providers/auth.service';
 
@@ -14,7 +15,7 @@ export class NavigationPage {
 
   rootPage: any = AccountTabsPage;
 
-  constructor(private _auth: AuthService) {
+  constructor(private _auth: AuthService, private _menu: MenuController) {
 
   }
 
@@ -24,6 +25,7 @@ export class NavigationPage {
 
   loadAddAccountPage(){
     this.rootPage = AddAccountPage;
+    this._menu.close();
   }
 
   logout(){
