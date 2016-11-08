@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MenuController } from 'ionic-angular';
 
 import { AuthService } from '../../providers/auth.service';
-import { AccountService } from '../../providers/account.service';
+import { AccountService } from '../../providers/logged-in/account.service';
 
 // Page Imports
 import { AccountTabsPage } from '../account/account-tabs/account-tabs';

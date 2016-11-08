@@ -9,8 +9,8 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 
-import { ConfigService } from './config.service';
-import { AuthService } from './auth.service';
+import { ConfigService } from '../config.service';
+import { AuthService } from '../auth.service';
 
 /*
   Handles all Authorized HTTP functions with Bearer Token

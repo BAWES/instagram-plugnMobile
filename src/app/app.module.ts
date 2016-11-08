@@ -21,8 +21,9 @@ import { MediaPage } from '../pages/account/media/media';
 import { AuthService } from '../providers/auth.service'
 import { KeyboardService } from '../providers/keyboard.service'
 import { ConfigService } from '../providers/config.service'
-import { AuthHttpService } from '../providers/authhttp.service'
-import { AccountService } from '../providers/account.service'
+
+import { AuthHttpService } from '../providers/logged-in/authhttp.service'
+import { AccountService } from '../providers/logged-in/account.service'
 
 export const pages = [
     MyApp,
