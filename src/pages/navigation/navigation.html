@@ -10,34 +10,18 @@
     <ion-list>
       <ion-list-header>Managed Accounts</ion-list-header>
 
-      <button ion-item (click)="openPage(1)">
-        <ion-avatar item-left>
-          <img src="https://scontent.cdninstagram.com/t51.2885-19/1169833_717533781633797_1900069462_a.jpg">
-        </ion-avatar>
-        @bawestech
-        <ion-badge item-right color="danger">2</ion-badge>
-      </button>
-      <button ion-item (click)="openPage(1)">
-        <ion-avatar item-left>
-          <img src="https://scontent.cdninstagram.com/t51.2885-19/s150x150/14350631_651391715024543_658582329_a.jpg">
-        </ion-avatar>
-        @khalidmnet
-        <ion-badge item-right color="danger">126</ion-badge>
-      </button>
-      <button ion-item (click)="openPage(1)">
-        <ion-avatar item-left>
-          <img src="https://scontent.cdninstagram.com/t51.2885-19/s150x150/11950717_1641299012812447_1457713182_a.jpg">
-        </ion-avatar>
-        @studenthubco
-        <ion-badge item-right color="danger">18</ion-badge>
-      </button>
-      <button ion-item (click)="openPage(1)">
-        <ion-avatar item-left>
-          <img src="https://scontent.cdninstagram.com/t51.2885-19/s150x150/13732345_853056294823263_65844542_a.jpg">
-        </ion-avatar>
-        @plugn.io
-        <!--<ion-badge item-right color="danger">0</ion-badge>-->
-      </button>
+      <div *ngIf="accounts.managedAccounts">
+        <button ion-item *ngFor="let account of accounts.managedAccounts" (click)="accounts.setActiveAccount(account); menuLeft.close();">
+          <ion-avatar item-left>
+            <img src="{{ account.user_profile_pic }}">
+          </ion-avatar>
+          @{{ account.user_name }}
+          <ion-badge item-right color="danger" *ngIf="account.unhandledCount > 0">
+            {{ account.unhandledCount }}
+          </ion-badge>
+        </button>
+      </div>
+
       <button ion-item (click)="loadAddAccountPage()">
         <ion-avatar item-left>
           <img src="assets/insta-logo.png">

@@ -34,9 +34,17 @@ export class AccountService {
 
       // Sets the currently active account for initial viewing (if exists)
       if(!this.activeAccount && this.managedAccounts[0]){
-        this.activeAccount = this.managedAccounts[0];
+        this.setActiveAccount(this.managedAccounts[0]);
       }
     });
+  }
+
+  /**
+   * Sets the currently active account to the one passed as param
+   * @param  {any} account
+   */
+  public setActiveAccount(account){
+    this.activeAccount = account;
   }
 
 
