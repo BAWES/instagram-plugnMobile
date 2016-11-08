@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 
 import { AuthService } from '../../providers/auth.service';
 
+// Page Imports
 import { AccountTabsPage } from '../account/account-tabs/account-tabs';
+import { AddAccountPage } from '../add-account/add-account';
 
 @Component({
   selector: 'page-navigation',
@@ -18,6 +20,10 @@ export class NavigationPage {
 
   openPage(page){
     console.log("Attempting to open page");
+  }
+
+  loadAddAccountPage(){
+    this.rootPage = AddAccountPage;
   }
 
   logout(){
