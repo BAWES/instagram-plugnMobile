@@ -10,7 +10,9 @@ import { AuthHttpService } from './authhttp.service';
 @Injectable()
 export class AccountService {
 
-  accountEndpoint: string = "/accounts";
+  public managedAccounts; // Array of managed accounts stored here
+
+  private _accountEndpoint: string = "/accounts";
 
   constructor(
     private _authhttp: AuthHttpService,
@@ -18,13 +20,16 @@ export class AccountService {
     ) {
     _platform.ready().then(() => {
       // Get list of accounts managed by the currently logged in agent 
-      this.getManagedAccounts();
+      this._populateManagedAccounts();
     });
   }
 
-  getManagedAccounts(){
-    this._authhttp.get(this.accountEndpoint).subscribe(jsonResponse => {
-      console.log(jsonResponse);
+  /**
+   * Get updated list of accounts managed by agent and store in variable
+   */
+  private _populateManagedAccounts(){
+    this._authhttp.get(this._accountEndpoint).subscribe(jsonResponse => {
+      this.managedAccounts = jsonResponse;
     });
   }
 
