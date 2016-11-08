@@ -16,7 +16,7 @@ export class MediaPage {
   constructor(public navCtrl: NavController) {}
 
   ionViewDidLoad() {
-    console.log('Hello MediaPage Page');
+    //console.log('Hello MediaPage Page');
   }
 
   doRefresh(refresher) {

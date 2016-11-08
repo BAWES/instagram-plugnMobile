@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
+import { Platform } from 'ionic-angular';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/empty';
@@ -21,6 +22,7 @@ export class AuthHttpService {
     private _http: Http,
     private _auth: AuthService,
     private _config: ConfigService,
+    private _platform: Platform
     ) {}
 
   /**
@@ -77,7 +79,7 @@ export class AuthHttpService {
       let errMsg = (error.message) ? error.message :
           error.status ? `${error.status} - ${error.statusText}` : 'Server error';
 
-      alert(errMsg);
+      alert("Error: "+errMsg);
 
       if (error.status === 401) {
           this._auth.logout('Session expired, please log back in.');

@@ -35,7 +35,9 @@ export class AuthService {
     private _events: Events,
     private _ref:ApplicationRef
     ) {
-      this._updateLoginStatus();
+      _platform.ready().then(() => {
+        this._updateLoginStatus();
+      });
     }
 
   /**

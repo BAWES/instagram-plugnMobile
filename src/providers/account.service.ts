@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { Platform } from 'ionic-angular';
+
 import { AuthHttpService } from './authhttp.service';
 
 /*
@@ -8,7 +10,23 @@ import { AuthHttpService } from './authhttp.service';
 @Injectable()
 export class AccountService {
 
-  constructor(private _http: AuthHttpService) {}
+  accountEndpoint: string = "/accounts";
+
+  constructor(
+    private _authhttp: AuthHttpService,
+    private _platform: Platform
+    ) {
+    _platform.ready().then(() => {
+      // Get list of accounts managed by the currently logged in agent 
+      this.getManagedAccounts();
+    });
+  }
+
+  getManagedAccounts(){
+    this._authhttp.get(this.accountEndpoint).subscribe(jsonResponse => {
+      console.log(jsonResponse);
+    });
+  }
 
 
 }

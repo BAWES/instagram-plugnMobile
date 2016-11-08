@@ -16,7 +16,7 @@ export class ConversationPage {
   constructor(public navCtrl: NavController) {}
 
   ionViewDidLoad() {
-    console.log('Hello ConversationPage Page');
+    //console.log('Hello ConversationPage Page');
   }
 
   doRefresh(refresher) {

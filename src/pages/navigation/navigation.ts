@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MenuController } from 'ionic-angular';
 
 import { AuthService } from '../../providers/auth.service';
+import { AccountService } from '../../providers/account.service';
 
 // Page Imports
 import { AccountTabsPage } from '../account/account-tabs/account-tabs';
@@ -15,9 +16,10 @@ export class NavigationPage {
 
   rootPage: any = AccountTabsPage;
 
-  constructor(private _auth: AuthService, private _menu: MenuController) {
-
-  }
+  constructor(
+    private _auth: AuthService,
+    private _accounts: AccountService,
+    private _menu: MenuController) { }
 
   openPage(page){
     console.log("Attempting to open page");
