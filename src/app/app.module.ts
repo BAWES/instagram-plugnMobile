@@ -21,6 +21,7 @@ import { MediaPage } from '../pages/account/media/media';
 import { AuthService } from '../providers/auth.service'
 import { KeyboardService } from '../providers/keyboard.service'
 import { ConfigService } from '../providers/config.service'
+import { AccountService } from '../providers/account.service'
 
 export const pages = [
     MyApp,
@@ -49,7 +50,8 @@ export const pages = [
   providers: [
     AuthService, //Handles all Authorization
     KeyboardService, //Handles all Keyboard Activity
-    ConfigService //Handles Environment-specific Variables
+    ConfigService, //Handles Environment-specific Variables
+    AccountService //Manages Instagram Accounts assigned to Agent
   ],
   bootstrap: [IonicApp]
 })
