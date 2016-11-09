@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Platform } from 'ionic-angular';
+import { Platform, Events } from 'ionic-angular';
 
 import { AuthHttpService } from './authhttp.service';
 
@@ -17,7 +17,8 @@ export class AccountService {
 
   constructor(
     private _authhttp: AuthHttpService,
-    private _platform: Platform
+    private _platform: Platform,
+    private _events: Events
     ) {
     _platform.ready().then(() => {
       // Get list of accounts managed by the currently logged in agent 
@@ -41,10 +42,12 @@ export class AccountService {
 
   /**
    * Sets the currently active account to the one passed as param
+   * then publishes event `account:selected`
    * @param  {any} account
    */
   public setActiveAccount(account){
     this.activeAccount = account;
+    this._events.publish('account:selected', account);
   }
 
 

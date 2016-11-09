@@ -1,50 +1,29 @@
 import { Injectable } from '@angular/core';
 
-import { Platform } from 'ionic-angular';
-
 import { AuthHttpService } from './authhttp.service';
 
 /*
-  Manages Instagram Accounts Assigned to Agent
+  Manages Media belonging to an Instagram Account
 */
 @Injectable()
-export class AccountService {
+export class MediaService {
 
-  public activeAccount; // The account currently being viewed by agent
-  public managedAccounts; // Array of managed accounts stored here
+  public mediaList; // Cached media list for loaded account
 
-  private _accountEndpoint: string = "/accounts";
+  private _mediaEndpoint: string = "/media";
 
-  constructor(
-    private _authhttp: AuthHttpService,
-    private _platform: Platform
-    ) {
-    _platform.ready().then(() => {
-      // Get list of accounts managed by the currently logged in agent 
-      this._populateManagedAccounts();
-    });
-  }
+  constructor(private _authhttp: AuthHttpService) { }
 
   /**
-   * Get updated list of accounts managed by agent and store in variable
+   * Load up to date media list for the specified account id
+   * @param  {number} accountId
    */
-  private _populateManagedAccounts(){
-    this._authhttp.get(this._accountEndpoint).subscribe(jsonResponse => {
-      this.managedAccounts = jsonResponse;
+  loadMediaForAccount(accountId: number){
+    let mediaUrl = `${this._mediaEndpoint}?accountId=${accountId}`;
 
-      // Sets the currently active account for initial viewing (if exists)
-      if(!this.activeAccount && this.managedAccounts[0]){
-        this.setActiveAccount(this.managedAccounts[0]);
-      }
+    this._authhttp.get(mediaUrl).subscribe(jsonResponse => {
+      this.mediaList = jsonResponse;
     });
-  }
-
-  /**
-   * Sets the currently active account to the one passed as param
-   * @param  {any} account
-   */
-  public setActiveAccount(account){
-    this.activeAccount = account;
   }
 
 

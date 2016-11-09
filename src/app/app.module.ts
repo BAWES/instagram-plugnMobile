@@ -24,6 +24,7 @@ import { ConfigService } from '../providers/config.service'
 
 import { AuthHttpService } from '../providers/logged-in/authhttp.service'
 import { AccountService } from '../providers/logged-in/account.service'
+import { MediaService } from '../providers/logged-in/media.service'
 
 export const pages = [
     MyApp,
@@ -54,7 +55,8 @@ export const pages = [
     KeyboardService, //Handles all Keyboard Activity
     ConfigService, //Handles Environment-specific Variables
     AuthHttpService, //Handles all Authorized HTTP functions with Bearer Token
-    AccountService //Manages Instagram Accounts assigned to Agent
+    AccountService, //Manages Instagram Accounts assigned to Agent
+    MediaService //Manage Media for accounts
   ],
   bootstrap: [IonicApp]
 })
