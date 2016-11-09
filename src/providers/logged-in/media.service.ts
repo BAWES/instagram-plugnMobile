@@ -9,7 +9,10 @@ import { AuthHttpService } from './authhttp.service';
 export class MediaService {
 
   public isLoading = true;
-  public mediaList; // Cached media list for loaded account
+
+  public mediaList; // Full cached media list for loaded account
+  public handledMedia; // Handled Subset of mediaList
+  public unhandledMedia; // Unhandled Subset of mediaList
 
   private _mediaEndpoint: string = "/media";
 
@@ -23,10 +26,26 @@ export class MediaService {
     let mediaUrl = `${this._mediaEndpoint}?accountId=${accountId}`;
 
     this.isLoading = true;
-    
+
     this._authhttp.get(mediaUrl).subscribe(jsonResponse => {
       this.isLoading = false;
       this.mediaList = jsonResponse;
+      this._sortMediaList();
+    });
+  }
+
+  /**
+   * Sorts the loaded media into two categories: Handled and Unhandled
+   */
+  private _sortMediaList(){
+    // Populate Unhandled Media
+    this.unhandledMedia = this.mediaList.filter((mediaItem) => {
+      return mediaItem.numCommentsUnhandled > 0;
+    });
+
+    // Populate Handled Media
+    this.handledMedia = this.mediaList.filter((mediaItem) => {
+      return mediaItem.numCommentsUnhandled == 0;
     });
   }
 

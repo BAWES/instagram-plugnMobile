@@ -18,28 +18,16 @@
       Unhandled Media
     </ion-list-header>
 
-    <button ion-item>
+    <button ion-item *ngFor="let mediaItem of media.unhandledMedia">
       <ion-thumbnail item-left>
-        <img src="https://scontent.cdninstagram.com/t51.2885-15/s150x150/e35/c135.0.810.810/14590949_1135471459875902_8256537317561335808_n.jpg?ig_cache_key=MTM1NjMzODMwMDM0ODg0NjA3NQ%3D%3D.2.c">
+        <img src="{{ mediaItem.image.thumb }}">
       </ion-thumbnail>
 
-      <h3 class='elipse'>Thanks Bazaar for featuring us on your magazine</h3>
-      <p>9 Comments - 65 Likes</p>
-      <p>Oct 8, 2016</p>
+      <h3 class='elipse'>{{ mediaItem.caption }}</h3>
+      <p>{{ mediaItem.numComments }} Comments - {{ mediaItem.numLikes }} Likes</p>
+      <p>{{ mediaItem.datePosted }}</p>
 
-      <ion-badge item-right color="danger">4</ion-badge>
-    </button>
-
-    <button ion-item>
-      <ion-thumbnail item-left>
-        <img src="https://scontent.cdninstagram.com/t51.2885-15/s150x150/e35/14294698_319553338396655_4796921953539588096_n.jpg?ig_cache_key=MTM0NDcxMTgwNzkyMzM5OTMwMg%3D%3D.2">
-      </ion-thumbnail>
-
-      <h3 class='elipse'>Mornings without coffee, feeling out of place. #coconut #coffee #india</h3>
-      <p>5 Comments - 94 Likes</p>
-      <p>Sep 22, 2016</p>
-
-      <ion-badge item-right color="danger">2</ion-badge>
+      <ion-badge item-right color="danger">{{ mediaItem.numCommentsUnhandled }}</ion-badge>
     </button>
 
   </ion-list>
@@ -50,7 +38,7 @@
       Media
     </ion-list-header>
 
-    <button ion-item *ngFor="let mediaItem of media.mediaList">
+    <button ion-item *ngFor="let mediaItem of media.handledMedia">
       <ion-thumbnail item-left>
         <img src="{{ mediaItem.image.thumb }}">
       </ion-thumbnail>
