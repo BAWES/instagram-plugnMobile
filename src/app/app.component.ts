@@ -12,7 +12,7 @@ import { AuthService } from '../providers/auth.service'
   template: `<ion-nav [root]="rootPage"></ion-nav>`
 })
 export class MyApp implements OnInit{
-  rootPage: any = LoginPage;
+  rootPage: any;
 
   constructor(
     platform: Platform, 
@@ -30,6 +30,11 @@ export class MyApp implements OnInit{
       if (platform.is('cordova')) {
         StatusBar.styleDefault();
       }
+
+      // Figure out which page to load on app start [Based on Auth]
+      if(this._auth.isLoggedIn){
+        this.rootPage = NavigationPage;
+      }else this.rootPage = LoginPage;
       
     });
   }
@@ -39,11 +44,6 @@ export class MyApp implements OnInit{
    * Using Ng2 Lifecycle hooks because view lifecycle events don't trigger for Bootstrapped MyApp Component
    */
   ngOnInit(){
-    // Figure out which page to load on app start [Based on Auth]
-    if(this._auth.isLoggedIn){
-      this.rootPage = NavigationPage;
-    }else this.rootPage = LoginPage;
-
     // On Login Event, set root to Internal app page
     this._events.subscribe('user:login', (userEventData) => {
       this.rootPage = NavigationPage;
@@ -58,14 +58,14 @@ export class MyApp implements OnInit{
       // Show Toast Message explaining logout reason if there's one set
       let logoutReason = userEventData[0];
       if(logoutReason){
-        this.presentToast(logoutReason);
+        this._presentToast(logoutReason);
       }
       
     });
 
   }
 
-  presentToast(content: string) {
+  private _presentToast(content: string) {
     let toast = this._toastCtrl.create({
       message: content,
       position: 'bottom',
