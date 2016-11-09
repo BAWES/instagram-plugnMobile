@@ -13,7 +13,7 @@
   </ion-refresher>
 
   <!-- Unhandled Media -->
-  <ion-list class="unhandled">
+  <ion-list class="unhandled" *ngIf="media.unhandledMedia  && media.unhandledMedia.length > 0">
     <ion-list-header>
       Unhandled Media
     </ion-list-header>
@@ -33,7 +33,7 @@
   </ion-list>
 
   <!-- Media -->
-  <ion-list>
+  <ion-list *ngIf="media.handledMedia && media.handledMedia.length > 0">
     <ion-list-header>
       Media
     </ion-list-header>
