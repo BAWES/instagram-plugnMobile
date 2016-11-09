@@ -20,12 +20,15 @@ export class MediaPage {
       // Listen to selected account event and load media for selected account
       events.subscribe('account:selected', (accountEventData) => {
         let userAccount = accountEventData[0];
-        this.media.loadMediaForAccount(userAccount.user_id);
+        this.media.loadMediaForAccount(userAccount);
       });
     }
 
   ionViewDidLoad() {
-    
+    // If the media hasn't been loaded for the active account, do so now
+    if(!this.media.mediaList && !this.media.isLoading){
+      this.media.loadMediaForCurrentlyActiveAccount();
+    }
   }
 
   doRefresh(refresher) {

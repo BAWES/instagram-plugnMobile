@@ -13,7 +13,7 @@ export class AccountService {
   public activeAccount; // The account currently being viewed by agent
   public managedAccounts; // Array of managed accounts stored here
 
-  public isLoading = true;
+  public isLoading = false;
 
   private _accountEndpoint: string = "/accounts";
 
@@ -33,7 +33,7 @@ export class AccountService {
    */
   private _populateManagedAccounts(){
     this.isLoading = true;
-    
+
     this._authhttp.get(this._accountEndpoint).subscribe(jsonResponse => {
       this.isLoading = false;
       this.managedAccounts = jsonResponse;
