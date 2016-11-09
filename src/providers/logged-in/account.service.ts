@@ -13,6 +13,8 @@ export class AccountService {
   public activeAccount; // The account currently being viewed by agent
   public managedAccounts; // Array of managed accounts stored here
 
+  public isLoading = true;
+
   private _accountEndpoint: string = "/accounts";
 
   constructor(
@@ -30,7 +32,10 @@ export class AccountService {
    * Get updated list of accounts managed by agent and store in variable
    */
   private _populateManagedAccounts(){
+    this.isLoading = true;
+    
     this._authhttp.get(this._accountEndpoint).subscribe(jsonResponse => {
+      this.isLoading = false;
       this.managedAccounts = jsonResponse;
 
       // Sets the currently active account for initial viewing (if exists)
