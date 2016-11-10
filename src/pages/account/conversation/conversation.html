@@ -35,7 +35,7 @@
         <p>@{{ conversationItem.comment_by_username }}</p>
         <p>{{ conversationItem.comment_text }}</p>
 
-        <ion-note item-right>{{ getTimeSinceDate(conversationItem.comment_datetime | date) }}</ion-note>
+        <ion-note item-right>{{ conversationItem.comment_datetime }}</ion-note>
         <ion-badge color="danger">{{ conversationItem.unhandledCount }}</ion-badge>
       </button>
 
@@ -56,7 +56,7 @@
         <p>@{{ conversationItem.comment_by_username }}</p>
         <p>{{ conversationItem.comment_text }}</p>
 
-        <ion-note item-right>{{ getTimeSinceDate(conversationItem.comment_datetime | date) }}</ion-note>
+        <ion-note item-right>{{ conversationItem.comment_datetime }}</ion-note>
       </button>
 
     </ion-list>
