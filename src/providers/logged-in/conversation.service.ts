@@ -53,7 +53,7 @@ export class ConversationService {
 
     // Populate Handled Conversations
     this.handledConversations = this.conversationList.filter((conversationItem) => {
-      return parseInt(conversationItem.unhandledCount, 10) == 0;
+      return parseInt(conversationItem.unhandledCount, 10)? false: true;
     });
   }
 
