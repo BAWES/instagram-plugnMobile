@@ -19,8 +19,7 @@ export class ConversationPage {
     ) {
       // Listen to selected account event and load conversations for selected account
       events.subscribe('account:selected', (accountEventData) => {
-        let userAccount = accountEventData[0];
-        this.conversations.loadConversationsForAccount(userAccount);
+        this.conversations.loadConversationsForCurrentlyActiveAccount();
       });
     }
 

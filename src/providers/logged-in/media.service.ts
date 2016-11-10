@@ -20,10 +20,19 @@ export class MediaService {
   constructor(private _authhttp: AuthHttpService, private _account: AccountService) { }
 
   /**
+   * Load media for the currently active account if available
+   */
+  loadMediaForCurrentlyActiveAccount(){
+    if(this._account.activeAccount){
+      this._loadMediaForAccount(this._account.activeAccount);
+    }
+  }
+
+  /**
    * Load up to date media list for the specified account id
    * @param  {} account
    */
-  loadMediaForAccount(account){
+  private _loadMediaForAccount(account){
     let mediaUrl = `${this._mediaEndpoint}?accountId=${account.user_id}`;
 
     this.isLoading = true;
@@ -33,15 +42,6 @@ export class MediaService {
       this.mediaList = jsonResponse;
       this._sortMediaList();
     });
-  }
-
-  /**
-   * Load media for the currently active account if available
-   */
-  loadMediaForCurrentlyActiveAccount(){
-    if(this._account.activeAccount){
-      this.loadMediaForAccount(this._account.activeAccount);
-    }
   }
 
   /**

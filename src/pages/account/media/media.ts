@@ -19,8 +19,7 @@ export class MediaPage {
     ) {
       // Listen to selected account event and load media for selected account
       events.subscribe('account:selected', (accountEventData) => {
-        let userAccount = accountEventData[0];
-        this.media.loadMediaForAccount(userAccount);
+        this.media.loadMediaForCurrentlyActiveAccount();
       });
     }
 

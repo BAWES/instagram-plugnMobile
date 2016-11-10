@@ -19,11 +19,21 @@ export class ConversationService {
 
   constructor(private _authhttp: AuthHttpService, private _account: AccountService) { }
 
+
+  /**
+   * Load conversations for the currently active account if available
+   */
+  loadConversationsForCurrentlyActiveAccount(){
+    if(this._account.activeAccount){
+      this._loadConversationsForAccount(this._account.activeAccount);
+    }
+  }
+  
   /**
    * Load up to date Conversation list for the specified account id
    * @param  {} account
    */
-  loadConversationsForAccount(account){
+  private _loadConversationsForAccount(account){
     let convUrl = `${this._conversationsEndpoint}?accountId=${account.user_id}`;
 
     this.isLoading = true;
@@ -33,15 +43,6 @@ export class ConversationService {
       this.conversationList = jsonResponse;
       this._sortConversationList();
     });
-  }
-
-  /**
-   * Load conversations for the currently active account if available
-   */
-  loadConversationsForCurrentlyActiveAccount(){
-    if(this._account.activeAccount){
-      this.loadConversationsForAccount(this._account.activeAccount);
-    }
   }
 
   /**
