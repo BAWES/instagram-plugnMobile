@@ -12,45 +12,55 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <!-- Unhandled Conversations -->
-  <ion-list class="unhandled">
-    <ion-list-header>
-      Unhandled Conversations
-    </ion-list-header>
+  <!-- When content isn't available' -->
+  <div class="page-loading" *ngIf="conversations.isLoading">
+    <img src='assets/brand/loader.gif'>
+  </div>
 
-    <button ion-item detail-none>
-      <ion-avatar item-left>
-        <img src="https://scontent.cdninstagram.com/t51.2885-19/10802410_1489006914721546_730098243_a.jpg">
-      </ion-avatar>
+  <!-- When content available -->
+  <div *ngIf="!conversations.isLoading">
 
-      <h3 class='elipse'>Saoud.A.A.A</h3>
-      <p>@saoudalt</p>
-      <p>Mark Twain. Sounds familiar. Who is he?</p>
+    <!-- Unhandled Conversations -->
+    <ion-list class="unhandled" *ngIf="conversations.unhandledConversations && conversations.unhandledConversations.length > 0">
+      <ion-list-header>
+        Unhandled Conversations
+      </ion-list-header>
 
-      <ion-note item-right>3 months ago</ion-note>
-      <ion-badge color="danger">324</ion-badge>
-    </button>
+      <button ion-item detail-none *ngFor="let conversationItem of conversations.unhandledConversations">
+        <ion-avatar item-left>
+          <img src="{{ conversationItem.comment_by_photo }}">
+        </ion-avatar>
 
-  </ion-list>
+        <h3 class='elipse'>{{ conversationItem.comment_by_fullname }}</h3>
+        <p>@{{ conversationItem.comment_by_username }}</p>
+        <p>{{ conversationItem.comment_text }}</p>
 
-  <!-- Conversations -->
-  <ion-list>
-    <ion-list-header>
-      Conversations
-    </ion-list-header>
+        <ion-note item-right>{{ getTimeSinceDate(conversationItem.comment_datetime | date) }}</ion-note>
+        <ion-badge color="danger">{{ conversationItem.unhandledCount }}</ion-badge>
+      </button>
 
-    <button ion-item detail-none>
-      <ion-avatar item-left>
-        <img src="https://scontent.cdninstagram.com/t51.2885-19/10802410_1489006914721546_730098243_a.jpg">
-      </ion-avatar>
+    </ion-list>
 
-      <h3 class='elipse'>Saoud.A.A.A</h3>
-      <p>@saoudalt</p>
-      <p>Mark Twain. Sounds familiar. Who is he?</p>
+    <!-- Conversations -->
+    <ion-list *ngIf="conversations.handledConversations && conversations.handledConversations.length > 0">
+      <ion-list-header>
+        Conversations
+      </ion-list-header>
 
-      <ion-note item-right>3 months ago</ion-note>
-    </button>
+      <button ion-item detail-none *ngFor="let conversationItem of conversations.handledConversations">
+        <ion-avatar item-left>
+          <img src="{{ conversationItem.comment_by_photo }}">
+        </ion-avatar>
 
-  </ion-list>
+        <h3 class='elipse'>{{ conversationItem.comment_by_fullname }}</h3>
+        <p>@{{ conversationItem.comment_by_username }}</p>
+        <p>{{ conversationItem.comment_text }}</p>
+
+        <ion-note item-right>{{ getTimeSinceDate(conversationItem.comment_datetime | date) }}</ion-note>
+      </button>
+
+    </ion-list>
+
+  </div>
 
 </ion-content>

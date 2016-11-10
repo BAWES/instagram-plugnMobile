@@ -50,12 +50,12 @@ export class ConversationService {
   private _sortConversationList(){
     // Populate Unhandled Conversations
     this.unhandledConversations = this.conversationList.filter((conversationItem) => {
-      return conversationItem.numCommentsUnhandled > 0;
+      return parseInt(conversationItem.unhandledCount, 10) > 0;
     });
 
     // Populate Handled Conversations
     this.handledConversations = this.conversationList.filter((conversationItem) => {
-      return conversationItem.numCommentsUnhandled == 0;
+      return parseInt(conversationItem.unhandledCount, 10) == 0;
     });
   }
 
