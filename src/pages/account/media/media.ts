@@ -15,10 +15,10 @@ export class MediaPage {
   constructor(
     public navCtrl: NavController, 
     public media: MediaService,
-    events: Events,
+    private _events: Events,
     ) {
       // Listen to selected account event and load media for selected account
-      events.subscribe('account:selected', (accountEventData) => {
+      this._events.subscribe('account:selected', (accountEventData) => {
         this.media.loadMediaForCurrentlyActiveAccount();
       });
     }
@@ -28,6 +28,13 @@ export class MediaPage {
     if(!this.media.mediaList && !this.media.isLoading){
       this.media.loadMediaForCurrentlyActiveAccount();
     }
+  }
+
+  /**
+   * Trigger an event notifying that user is opening this page
+   */
+  ionViewWillEnter(){
+    this._events.publish('view:selected', "media");
   }
 
   doRefresh(refresher) {

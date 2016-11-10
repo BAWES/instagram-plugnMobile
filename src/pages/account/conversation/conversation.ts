@@ -15,10 +15,10 @@ export class ConversationPage {
   constructor(
     public navCtrl: NavController, 
     public conversations: ConversationService,
-    events: Events,
+    private _events: Events,
     ) {
       // Listen to selected account event and load conversations for selected account
-      events.subscribe('account:selected', (accountEventData) => {
+      this._events.subscribe('account:selected', (accountEventData) => {
         this.conversations.loadConversationsForCurrentlyActiveAccount();
       });
     }
@@ -28,6 +28,13 @@ export class ConversationPage {
     if(!this.conversations.conversationList && !this.conversations.isLoading){
       this.conversations.loadConversationsForCurrentlyActiveAccount();
     }
+  }
+
+  /**
+   * Trigger an event notifying that user is opening this page
+   */
+  ionViewWillEnter(){
+    this._events.publish('view:selected', "conversation");
   }
 
   /**

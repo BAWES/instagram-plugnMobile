@@ -13,6 +13,12 @@ export class AccountService {
   public activeAccount; // The account currently being viewed by agent
   public managedAccounts; // Array of managed accounts stored here
 
+  /**
+   * Whether the user is currently using "media" or "conversation" view
+   * This will let the system know which data takes priority to load first from server
+   */
+  public currentView;
+
   public isLoading = false;
 
   private _accountEndpoint: string = "/accounts";
@@ -25,6 +31,12 @@ export class AccountService {
     _platform.ready().then(() => {
       // Get list of accounts managed by the currently logged in agent 
       this._populateManagedAccounts();
+    });
+
+    // Set current view when triggered
+    // This is to know which HTTP request takes priority (reduce perceived loading time)
+    this._events.subscribe('view:selected', (selectedView) => {
+      this.currentView = selectedView[0];
     });
   }
 
