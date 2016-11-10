@@ -30,6 +30,14 @@ export class ConversationPage {
   }
 
   /**
+   * Refresh the view once dragged via ion-refresher
+   * @param  {} refresher
+   */
+  doRefresh(refresher) {
+    this._events.publish('refresh:requested', refresher);
+  }
+
+  /**
    * Returns the time since provided date
    * @param  {} date
    */
@@ -74,15 +82,6 @@ export class ConversationPage {
     }
 
     return interval + ' ' + intervalType + ' ago';
-  }
-
-  doRefresh(refresher) {
-    console.log('Begin async operation', refresher);
-
-    setTimeout(() => {
-      console.log('Async operation has ended');
-      refresher.complete();
-    }, 2000);
   }
 
 }

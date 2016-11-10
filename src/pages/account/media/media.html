@@ -8,17 +8,17 @@
 <ion-content>
 
   <!-- Swipe to Refresh -->
-  <ion-refresher (ionRefresh)="doRefresh($event)">
+  <ion-refresher (ionRefresh)="doRefresh($event)" [enabled]="media.mediaList">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
   <!-- When content isn't available' -->
-  <div class="page-loading" *ngIf="media.isLoading">
+  <div class="page-loading" *ngIf="media.isLoading && !media.refresherLoading">
     <img src='assets/brand/loader.gif'>
   </div>
 
   <!-- When content available -->
-  <div *ngIf="!media.isLoading">
+  <div *ngIf="!media.isLoading || media.refresherLoading">
 
     <!-- Unhandled Media -->
     <ion-list class="unhandled" *ngIf="media.unhandledMedia && media.unhandledMedia.length > 0">

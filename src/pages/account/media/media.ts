@@ -29,13 +29,13 @@ export class MediaPage {
     this._events.publish('view:selected', "media");
   }
 
+  
+  /**
+   * Refresh the view once dragged via ion-refresher
+   * @param  {} refresher
+   */
   doRefresh(refresher) {
-    console.log('Begin async operation', refresher);
-
-    setTimeout(() => {
-      console.log('Async operation has ended');
-      refresher.complete();
-    }, 2000);
+    this._events.publish('refresh:requested', refresher);
   }
 
 }

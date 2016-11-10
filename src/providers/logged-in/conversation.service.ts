@@ -9,6 +9,7 @@ import { AuthHttpService } from './authhttp.service';
 export class ConversationService {
 
   public isLoading = false;
+  public refresherLoading = false; //Using the refresher component
 
   public conversationList; // Full cached conversation list for loaded account
   public handledConversations; // Handled Subset of conversationList
@@ -23,10 +24,11 @@ export class ConversationService {
    * @param  {} account
    * @param  {} callback?
    */
-  loadConversationsForAccount(account, callback?){
+  loadConversationsForAccount(account, callback?, refresherLoading = false){
     let convUrl = `${this._conversationsEndpoint}?accountId=${account.user_id}`;
 
     this.isLoading = true;
+    this.refresherLoading = refresherLoading;
     
     this._authhttp.get(convUrl).subscribe(jsonResponse => {
       // Run the callback if available
@@ -34,6 +36,7 @@ export class ConversationService {
         callback();
       }
       this.isLoading = false;
+      this.refresherLoading = false;
       this.conversationList = jsonResponse;
       this._sortConversationList();
     });

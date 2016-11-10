@@ -9,6 +9,7 @@ import { AuthHttpService } from './authhttp.service';
 export class MediaService {
 
   public isLoading = false;
+  public refresherLoading = false; //Using the refresher component
 
   public mediaList; // Full cached media list for loaded account
   public handledMedia; // Handled Subset of mediaList
@@ -22,11 +23,13 @@ export class MediaService {
    * Load up to date media list for the specified account id
    * @param  {} account
    * @param  {} callback?
+   * @param  {} refresherLoading
    */
-  loadMediaForAccount(account, callback?){
+  loadMediaForAccount(account, callback?, refresherLoading = false){
     let mediaUrl = `${this._mediaEndpoint}?accountId=${account.user_id}`;
 
     this.isLoading = true;
+    this.refresherLoading = refresherLoading;
     
     this._authhttp.get(mediaUrl).subscribe(jsonResponse => {
       // Run the callback if available
@@ -34,6 +37,7 @@ export class MediaService {
         callback();
       }
       this.isLoading = false;
+      this.refresherLoading = false;
       this.mediaList = jsonResponse;
       this._sortMediaList();
     });

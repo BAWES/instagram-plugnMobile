@@ -8,17 +8,17 @@
 <ion-content>
 
   <!-- Swipe to Refresh -->
-  <ion-refresher (ionRefresh)="doRefresh($event)">
+  <ion-refresher (ionRefresh)="doRefresh($event)" [enabled]="conversations.conversationList">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
   <!-- When content isn't available' -->
-  <div class="page-loading" *ngIf="conversations.isLoading">
+  <div class="page-loading" *ngIf="conversations.isLoading && !conversations.refresherLoading">
     <img src='assets/brand/loader.gif'>
   </div>
 
   <!-- When content available -->
-  <div *ngIf="!conversations.isLoading">
+  <div *ngIf="!conversations.isLoading || conversations.refresherLoading">
 
     <!-- Unhandled Conversations -->
     <ion-list class="unhandled" *ngIf="conversations.unhandledConversations && conversations.unhandledConversations.length > 0">

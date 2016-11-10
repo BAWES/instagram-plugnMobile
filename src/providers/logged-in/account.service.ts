@@ -42,6 +42,12 @@ export class AccountService {
     this._events.subscribe('view:selected', (selectedView) => {
       this.currentView = selectedView[0];
     });
+
+    // Reload Updated Media and Conversations on Refresh Request by User 
+    this._events.subscribe('refresh:requested', (refresherData) => {
+      let refresher = refresherData[0];
+      this.loadAccountMediaAndConversations(refresher);
+    });
   }
 
   /**
@@ -56,22 +62,34 @@ export class AccountService {
 
   /**
    * Attempt to load media and conversations for current active account
-   * based on set priority/view
+   * based on set priority/view.
+   * 
+   * If a Refresher is provided, do not trigger isLoading animation.
+   * 
+   * @param  {} refresher? The ionic refresher to complete if its used
    */
-  loadAccountMediaAndConversations(){
+  loadAccountMediaAndConversations(refresher?){
     if(!this.activeAccount) return;
 
     // Loading priority is based on the active view 
     if(this.currentView == "media"){
       // Load Media > Follow up by Loading Conversations as Callback
       this._media.loadMediaForAccount(this.activeAccount, () => {
+        if(refresher){
+          refresher.complete();
+        }
         this._conversation.loadConversationsForAccount(this.activeAccount);
-      });
+      }, 
+      refresher? true: false);
     }else if(this.currentView == "conversation"){
       // Load Conversations > Follow up by Loading Media as Callback
       this._conversation.loadConversationsForAccount(this.activeAccount, () => {
+        if(refresher){
+          refresher.complete();
+        }
         this._media.loadMediaForAccount(this.activeAccount);
-      });
+      }, 
+      refresher? true: false);
     }
   }
 
