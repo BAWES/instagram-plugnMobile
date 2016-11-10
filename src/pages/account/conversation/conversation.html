@@ -28,7 +28,7 @@
 
       <button ion-item detail-none *ngFor="let conversationItem of conversations.unhandledConversations">
         <ion-avatar item-left>
-          <img src="{{ conversationItem.comment_by_photo }}">
+          <img src="{{ conversationItem.comment_by_photo }}" onError="this.src='assets/user.png';">
         </ion-avatar>
 
         <h3 class='elipse'>{{ conversationItem.comment_by_fullname }}</h3>
@@ -49,7 +49,7 @@
 
       <button ion-item detail-none *ngFor="let conversationItem of conversations.handledConversations">
         <ion-avatar item-left>
-          <img src="{{ conversationItem.comment_by_photo }}">
+          <img src="{{ conversationItem.comment_by_photo }}" onError="this.src='assets/user.png';">
         </ion-avatar>
 
         <h3 class='elipse'>{{ conversationItem.comment_by_fullname }}</h3>

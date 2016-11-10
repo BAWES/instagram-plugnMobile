@@ -28,7 +28,7 @@
 
       <button ion-item *ngFor="let mediaItem of media.unhandledMedia">
         <ion-thumbnail item-left>
-          <img src="{{ mediaItem.image.thumb }}">
+          <img src="{{ mediaItem.image.thumb }}" onError="this.src='assets/user.png';">
         </ion-thumbnail>
 
         <h3 class='elipse'>{{ mediaItem.caption }}</h3>
@@ -48,7 +48,7 @@
 
       <button ion-item *ngFor="let mediaItem of media.handledMedia">
         <ion-thumbnail item-left>
-          <img src="{{ mediaItem.image.thumb }}">
+          <img src="{{ mediaItem.image.thumb }}" onError="this.src='assets/user.png';">
         </ion-thumbnail>
 
         <h3 class='elipse'>{{ mediaItem.caption }}</h3>
