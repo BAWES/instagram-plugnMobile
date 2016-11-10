@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Platform, Events } from 'ionic-angular';
 
 import { AuthHttpService } from './authhttp.service';
+import { MediaService } from './media.service';
+import { ConversationService } from './conversation.service';
 
 /*
   Manages Instagram Accounts Assigned to Agent
@@ -17,16 +19,18 @@ export class AccountService {
    * Whether the user is currently using "media" or "conversation" view
    * This will let the system know which data takes priority to load first from server
    */
-  public currentView;
+  public currentView = "media";
 
   public isLoading = false;
 
   private _accountEndpoint: string = "/accounts";
 
   constructor(
-    private _authhttp: AuthHttpService,
     private _platform: Platform,
-    private _events: Events
+    private _events: Events,
+    private _authhttp: AuthHttpService,
+    private _media: MediaService,
+    private _conversation: ConversationService,
     ) {
     _platform.ready().then(() => {
       // Get list of accounts managed by the currently logged in agent 
@@ -38,6 +42,16 @@ export class AccountService {
     this._events.subscribe('view:selected', (selectedView) => {
       this.currentView = selectedView[0];
     });
+  }
+
+  /**
+   * Sets the currently active account to the one passed as param
+   * then publishes event `account:selected`
+   * @param  {any} account
+   */
+  public setActiveAccount(account){
+    this.activeAccount = account;
+    this.loadAccountMediaAndConversations();
   }
 
   /**
@@ -58,13 +72,24 @@ export class AccountService {
   }
 
   /**
-   * Sets the currently active account to the one passed as param
-   * then publishes event `account:selected`
-   * @param  {any} account
+   * Attempt to load media and conversations for current active account
+   * based on set priority/view
    */
-  public setActiveAccount(account){
-    this.activeAccount = account;
-    this._events.publish('account:selected', account);
+  loadAccountMediaAndConversations(){
+    if(!this.activeAccount) return;
+
+    // Loading priority is based on the active view 
+    if(this.currentView == "media"){
+      // Load Media > Follow up by Loading Conversations as Callback
+      this._media.loadMediaForAccount(this.activeAccount, () => {
+        this._conversation.loadConversationsForAccount(this.activeAccount);
+      });
+    }else if(this.currentView == "conversation"){
+      // Load Conversations > Follow up by Loading Media as Callback
+      this._conversation.loadConversationsForAccount(this.activeAccount, () => {
+        this._media.loadMediaForAccount(this.activeAccount);
+      });
+    }
   }
 
 

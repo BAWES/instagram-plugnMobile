@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { AuthHttpService } from './authhttp.service';
-import { AccountService } from './account.service';
 
 /*
   Manages Conversations belonging to an Instagram Account
@@ -17,28 +16,23 @@ export class ConversationService {
 
   private _conversationsEndpoint: string = "/conversations";
 
-  constructor(private _authhttp: AuthHttpService, private _account: AccountService) { }
+  constructor(private _authhttp: AuthHttpService) { }
 
-
-  /**
-   * Load conversations for the currently active account if available
-   */
-  loadConversationsForCurrentlyActiveAccount(){
-    if(this._account.activeAccount){
-      this._loadConversationsForAccount(this._account.activeAccount);
-    }
-  }
-  
   /**
    * Load up to date Conversation list for the specified account id
    * @param  {} account
+   * @param  {} callback?
    */
-  private _loadConversationsForAccount(account){
+  loadConversationsForAccount(account, callback?){
     let convUrl = `${this._conversationsEndpoint}?accountId=${account.user_id}`;
 
     this.isLoading = true;
     
     this._authhttp.get(convUrl).subscribe(jsonResponse => {
+      // Run the callback if available
+      if(callback){
+        callback();
+      }
       this.isLoading = false;
       this.conversationList = jsonResponse;
       this._sortConversationList();

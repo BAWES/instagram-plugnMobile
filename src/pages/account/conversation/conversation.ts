@@ -16,18 +16,10 @@ export class ConversationPage {
     public navCtrl: NavController, 
     public conversations: ConversationService,
     private _events: Events,
-    ) {
-      // Listen to selected account event and load conversations for selected account
-      this._events.subscribe('account:selected', (accountEventData) => {
-        this.conversations.loadConversationsForCurrentlyActiveAccount();
-      });
-    }
+    ) { }
 
   ionViewDidLoad() {
-    // If the conversations haven't been loaded for the active account, do so now
-    if(!this.conversations.conversationList && !this.conversations.isLoading){
-      this.conversations.loadConversationsForCurrentlyActiveAccount();
-    }
+    // Initialize Class Here If Needed
   }
 
   /**

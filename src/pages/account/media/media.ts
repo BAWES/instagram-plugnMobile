@@ -16,18 +16,10 @@ export class MediaPage {
     public navCtrl: NavController, 
     public media: MediaService,
     private _events: Events,
-    ) {
-      // Listen to selected account event and load media for selected account
-      this._events.subscribe('account:selected', (accountEventData) => {
-        this.media.loadMediaForCurrentlyActiveAccount();
-      });
-    }
+    ) {}
 
   ionViewDidLoad() {
-    // If the media hasn't been loaded for the active account, do so now
-    if(!this.media.mediaList && !this.media.isLoading){
-      this.media.loadMediaForCurrentlyActiveAccount();
-    }
+    // Initialize Class Here If Needed
   }
 
   /**

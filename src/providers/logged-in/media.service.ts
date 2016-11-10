@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
 import { AuthHttpService } from './authhttp.service';
-import { AccountService } from './account.service';
 
 /*
   Manages Media belonging to an Instagram Account
@@ -17,27 +16,23 @@ export class MediaService {
 
   private _mediaEndpoint: string = "/media";
 
-  constructor(private _authhttp: AuthHttpService, private _account: AccountService) { }
-
-  /**
-   * Load media for the currently active account if available
-   */
-  loadMediaForCurrentlyActiveAccount(){
-    if(this._account.activeAccount){
-      this._loadMediaForAccount(this._account.activeAccount);
-    }
-  }
+  constructor(private _authhttp: AuthHttpService) { }
 
   /**
    * Load up to date media list for the specified account id
    * @param  {} account
+   * @param  {} callback?
    */
-  private _loadMediaForAccount(account){
+  loadMediaForAccount(account, callback?){
     let mediaUrl = `${this._mediaEndpoint}?accountId=${account.user_id}`;
 
     this.isLoading = true;
     
     this._authhttp.get(mediaUrl).subscribe(jsonResponse => {
+      // Run the callback if available
+      if(callback){
+        callback();
+      }
       this.isLoading = false;
       this.mediaList = jsonResponse;
       this._sortMediaList();
