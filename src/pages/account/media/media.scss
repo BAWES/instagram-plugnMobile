@@ -1,4 +1,10 @@
 page-media {
+
+    .page-loading{
+        text-align: center;
+        img{width:80px; margin-top: 200px;}
+    }
+
     .elipse{
         text-overflow: ellipsis;
         white-space: nowrap;

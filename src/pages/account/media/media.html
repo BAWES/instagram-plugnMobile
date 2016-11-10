@@ -7,49 +7,56 @@
 
 <ion-content>
 
-  <!-- Swipe to Refresh -->
-  <ion-refresher (ionRefresh)="doRefresh($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
+  <!-- When content isn't available' -->
+  <div class="page-loading" *ngIf="media.isLoading">
+    <img src='assets/brand/loader.gif'>
+  </div>
 
-  <img src='assets/brand/loader.gif' style='width: 130px;'>
+  <!-- When content available -->
+  <div *ngIf="!media.isLoading">
+    
+    <!-- Swipe to Refresh -->
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
 
-  <!-- Unhandled Media -->
-  <ion-list class="unhandled" *ngIf="media.unhandledMedia  && media.unhandledMedia.length > 0">
-    <ion-list-header>
-      Unhandled Media
-    </ion-list-header>
+    <!-- Unhandled Media -->
+    <ion-list class="unhandled" *ngIf="media.unhandledMedia  && media.unhandledMedia.length > 0">
+      <ion-list-header>
+        Unhandled Media
+      </ion-list-header>
 
-    <button ion-item *ngFor="let mediaItem of media.unhandledMedia">
-      <ion-thumbnail item-left>
-        <img src="{{ mediaItem.image.thumb }}">
-      </ion-thumbnail>
+      <button ion-item *ngFor="let mediaItem of media.unhandledMedia">
+        <ion-thumbnail item-left>
+          <img src="{{ mediaItem.image.thumb }}">
+        </ion-thumbnail>
 
-      <h3 class='elipse'>{{ mediaItem.caption }}</h3>
-      <p>{{ mediaItem.numComments }} Comments - {{ mediaItem.numLikes }} Likes</p>
-      <p>{{ mediaItem.datePosted }}</p>
+        <h3 class='elipse'>{{ mediaItem.caption }}</h3>
+        <p>{{ mediaItem.numComments }} Comments - {{ mediaItem.numLikes }} Likes</p>
+        <p>{{ mediaItem.datePosted }}</p>
 
-      <ion-badge item-right color="danger">{{ mediaItem.numCommentsUnhandled }}</ion-badge>
-    </button>
+        <ion-badge item-right color="danger">{{ mediaItem.numCommentsUnhandled }}</ion-badge>
+      </button>
 
-  </ion-list>
+    </ion-list>
 
-  <!-- Media -->
-  <ion-list *ngIf="media.handledMedia && media.handledMedia.length > 0">
-    <ion-list-header>
-      Media
-    </ion-list-header>
+    <!-- Media -->
+    <ion-list *ngIf="media.handledMedia && media.handledMedia.length > 0">
+      <ion-list-header>
+        Media
+      </ion-list-header>
 
-    <button ion-item *ngFor="let mediaItem of media.handledMedia">
-      <ion-thumbnail item-left>
-        <img src="{{ mediaItem.image.thumb }}">
-      </ion-thumbnail>
+      <button ion-item *ngFor="let mediaItem of media.handledMedia">
+        <ion-thumbnail item-left>
+          <img src="{{ mediaItem.image.thumb }}">
+        </ion-thumbnail>
 
-      <h3 class='elipse'>{{ mediaItem.caption }}</h3>
-      <p>{{ mediaItem.numComments }} Comments - {{ mediaItem.numLikes }} Likes</p>
-      <p>{{ mediaItem.datePosted }}</p>
-    </button>
+        <h3 class='elipse'>{{ mediaItem.caption }}</h3>
+        <p>{{ mediaItem.numComments }} Comments - {{ mediaItem.numLikes }} Likes</p>
+        <p>{{ mediaItem.datePosted }}</p>
+      </button>
 
-  </ion-list>
+    </ion-list>
+  </div>
 
 </ion-content>
