@@ -55,23 +55,6 @@ export class AccountService {
   }
 
   /**
-   * Get updated list of accounts managed by agent and store in variable
-   */
-  private _populateManagedAccounts(){
-    this.isLoading = true;
-
-    this._authhttp.get(this._accountEndpoint).subscribe(jsonResponse => {
-      this.isLoading = false;
-      this.managedAccounts = jsonResponse;
-
-      // Sets the currently active account for initial viewing (if exists)
-      if(!this.activeAccount && this.managedAccounts[0]){
-        this.setActiveAccount(this.managedAccounts[0]);
-      }
-    });
-  }
-
-  /**
    * Attempt to load media and conversations for current active account
    * based on set priority/view
    */
@@ -90,6 +73,23 @@ export class AccountService {
         this._media.loadMediaForAccount(this.activeAccount);
       });
     }
+  }
+
+  /**
+   * Get updated list of accounts managed by agent and store in variable
+   */
+  private _populateManagedAccounts(){
+    this.isLoading = true;
+
+    this._authhttp.get(this._accountEndpoint).subscribe(jsonResponse => {
+      this.isLoading = false;
+      this.managedAccounts = jsonResponse;
+
+      // Sets the currently active account for initial viewing (if exists)
+      if(!this.activeAccount && this.managedAccounts[0]){
+        this.setActiveAccount(this.managedAccounts[0]);
+      }
+    });
   }
 
 
