@@ -13,7 +13,7 @@
       <div *ngIf="accounts.managedAccounts">
         <button ion-item *ngFor="let account of accounts.managedAccounts" (click)="accounts.setActiveAccount(account); menuLeft.close();">
           <ion-avatar item-left>
-            <img src="{{ account.user_profile_pic }}">
+            <img src="{{ account.user_profile_pic }}" onError="this.src='assets/user.png';">
           </ion-avatar>
           @{{ account.user_name }}
           <ion-badge item-right color="danger" *ngIf="account.unhandledCount > 0">
@@ -60,7 +60,8 @@
         border-radius: 200px;
         -moz-border-radius: 200px;
         -webkit-border-radius: 200px' 
-          src="{{ accounts.activeAccount.user_profile_pic }}"/> 
+          src="{{ accounts.activeAccount.user_profile_pic }}"
+          onError="this.src='assets/user.png';"> 
     </ion-toolbar>
   </ion-header>
   <ion-content>
