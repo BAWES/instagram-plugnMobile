@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { Platform, Events, ToastController } from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 
@@ -18,7 +18,8 @@ export class MyApp implements OnInit{
     platform: Platform, 
     private _auth: AuthService,
     private _events: Events,
-    private _toastCtrl: ToastController
+    private _toastCtrl: ToastController,
+    private _zone: NgZone
     ) {
     
     /**
@@ -46,7 +47,9 @@ export class MyApp implements OnInit{
   ngOnInit(){
     // On Login Event, set root to Internal app page
     this._events.subscribe('user:login', (userEventData) => {
-      this.rootPage = NavigationPage;
+      this._zone.run(() => {
+        this.rootPage = NavigationPage;
+      })
     });
 
     // On Logout Event, set root to Login Page
