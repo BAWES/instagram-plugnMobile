@@ -192,7 +192,7 @@ export class AuthService {
    */
   processAuthFromUrl(url: string){
     this._platform.ready().then(() => {
-        this._browser = new InAppBrowser(url, "_self", "location=yes,zoom=no");
+        this._browser = new InAppBrowser(url, this._config.browserTarget, this._config.browserOptions);
 
         // Keep track of urls loaded
         this._browserLoadEvents = this._browser.on("loadstop");

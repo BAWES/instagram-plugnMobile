@@ -11,11 +11,15 @@ export class ConfigService {
   // Endpoint Urls
   public apiBaseUrl: string;
 
-  constructor(private _platform: Platform) {
+  // InAppBrowser Settings
+  public browserTarget: string;
+  public browserOptions: string;
+
+  constructor(public platform: Platform) {
     // Initiate dev environment on computer while 
     // running the production on mobile
-    _platform.ready().then(() => {
-      if (_platform.is('cordova')) {
+    platform.ready().then(() => {
+      if (platform.is('cordova')) {
         this.initProdEnvironment();
       }else{
         this.initDevEnvironment();
@@ -26,16 +30,42 @@ export class ConfigService {
   
   /**
    * Initialize the Dev Environment
+   * @param {string} [platform]
    */
-  initDevEnvironment(){
+  initDevEnvironment(platform?: string){
     this.apiBaseUrl = "http://localhost/~BAWES/plugn/api/web/v1";
+
+    this.setupDeviceSpecificConfigs();
   }
 
   /**
    * Initialize the Production Environment
+   * @param {string} [platform]
    */
-  initProdEnvironment(){
+  initProdEnvironment(platform?: string){
     this.apiBaseUrl = "https://api.plugn.io/v1";
+
+    this.setupDeviceSpecificConfigs();
+  }
+
+  /**
+   * Setup Device Specific Configs
+   */
+  setupDeviceSpecificConfigs(){
+    // Generic Configs
+    this.browserTarget = "_blank";
+    this.browserOptions = "location=no";
+
+    // iOS Specific Configs
+    if(this.platform.is("ios")){
+      this.browserTarget = "_blank";
+      this.browserOptions = "location=no,clearcache=yes,clearsessioncache=yes,closebuttoncaption=cancel";
+    }
+    // Android Specific Configs
+    if(this.platform.is("android")){
+      this.browserTarget = "_self";
+      this.browserOptions = "location=yes,zoom=no,clearcache=yes,clearsessioncache=yes";
+    }
   }
 
 }
