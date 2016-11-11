@@ -1,7 +1,7 @@
 <!-- Menu Left -->
 <ion-menu #menuLeft side="left" type="overlay" persistent="true" [content]="loggedInContent">
   <ion-header>
-    <ion-toolbar text-center>
+    <ion-toolbar text-center style="height:auto;">
       <img margin style='height:45px;' src="assets/brand/logo-dark.png" />
     </ion-toolbar>
   </ion-header>
@@ -55,7 +55,7 @@
 <ion-menu #menuRight *ngIf="accounts.activeAccount"
   side="right" type="overlay" persistent="true" [content]="loggedInContent">
   <ion-header>
-    <ion-toolbar text-center>
+    <ion-toolbar text-center style="height:auto;">
       <img margin style='width:100px; height:100px;
         border-radius: 200px;
         -moz-border-radius: 200px;
