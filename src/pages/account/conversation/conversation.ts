@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController, Events } from 'ionic-angular';
 
+// Services
 import { ConversationService } from '../../../providers/logged-in/conversation.service';
 import { AccountService } from '../../../providers/logged-in/account.service';
 
+// Pages
 import { ConversationDetailPage } from '../conversation-detail/conversation-detail';
 
 /*

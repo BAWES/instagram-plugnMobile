@@ -18,6 +18,9 @@ import { ConversationPage } from '../pages/account/conversation/conversation';
 import { ConversationDetailPage } from '../pages/account/conversation-detail/conversation-detail';
 import { MediaPage } from '../pages/account/media/media';
 
+// Directives 
+import { Autosize } from '../directives/autosize/autosize';
+
 // Providers / Services
 import { AuthService } from '../providers/auth.service'
 import { KeyboardService } from '../providers/keyboard.service'
@@ -29,26 +32,53 @@ import { MediaService } from '../providers/logged-in/media.service'
 import { ConversationService } from '../providers/logged-in/conversation.service'
 
 export const pages = [
-    MyApp,
+  MyApp,
 
-    // Main Nav Page [Logged In]
-    NavigationPage,
-    AddAccountPage,
+  // Main Nav Page [Logged In]
+  NavigationPage,
+  AddAccountPage,
 
-    // Account Mgmt Pages Media/Conv View 
-    AccountTabsPage,
-    ConversationPage,
-    ConversationDetailPage,
-    MediaPage,
+  // Account Mgmt Pages Media/Conv View 
+  AccountTabsPage,
+  ConversationPage,
+  ConversationDetailPage,
+  MediaPage,
 
-    // Start-Pages
-    LoginPage,
-    RegisterPage,
-    ForgotPasswordPage
-  ];
+  // Start-Pages
+  LoginPage,
+  RegisterPage,
+  ForgotPasswordPage
+];
+
+export const toDeclare = [
+  /**
+   * Directives
+   */
+  Autosize,
+
+  /**
+   * Pages >> Paste Pages Definition Above Under Here
+   */
+  MyApp,
+
+  // Main Nav Page [Logged In]
+  NavigationPage,
+  AddAccountPage,
+
+  // Account Mgmt Pages Media/Conv View 
+  AccountTabsPage,
+  ConversationPage,
+  ConversationDetailPage,
+  MediaPage,
+
+  // Start-Pages
+  LoginPage,
+  RegisterPage,
+  ForgotPasswordPage
+];
 
 @NgModule({
-  declarations: pages,
+  declarations: toDeclare,
   entryComponents: pages,
   imports: [
     IonicModule.forRoot(MyApp, {
