@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, Events } from 'ionic-angular';
+import { NavParams, Events } from 'ionic-angular';
 
+// Models
+import { Conversation } from '../../../models/conversation';
+
+// Services
 import { ConversationService } from '../../../providers/logged-in/conversation.service';
 
 /*
@@ -12,11 +16,15 @@ import { ConversationService } from '../../../providers/logged-in/conversation.s
 })
 export class ConversationDetailPage {
 
+  public activeConversation: Conversation;
+
   constructor(
-    public navCtrl: NavController, 
+    params: NavParams,
     public conversations: ConversationService,
     private _events: Events,
-    ) { }
+    ) {
+      this.activeConversation = params.get("conversation");      
+    }
 
   ionViewDidLoad() {
     // Initialize Class Here If Needed

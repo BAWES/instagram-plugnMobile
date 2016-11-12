@@ -5,7 +5,7 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content padding>
 
   <!-- Swipe to Refresh -->
   <ion-refresher (ionRefresh)="doRefresh($event)" [enabled]="conversations.conversationList">
@@ -20,7 +20,7 @@
   <!-- When content available -->
   <div *ngIf="!conversations.isLoading || conversations.refresherLoading">
 
-    Conversation Content Here
+    {{ activeConversation | json }}
 
   </div>
 
