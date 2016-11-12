@@ -14,8 +14,8 @@ import { ConversationPage } from '../conversation/conversation';
 })
 export class AccountTabsPage {
 
-  tab1Root: any = MediaPage;
-  tab2Root: any = ConversationPage;
+  tab1Root: any = ConversationPage;
+  tab2Root: any = MediaPage;
 
   constructor(public navCtrl: NavController) {
 
