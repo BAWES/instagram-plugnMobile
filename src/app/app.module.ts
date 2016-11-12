@@ -51,7 +51,9 @@ export const pages = [
   declarations: pages,
   entryComponents: pages,
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp, {
+      tabsHideOnSubPages: true
+    })
   ],
   providers: [
     AuthService, //Handles all Authorization
