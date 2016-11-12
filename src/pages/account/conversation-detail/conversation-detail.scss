@@ -1,13 +1,14 @@
 page-conversation-detail {
-    textarea {
-        resize: both;
-    }
-
+    
     ion-note {
         font-size: 12px;
         position: absolute;
         top: 5px;
         right: 5px;
+    }
+
+    .message{
+        font-size:1.2em;
     }
 
     .elipse{
