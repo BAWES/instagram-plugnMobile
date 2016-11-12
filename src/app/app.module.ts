@@ -15,6 +15,7 @@ import { AddAccountPage } from '../pages/add-account/add-account';
 // Account Management Pages via Conversation / Media View
 import { AccountTabsPage } from '../pages/account/account-tabs/account-tabs';
 import { ConversationPage } from '../pages/account/conversation/conversation';
+import { ConversationDetailPage } from '../pages/account/conversation-detail/conversation-detail';
 import { MediaPage } from '../pages/account/media/media';
 
 // Providers / Services
@@ -37,6 +38,7 @@ export const pages = [
     // Account Mgmt Pages Media/Conv View 
     AccountTabsPage,
     ConversationPage,
+    ConversationDetailPage,
     MediaPage,
 
     // Start-Pages

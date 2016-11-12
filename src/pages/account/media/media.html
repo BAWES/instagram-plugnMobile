@@ -1,6 +1,24 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Media</ion-title>
+
+    <button ion-button menuToggle="left">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <img menuToggle="left" left style='width:25px; height:25px; float:left;' src="assets/brand/icon.png" />
+
+    <ion-buttons right *ngIf="accounts.activeAccount">
+      <button ion-button icon-right menuToggle="right">
+        @{{ accounts.activeAccount.user_name }} 
+        <img style='width:25px; height:25px;
+        margin-left:5px;
+        border-radius: 200px;
+        -moz-border-radius: 200px;
+        -webkit-border-radius: 200px' 
+          src="{{ accounts.activeAccount.user_profile_pic }}"/> 
+      </button>
+    </ion-buttons>
+
   </ion-navbar>
 </ion-header>
 

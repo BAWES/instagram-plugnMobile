@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, Events } from 'ionic-angular';
 
 import { MediaService } from '../../../providers/logged-in/media.service';
+import { AccountService } from '../../../providers/logged-in/account.service';
 
 /*
   Media page.
@@ -15,6 +16,7 @@ export class MediaPage {
   constructor(
     public navCtrl: NavController, 
     public media: MediaService,
+    public accounts: AccountService,
     private _events: Events,
     ) {}
 

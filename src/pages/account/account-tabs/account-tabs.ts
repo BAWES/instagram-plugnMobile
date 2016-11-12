@@ -5,9 +5,6 @@ import { NavController } from 'ionic-angular';
 import { MediaPage } from '../media/media';
 import { ConversationPage } from '../conversation/conversation';
 
-// Services
-import { AccountService } from '../../../providers/logged-in/account.service';
-
 /*
   AccountTabs tabs.
 */
@@ -20,7 +17,7 @@ export class AccountTabsPage {
   tab1Root: any = MediaPage;
   tab2Root: any = ConversationPage;
 
-  constructor(public navCtrl: NavController, public accounts: AccountService) {
+  constructor(public navCtrl: NavController) {
 
   }
 

@@ -1,6 +1,24 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Conversations</ion-title>
+
+    <button ion-button menuToggle="left">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <img menuToggle="left" left style='width:25px; height:25px; float:left;' src="assets/brand/icon.png" />
+
+    <ion-buttons right *ngIf="accounts.activeAccount">
+      <button ion-button icon-right menuToggle="right">
+        @{{ accounts.activeAccount.user_name }} 
+        <img style='width:25px; height:25px;
+        margin-left:5px;
+        border-radius: 200px;
+        -moz-border-radius: 200px;
+        -webkit-border-radius: 200px' 
+          src="{{ accounts.activeAccount.user_profile_pic }}"/> 
+      </button>
+    </ion-buttons>
+
   </ion-navbar>
 </ion-header>
 
@@ -27,7 +45,8 @@
       </ion-list-header>
 
       <button ion-item detail-none 
-        *ngFor="let conversationItem of conversations.unhandledConversations;trackBy:conversationItem?.comment_by_username">
+        *ngFor="let conversationItem of conversations.unhandledConversations;trackBy:conversationItem?.comment_by_username"
+        (click)="loadConversationDetail(conversationItem)">
         
         <ion-avatar item-left>
           <img src="{{ conversationItem.comment_by_photo }}" onError="this.src='assets/user.png';">
@@ -50,7 +69,9 @@
       </ion-list-header>
 
       <button ion-item detail-none 
-        *ngFor="let conversationItem of conversations.handledConversations;trackBy:conversationItem?.comment_by_username">
+        *ngFor="let conversationItem of conversations.handledConversations;trackBy:conversationItem?.comment_by_username"
+        (click)="loadConversationDetail(conversationItem)">
+
         <ion-avatar item-left>
           <img src="{{ conversationItem.comment_by_photo }}" onError="this.src='assets/user.png';">
         </ion-avatar>

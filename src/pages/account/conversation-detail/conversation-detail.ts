@@ -2,23 +2,19 @@ import { Component } from '@angular/core';
 import { NavController, Events } from 'ionic-angular';
 
 import { ConversationService } from '../../../providers/logged-in/conversation.service';
-import { AccountService } from '../../../providers/logged-in/account.service';
-
-import { ConversationDetailPage } from '../conversation-detail/conversation-detail';
 
 /*
-  Conversation page.
+  Conversation Detail page.
 */
 @Component({
-  selector: 'page-conversation',
-  templateUrl: 'conversation.html'
+  selector: 'page-conversation-detail',
+  templateUrl: 'conversation-detail.html'
 })
-export class ConversationPage {
+export class ConversationDetailPage {
 
   constructor(
     public navCtrl: NavController, 
     public conversations: ConversationService,
-    public accounts: AccountService,
     private _events: Events,
     ) { }
 
@@ -30,15 +26,7 @@ export class ConversationPage {
    * Trigger an event notifying that user is opening this page
    */
   ionViewWillEnter(){
-    this._events.publish('view:selected', "conversation");
-  }
 
-  /**
-   * Load Conversation Detail Page
-   * @param  {} conversation
-   */
-  loadConversationDetail(conversation){
-      this.navCtrl.push(ConversationDetailPage);
   }
 
   /**
@@ -46,7 +34,7 @@ export class ConversationPage {
    * @param  {} refresher
    */
   doRefresh(refresher) {
-    this._events.publish('refresh:requested', refresher);
+    //this._events.publish('refresh:requested', refresher);
   }
 
 }
