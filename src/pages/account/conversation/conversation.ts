@@ -35,10 +35,12 @@ export class ConversationPage {
 
   /**
    * Load Conversation Detail Page
-   * @param  {} conversation
+   * @param  {} conversationItem
    */
-  loadConversationDetail(conversation){
-      this.navCtrl.push(ConversationDetailPage);
+  loadConversationDetail(conversationItem){
+      this.navCtrl.push(ConversationDetailPage, { 
+        conversation: conversationItem
+      });
   }
 
   /**

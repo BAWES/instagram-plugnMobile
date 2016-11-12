@@ -1,5 +1,5 @@
 
-export interface Comment{
+export interface Conversation{
     comment_id: number;
     media_id: number;
     user_id: number;

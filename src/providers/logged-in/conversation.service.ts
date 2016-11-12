@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 // Models
-import { Comment } from '../../models/comment';
+import { Conversation } from '../../models/conversation';
 
 // Services
 import { AuthHttpService } from './authhttp.service';
@@ -15,9 +15,9 @@ export class ConversationService {
   public isLoading = false;
   public refresherLoading = false; //Using the refresher component
 
-  public conversationList: Comment[]; // Full cached conversation list for loaded account
-  public handledConversations: Comment[]; // Handled Subset of conversationList
-  public unhandledConversations: Comment[]; // Unhandled Subset of conversationList
+  public conversationList: Conversation[]; // Full cached conversation list for loaded account
+  public handledConversations: Conversation[]; // Handled Subset of conversationList
+  public unhandledConversations: Conversation[]; // Unhandled Subset of conversationList
 
   private _conversationsEndpoint: string = "/conversations";
 
