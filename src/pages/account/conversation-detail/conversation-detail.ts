@@ -17,6 +17,7 @@ import { ConversationService } from '../../../providers/logged-in/conversation.s
 export class ConversationDetailPage {
 
   public activeConversation: Conversation;
+  public selectedTab: string = "conversation";
 
   constructor(
     params: NavParams,

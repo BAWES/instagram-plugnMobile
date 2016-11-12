@@ -11,11 +11,11 @@
   </ion-navbar>
 
   <ion-toolbar>
-    <ion-segment [(ngModel)]="relationship" color="dark">
-      <ion-segment-button value="friends" (ionSelect)="selectedFriends()">
+    <ion-segment [(ngModel)]="selectedTab" color="dark">
+      <ion-segment-button value="conversation">
         Conversation
       </ion-segment-button>
-      <ion-segment-button value="enemies" (ionSelect)="selectedEnemies()">
+      <ion-segment-button value="info">
         Info &amp; Notes
       </ion-segment-button>
     </ion-segment>
@@ -36,10 +36,10 @@
   </div>
 
   <!-- When content available -->
-  <div *ngIf="!conversations.isLoading || conversations.refresherLoading">
+  <div *ngIf="!conversations.isLoading || conversations.refresherLoading" [ngSwitch]="selectedTab">
 
-    <!-- Comments in Conversation -->
-    <ion-list no-lines>
+    <!-- START Conversation Tab -->
+    <ion-list no-lines *ngSwitchCase="'conversation'">
 
       <!-- Sliding Item -->
       <ion-item-sliding>
@@ -67,12 +67,19 @@
       </ion-item-sliding>
 
     </ion-list>
+    <!-- END Conversation Tab -->
+
+    <!-- START Info Tab -->
+    <div padding *ngSwitchCase="'info'">
+      Info content will go here
+    </div>
+    <!-- END Info Tab -->
 
   </div>
 
 </ion-content>
 
-<ion-footer>
+<ion-footer *ngIf="selectedTab == 'conversation'">
   <!-- Comment Box Toolbar -->
   <ion-toolbar>
     <ion-buttons left>
