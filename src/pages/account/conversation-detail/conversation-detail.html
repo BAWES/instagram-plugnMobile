@@ -1,7 +1,18 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Conversation Detail</ion-title>
+    <ion-title>{{ activeConversation.comment_by_fullname }}</ion-title>
+
+    <ion-buttons right>
+      <button ion-button>
+        <ion-icon name="information-circle"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
+  <ion-toolbar>
+    <button ion-button block outline color="dark">
+        Mark Conversation Handled
+    </button>
+  </ion-toolbar>
 </ion-header>
 
 
@@ -20,7 +31,46 @@
   <!-- When content available -->
   <div *ngIf="!conversations.isLoading || conversations.refresherLoading">
 
-    {{ activeConversation | json }}
+    <!-- Comments in Conversation -->
+    <ion-list no-lines>
+
+      <ion-item text-wrap>
+        <ion-avatar item-left>
+          <img src="{{ activeConversation.comment_by_photo }}w" onError="this.src='assets/user.png';">
+        </ion-avatar>
+
+        <h3 class='elipse'>Jasem</h3>
+        <p>@khalidmnet</p>
+        <p>Once upon a time bla bla a upon a time bla bla a upon a time bla bla a upon a time bla bla a</p>
+
+        <ion-note item-right>15 minutes ago</ion-note>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="{{ activeConversation.comment_by_photo }}w" onError="this.src='assets/user.png';">
+        </ion-avatar>
+
+        <h3 class='elipse'>Jasem</h3>
+        <p>@jasoom</p>
+        <p>Hey bro how are you</p>
+
+        <ion-note item-right>12 minutes ago</ion-note>
+      </ion-item>
+
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="{{ activeConversation.comment_by_photo }}" onError="this.src='assets/user.png';">
+        </ion-avatar>
+
+        <h3 class='elipse'>Khalid Al-Mutawa</h3>
+        <p>@khalidmnet</p>
+        <p>Hey bro how are you</p>
+
+        <ion-note item-right>3 minutes ago</ion-note>
+      </ion-item>
+
+    </ion-list>
 
   </div>
 
