@@ -3,15 +3,22 @@
     <ion-title>{{ activeConversation.comment_by_fullname }}</ion-title>
 
     <ion-buttons right>
-      <button ion-button>
-        <ion-icon name="information-circle"></ion-icon>
+      <button ion-button icon-left solid color="primary">
+        <ion-icon name="checkmark-circle-outline"></ion-icon>
+        Mark Handled
       </button>
     </ion-buttons>
   </ion-navbar>
+
   <ion-toolbar>
-    <button ion-button block outline color="dark">
-        Mark Conversation Handled
-    </button>
+    <ion-segment [(ngModel)]="relationship" color="dark">
+      <ion-segment-button value="friends" (ionSelect)="selectedFriends()">
+        Conversation
+      </ion-segment-button>
+      <ion-segment-button value="enemies" (ionSelect)="selectedEnemies()">
+        Info &amp; Notes
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
@@ -66,6 +73,7 @@
 </ion-content>
 
 <ion-footer>
+  <!-- Comment Box Toolbar -->
   <ion-toolbar>
     <ion-buttons left>
       <ion-chip>
@@ -79,10 +87,9 @@
     <ion-textarea autosize rows="1" placeholder="comment input here"></ion-textarea>
 
     <ion-buttons right>
-      <button ion-button>
+      <button ion-button icon-only>
         <ion-icon name="send"></ion-icon>
       </button>
     </ion-buttons>
-
-  </ion-toolbar>  
+  </ion-toolbar>
 </ion-footer>
