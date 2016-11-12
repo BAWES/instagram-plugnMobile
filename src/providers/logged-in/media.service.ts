@@ -1,5 +1,9 @@
 import { Injectable } from '@angular/core';
 
+// Models
+import { Media } from '../../models/media';
+
+// Services
 import { AuthHttpService } from './authhttp.service';
 
 /*
@@ -11,9 +15,9 @@ export class MediaService {
   public isLoading = false;
   public refresherLoading = false; //Using the refresher component
 
-  public mediaList; // Full cached media list for loaded account
-  public handledMedia; // Handled Subset of mediaList
-  public unhandledMedia; // Unhandled Subset of mediaList
+  public mediaList: Media[]; // Full cached media list for loaded account
+  public handledMedia: Media[]; // Handled Subset of mediaList
+  public unhandledMedia: Media[]; // Unhandled Subset of mediaList
 
   private _mediaEndpoint: string = "/media";
 

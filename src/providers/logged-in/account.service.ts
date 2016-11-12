@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { Platform, Events } from 'ionic-angular';
 
+// Models
+import { InstagramAccount } from '../../models/instagram-account';
+
+// Services
 import { AuthHttpService } from './authhttp.service';
 import { MediaService } from './media.service';
 import { ConversationService } from './conversation.service';
@@ -12,8 +16,8 @@ import { ConversationService } from './conversation.service';
 @Injectable()
 export class AccountService {
 
-  public activeAccount; // The account currently being viewed by agent
-  public managedAccounts; // Array of managed accounts stored here
+  public activeAccount: InstagramAccount; // The account currently being viewed by agent
+  public managedAccounts: InstagramAccount[]; // Array of managed accounts stored here
 
   /**
    * Whether the user is currently using "media" or "conversation" view
