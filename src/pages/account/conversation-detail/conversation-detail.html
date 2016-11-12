@@ -28,6 +28,22 @@
 
 <ion-footer>
   <ion-toolbar>
+    <ion-buttons left>
+      <ion-chip>
+        <ion-avatar>
+          <img src="{{ activeConversation.comment_by_photo }}" onError="this.src='assets/user.png';">
+        </ion-avatar>
+        <ion-label>@{{ activeConversation.comment_by_username }}</ion-label>
+      </ion-chip>
+    </ion-buttons>
+    
     <ion-input type="text" placeholder="comment input here"></ion-input>
+
+    <ion-buttons right>
+      <button ion-button>
+        <ion-icon name="send"></ion-icon>
+      </button>
+    </ion-buttons>
+
   </ion-toolbar>  
 </ion-footer>
