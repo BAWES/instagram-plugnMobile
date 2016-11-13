@@ -15,7 +15,6 @@ export class CommentComponent {
   @Input('value') comment: Comment;
 
   constructor() {
-    console.log('Hello Comment Component'+ this.comment);
   }
 
 }

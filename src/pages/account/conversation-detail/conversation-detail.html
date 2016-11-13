@@ -41,13 +41,11 @@
     <!-- START Conversation Tab -->
     <ion-list no-lines *ngSwitchCase="'conversation'">
 
-      <!-- Sliding Item -->
-      <ion-item-sliding 
-        *ngFor="let comment of conversationComments">
-        
+      <!-- Comment List Rendered -->
+      <div *ngFor="let comment of conversationComments">
         <comment [value]="comment"></comment>
-
-      </ion-item-sliding>
+      </div>
+      
 
     </ion-list>
     <!-- END Conversation Tab -->
