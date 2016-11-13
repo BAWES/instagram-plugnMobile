@@ -16,11 +16,12 @@ import { ConversationService } from '../../../providers/logged-in/conversation.s
 })
 export class ConversationDetailPage {
   public isLoading = false;
+  public refresherLoading = false;
 
   public activeConversation: Conversation;
   public selectedTab: string = "conversation";
 
-  public conversationDetail;
+  public conversationComments;
 
   constructor(
     params: NavParams,
@@ -32,9 +33,20 @@ export class ConversationDetailPage {
 
   ionViewDidLoad() {
     // Load and populate conversation detail
+    this._loadComments();
+  }
+
+  private _loadComments(){
     this.isLoading = true;
     this.conversations.getConversationDetail(this.activeConversation).subscribe((jsonResponse) => {
-      this.conversationDetail = jsonResponse.conversationComments;
+      this.isLoading = false;
+      this.conversationComments = jsonResponse.conversationComments;
+
+      // Transform All MySQL Dates into Time Since
+      this.conversationComments = this.conversationComments.map((conversation) => {
+        conversation.comment_datetime = this.conversations.getTimeSinceDate(conversation.comment_datetime);
+        return conversation;
+      });
     });
   }
 
