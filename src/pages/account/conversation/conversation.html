@@ -38,6 +38,15 @@
   <!-- When content available -->
   <div *ngIf="!conversations.isLoading || conversations.refresherLoading">
 
+    <!-- Search Input -->
+    <ion-toolbar>
+      <ion-searchbar
+        [(ngModel)]="searchInput"
+        (ionInput)="searchFilter($event)"
+        debounce=250>
+      </ion-searchbar>
+    </ion-toolbar>
+
     <!-- Unhandled Conversations -->
     <ion-list class="unhandled" *ngIf="conversations.unhandledConversations && conversations.unhandledConversations.length > 0">
       <ion-list-header>

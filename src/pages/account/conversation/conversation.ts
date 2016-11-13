@@ -17,6 +17,8 @@ import { ConversationDetailPage } from '../conversation-detail/conversation-deta
 })
 export class ConversationPage {
 
+  public searchInput: string = "";
+
   constructor(
     public navCtrl: NavController, 
     public conversations: ConversationService,
@@ -43,6 +45,13 @@ export class ConversationPage {
       this.navCtrl.push(ConversationDetailPage, { 
         conversation: conversationItem
       });
+  }
+
+  /**
+   * Display search results based on user input
+   */
+  searchFilter(event){
+    this.conversations.filterConversationsByString(this.searchInput);
   }
 
   /**

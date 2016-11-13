@@ -22,6 +22,10 @@ export class ConversationService {
   public handledConversations: Conversation[]; // Handled Subset of conversationList
   public unhandledConversations: Conversation[]; // Unhandled Subset of conversationList
 
+  // Archive Original Conversations for reseting search results
+  private _origHandledConversations: Conversation[];
+  private _origUnandledConversations: Conversation[];
+
   private _conversationsEndpoint: string = "/conversations";
   private _conversationDetailEndpoint: string = "/conversations/detail";
 
@@ -84,6 +88,33 @@ export class ConversationService {
     this.handledConversations = this.conversationList.filter((conversationItem) => {
       return parseInt(conversationItem.unhandledCount, 10)? false: true;
     });
+
+    // Store Copies for future reference
+    this._origUnandledConversations = this.unhandledConversations.slice();
+    this._origHandledConversations = this.handledConversations.slice();
+  }
+
+  /**
+   * Filter Conversation List By a Specified Search String
+   * @param  {string} searchInput
+   */
+  public filterConversationsByString(searchInput: string){
+    searchInput = searchInput.toLowerCase();
+
+    if(searchInput){
+      // Filter Unhandled Conversations
+      this.unhandledConversations = this._origUnandledConversations.filter((conversationItem) => {
+        return conversationItem.comment_by_fullname.toLowerCase().indexOf(searchInput) >= 0;
+      });
+
+      // Filter Handled Conversations
+      this.handledConversations = this._origHandledConversations.filter((conversationItem) => {
+        return conversationItem.comment_by_fullname.toLowerCase().indexOf(searchInput) >= 0;
+      });
+    }else{
+      this.unhandledConversations = this._origUnandledConversations.slice();
+      this.handledConversations = this._origHandledConversations.slice();
+    }
   }
 
   /**
