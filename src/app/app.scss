@@ -15,6 +15,14 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+// Tab bar fix (hide when keyboard open)
+body.keyboard-is-open .tabbar {
+    display: none;
+}
+
+body.keyboard-is-open .scroll-content {
+    margin-bottom: 0 !important;
+}
 
 // Used by initial pages (login,registration,forgot pwd, etc.)
 .classicInput{
