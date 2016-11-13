@@ -1,0 +1,22 @@
+<!-- The Ion Item -->
+<ion-item text-wrap>
+  <ion-avatar item-left>
+    <img src="{{ comment.comment_by_photo }}" onError="this.src='assets/user.png';">
+  </ion-avatar>
+
+  <h3 class='elipse'>{{ comment.comment_by_fullname }}</h3>
+  <p class='username'>@{{ comment.comment_by_username }}</p>
+  <p class="message">
+    {{ comment.comment_text }}
+  </p>
+
+  <ion-note item-right>{{ comment.comment_datetime }}</ion-note>
+</ion-item>
+
+<!-- Right Sliding Options -->
+<ion-item-options side="right">
+  <button ion-button color="danger">
+    <ion-icon name="trash"></ion-icon>
+    Delete
+  </button>
+</ion-item-options>

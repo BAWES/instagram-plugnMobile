@@ -21,6 +21,9 @@ import { MediaPage } from '../pages/account/media/media';
 // Directives 
 import { Autosize } from '../directives/autosize/autosize';
 
+// Components 
+import { CommentComponent } from '../components/comment/comment';
+
 // Providers / Services
 import { AuthService } from '../providers/auth.service'
 import { KeyboardService } from '../providers/keyboard.service'
@@ -55,6 +58,11 @@ export const toDeclare = [
    * Directives
    */
   Autosize,
+
+  /**
+   * Components
+   */
+  CommentComponent,
 
   /**
    * Pages >> Paste Pages Definition Above Under Here

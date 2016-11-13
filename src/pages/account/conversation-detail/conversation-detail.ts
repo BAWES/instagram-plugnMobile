@@ -3,6 +3,7 @@ import { NavParams, Events } from 'ionic-angular';
 
 // Models
 import { Conversation } from '../../../models/conversation';
+import { Comment } from '../../../models/comment';
 
 // Services
 import { ConversationService } from '../../../providers/logged-in/conversation.service';
@@ -21,7 +22,7 @@ export class ConversationDetailPage {
   public activeConversation: Conversation;
   public selectedTab: string = "conversation";
 
-  public conversationComments;
+  public conversationComments: Comment[];
 
   constructor(
     params: NavParams,
