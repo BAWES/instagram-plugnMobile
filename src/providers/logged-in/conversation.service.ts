@@ -104,12 +104,14 @@ export class ConversationService {
     if(searchInput){
       // Filter Unhandled Conversations
       this.unhandledConversations = this._origUnandledConversations.filter((conversationItem) => {
-        return conversationItem.comment_by_fullname.toLowerCase().indexOf(searchInput) >= 0;
+        return conversationItem.comment_by_fullname.toLowerCase().indexOf(searchInput) >= 0
+                || conversationItem.comment_by_username.toLowerCase().indexOf(searchInput) >= 0;
       });
 
       // Filter Handled Conversations
       this.handledConversations = this._origHandledConversations.filter((conversationItem) => {
-        return conversationItem.comment_by_fullname.toLowerCase().indexOf(searchInput) >= 0;
+        return (conversationItem.comment_by_fullname.toLowerCase().indexOf(searchInput) >= 0) 
+                || (conversationItem.comment_by_username.toLowerCase().indexOf(searchInput) >= 0);
       });
     }else{
       this.unhandledConversations = this._origUnandledConversations.slice();
