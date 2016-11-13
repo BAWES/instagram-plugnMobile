@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 
 // Models
 import { Conversation } from '../../models/conversation';
+import { InstagramAccount } from '../../models/instagram-account';
+
+import { Observable } from 'rxjs/Observable';
 
 // Services
 import { AuthHttpService } from './authhttp.service';
@@ -20,15 +23,31 @@ export class ConversationService {
   public unhandledConversations: Conversation[]; // Unhandled Subset of conversationList
 
   private _conversationsEndpoint: string = "/conversations";
+  private _conversationDetailEndpoint: string = "/conversations/detail";
 
   constructor(private _authhttp: AuthHttpService) { }
 
   /**
-   * Load up to date Conversation list for the specified account id
-   * @param  {} account
-   * @param  {} callback?
+   * Get conversation detail between account and user
+   * @param  {Conversation} conversation
+   * @returns {Observable<any>}
    */
-  loadConversationsForAccount(account, callback?, refresherLoading = false){
+  getConversationDetail(conversation: Conversation): Observable<any>{
+    let detailUrl = `${this._conversationDetailEndpoint}`
+                    +`?accountId=${conversation.user_id}`
+                    +`&commenterId=${conversation.comment_by_id}`
+                    +`&commenterUsername=${conversation.comment_by_username}`;
+
+    return this._authhttp.get(detailUrl);
+  }
+
+  /**
+   * Load up to date Conversation list for the specified account id
+   * @param  {InstagramAccount} account
+   * @param  {fn} callback?
+   * @param  {boolean} refresherLoading=false
+   */
+  loadConversationsForAccount(account: InstagramAccount, callback?, refresherLoading = false){
     let convUrl = `${this._conversationsEndpoint}?accountId=${account.user_id}`;
 
     this.isLoading = true;

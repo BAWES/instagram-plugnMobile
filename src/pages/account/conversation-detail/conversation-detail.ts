@@ -15,9 +15,12 @@ import { ConversationService } from '../../../providers/logged-in/conversation.s
   templateUrl: 'conversation-detail.html'
 })
 export class ConversationDetailPage {
+  public isLoading = false;
 
   public activeConversation: Conversation;
   public selectedTab: string = "conversation";
+
+  public conversationDetail;
 
   constructor(
     params: NavParams,
@@ -28,14 +31,11 @@ export class ConversationDetailPage {
     }
 
   ionViewDidLoad() {
-    // Initialize Class Here If Needed
-  }
-
-  /**
-   * Trigger an event notifying that user is opening this page
-   */
-  ionViewWillEnter(){
-
+    // Load and populate conversation detail
+    this.isLoading = true;
+    this.conversations.getConversationDetail(this.activeConversation).subscribe((jsonResponse) => {
+      this.conversationDetail = jsonResponse.conversationComments;
+    });
   }
 
   /**
