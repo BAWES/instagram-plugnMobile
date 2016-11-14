@@ -1,7 +1,9 @@
 <!-- Sliding Item -->
 <ion-item-sliding>
   <!-- The Ion Item -->
-  <ion-item text-wrap>
+  <ion-item text-wrap 
+    [class.queued]="comment.commentType == 'queue'">
+
     <ion-avatar item-left>
       <img src="{{ comment.comment_by_photo }}" onError="this.src='assets/user.png';">
     </ion-avatar>
@@ -10,6 +12,11 @@
     <p class='username'>@{{ comment.comment_by_username }}</p>
     <p class="message">
       {{ comment.comment_text }}
+    </p>
+
+    <!-- If Comment Queued for Posting -->
+    <p class="status" *ngIf="comment.commentType == 'queue'">
+      <ion-spinner></ion-spinner> Queued to be posted by {{ comment.agent_name }}
     </p>
 
     <ion-note item-right>{{ comment.comment_datetime }}</ion-note>

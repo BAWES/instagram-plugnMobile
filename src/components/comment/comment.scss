@@ -1,11 +1,25 @@
 comment {
     .username{font-size:0.9em; margin-bottom:5px;}
     .message{font-size:1.1em;}
-
     ion-note {
         font-size: 12px;
         position: absolute;
         top: 5px;
         right: 5px;
     }
+
+    .status{margin-top:15px;}
+
+    // Spinner
+    ion-spinner {
+        width: 20px;
+        height: 20px;
+        //stroke: #444;
+        //fill: #222;
+    }
+
+    // Different Comment Status Styling
+    .queued{background: #ffffe0}
+
+    
 }
