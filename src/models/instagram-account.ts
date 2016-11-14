@@ -9,6 +9,7 @@ export interface InstagramAccount{
     user_media_count: number;
     user_following_count: number;
     user_follower_count: number;
+    user_instagram_id: number;
     unhandledCount: number;
     lastAgentActivity: string;
 }
