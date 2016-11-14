@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavParams, Events } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { NavParams, Events, Content } from 'ionic-angular';
 
 // Models
 import { Conversation } from '../../../models/conversation';
@@ -16,6 +16,8 @@ import { ConversationService } from '../../../providers/logged-in/conversation.s
   templateUrl: 'conversation-detail.html'
 })
 export class ConversationDetailPage {
+  @ViewChild(Content) content: Content;
+
   public isLoading = false;
   public refresherLoading = false;
 
@@ -48,15 +50,13 @@ export class ConversationDetailPage {
         conversation.comment_datetime = this.conversations.getTimeSinceDate(conversation.comment_datetime);
         return conversation;
       });
-    });
-  }
 
-  /**
-   * Refresh the view once dragged via ion-refresher
-   * @param  {} refresher
-   */
-  doRefresh(refresher) {
-    //this._events.publish('refresh:requested', refresher);
+      // Scroll to last Message in Conversation
+      setTimeout(() => {
+         this.content.scrollToBottom();
+        }, 100);
+      
+    });
   }
 
 }

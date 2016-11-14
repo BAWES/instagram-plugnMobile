@@ -25,12 +25,7 @@
 
 <ion-content>
 
-  <!-- Swipe to Refresh -->
-  <ion-refresher (ionRefresh)="doRefresh($event)" [enabled]="conversationComments">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
-
-  <!-- When content isn't available' -->
+  <!-- When content isn't available, Show Loading -->
   <div class="page-loading" *ngIf="isLoading && !refresherLoading">
     <img src='assets/brand/loader.gif'>
   </div>
