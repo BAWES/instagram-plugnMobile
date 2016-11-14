@@ -9,6 +9,7 @@ comment {
     }
     .status{
         margin-top:20px;
+        text-align:right;
         
         ion-spinner {
             width: 15px;
@@ -24,18 +25,16 @@ comment {
     .deleted{
         background: #feecec;
         
-        .message{
-            //text-decoration: line-through;
-            }
         .status{color: #8b0000;}
     }
     .unhandled{
-        background: #fff;
+        background: #f4f4f4;
 
-        .message{font-weight:bold;}
+        .message{font-weight:500; color:#000;}
     }
     .handled{
-        background: #f4f4f4;
+        background: #fff;
+
         .status{font-size:0.7em;}
     }
 
