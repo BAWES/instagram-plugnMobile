@@ -3,7 +3,9 @@
   <!-- The Ion Item -->
   <ion-item text-wrap 
     [class.queued]="comment.commentType == 'queue'"
-    [class.deleted]="comment.comment_deleted != '0'"> <!-- 1 if deleted, 2 if queued for deletion -->
+    [class.handled]="(comment.comment_handled == '1') && (comment.comment_deleted == '0') && (comment.commentType != 'queue')"
+    [class.unhandled]="(comment.comment_handled != '1') && (comment.comment_deleted == '0') && (comment.commentType != 'queue')"
+    [class.deleted]="(comment.comment_deleted != '0') && (comment.commentType != 'queue')"> <!-- 1 if deleted, 2 if queued for deletion -->
 
     <ion-avatar item-left>
       <img src="{{ comment.comment_by_photo }}" onError="this.src='assets/user.png';">
@@ -30,6 +32,13 @@
     <!-- If Comment is Queued to be Deleted -->
     <p class="status" *ngIf="comment.comment_deleted == '2'">
       <ion-spinner></ion-spinner> Queued to be deleted
+    </p>
+
+    <!-- If Comment is Handled and not Deleted -->
+    <p class="status" 
+      *ngIf="(comment.comment_by_id != accounts.activeAccount?.user_instagram_id) &&
+        (comment.comment_handled == '1') && (comment.comment_deleted == '0') && (comment.commentType != 'queue')">
+      Handled by {{ comment.handler_name }}
     </p>
 
     <ion-note item-right>{{ comment.comment_datetime }}</ion-note>

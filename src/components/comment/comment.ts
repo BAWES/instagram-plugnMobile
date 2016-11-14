@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 
 // Models
 import { Comment } from '../../models/comment';
+// Services
+import { AccountService } from '../../providers/logged-in/account.service';
 
 /*
   Comment Component to setup styling for comments based on requirements
@@ -14,7 +16,7 @@ export class CommentComponent {
 
   @Input('value') comment: Comment;
 
-  constructor() {
+  constructor(public accounts: AccountService) {
   }
 
 }

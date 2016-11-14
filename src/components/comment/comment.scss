@@ -24,8 +24,19 @@ comment {
     .deleted{
         background: #feecec;
         
-        .message{text-decoration: line-through;}
+        .message{
+            //text-decoration: line-through;
+            }
         .status{color: #8b0000;}
+    }
+    .unhandled{
+        background: #fff;
+
+        .message{font-weight:bold;}
+    }
+    .handled{
+        background: #f4f4f4;
+        .status{font-size:0.7em;}
     }
 
     
