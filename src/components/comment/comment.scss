@@ -7,19 +7,26 @@ comment {
         top: 5px;
         right: 5px;
     }
-
-    .status{margin-top:15px;}
-
-    // Spinner
-    ion-spinner {
-        width: 20px;
-        height: 20px;
-        //stroke: #444;
-        //fill: #222;
+    .status{
+        margin-top:20px;
+        
+        ion-spinner {
+            width: 15px;
+            height: 15px;
+            //stroke: #444;
+            //fill: #222;
+        }
     }
+    
 
     // Different Comment Status Styling
     .queued{background: #ffffe0}
+    .deleted{
+        background: #feecec;
+        
+        .message{text-decoration: line-through;}
+        .status{color: #8b0000;}
+    }
 
     
 }
