@@ -45,6 +45,7 @@ export class ConversationDetailPage {
     this._events.subscribe("keyboard:toggle", (keyboardData) => {
       if(keyboardData[0] == "open"){
         this.addKeyboardMargin = true;
+        this.content.scrollToBottom(0);
       }else this.addKeyboardMargin = false;
     });
   }
