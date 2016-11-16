@@ -90,7 +90,16 @@ export const toDeclare = [
   entryComponents: pages,
   imports: [
     IonicModule.forRoot(MyApp, {
-      tabsHideOnSubPages: true
+      // Global Config
+      tabsHideOnSubPages: true,
+
+      // Platform Specific Config
+      platforms : {
+          ios : {
+            scrollAssist: false,    // Valid options appear to be [true, false]
+            autoFocusAssist: false  // Valid options appear to be ['instant', 'delay', false]
+          }
+      }
     })
   ],
   providers: [

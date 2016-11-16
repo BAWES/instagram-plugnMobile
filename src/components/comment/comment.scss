@@ -28,12 +28,12 @@ comment {
         .status{color: #8b0000;}
     }
     .unhandled{
-        background: #f4f4f4;
+        background: #fff;
 
         .message{font-weight:500; color:#000;}
     }
     .handled{
-        background: #fff;
+        background: #f4f4f4;
 
         .status{font-size:0.7em;}
     }

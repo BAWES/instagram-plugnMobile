@@ -5,7 +5,8 @@ import { StatusBar } from 'ionic-native';
 import { NavigationPage } from '../pages/navigation/navigation';
 import { LoginPage } from '../pages/start-pages/login/login';
 
-import { AuthService } from '../providers/auth.service'
+import { AuthService } from '../providers/auth.service';
+import { KeyboardService } from '../providers/keyboard.service';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class MyApp implements OnInit{
   constructor(
     platform: Platform, 
     private _auth: AuthService,
+    private _keyboard: KeyboardService,
     private _events: Events,
     private _toastCtrl: ToastController,
     private _zone: NgZone
@@ -30,6 +32,10 @@ export class MyApp implements OnInit{
       // Here you can do any higher level native things you might need.
       if (platform.is('cordova')) {
         StatusBar.styleDefault();
+      }
+
+      if (platform.is('ios')) {
+        this._keyboard.disableScroll();
       }
 
       // Figure out which page to load on app start [Based on Auth]

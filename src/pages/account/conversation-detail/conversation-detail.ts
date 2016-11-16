@@ -37,6 +37,15 @@ export class ConversationDetailPage {
   ionViewDidLoad() {
     // Load and populate conversation detail
     this._loadComments();
+
+    // Register to resize content area when keyboard open and closes
+    // This will help scroll through and read comments while typing
+    this._events.subscribe("keyboard:toggle", (keyboardData) => {
+      setTimeout(() => {
+          //this.refreshContentHeight();
+          //this.content.scrollToBottom();
+        }, 100);
+    });
   }
 
   refreshContentHeight(){
