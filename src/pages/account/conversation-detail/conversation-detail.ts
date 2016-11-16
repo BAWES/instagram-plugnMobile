@@ -26,6 +26,8 @@ export class ConversationDetailPage {
 
   public conversationComments: Comment[];
 
+  public addKeyboardPadding = false;
+
   constructor(
     params: NavParams,
     public conversations: ConversationService,
@@ -37,6 +39,14 @@ export class ConversationDetailPage {
   ionViewDidLoad() {
     // Load and populate conversation detail
     this._loadComments();
+
+    // Add margin to ion-list of comments when keyboard opens
+    // This will help scroll through and read comments while typing
+    this._events.subscribe("keyboard:toggle", (keyboardData) => {
+      if(keyboardData[0] == "open"){
+        this.addKeyboardPadding = true;
+      }else this.addKeyboardPadding = false;
+    });
   }
 
   refreshContentHeight(){

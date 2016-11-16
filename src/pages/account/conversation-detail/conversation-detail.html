@@ -34,13 +34,12 @@
   <div *ngIf="!isLoading || refresherLoading" [ngSwitch]="selectedTab">
 
     <!-- START Conversation Tab -->
-    <ion-list no-lines *ngSwitchCase="'conversation'">
+    <ion-list class='commentList' no-lines *ngSwitchCase="'conversation'">
 
       <!-- Comment List Rendered -->
       <div *ngFor="let comment of conversationComments">
         <comment [value]="comment"></comment>
       </div>
-      
 
     </ion-list>
     <!-- END Conversation Tab -->

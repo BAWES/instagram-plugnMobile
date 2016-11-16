@@ -6,9 +6,13 @@ page-conversation-detail {
         overflow: hidden;
     }
 
+    ion-content{background: #f4f4f7 !important;}
+
+    .commentList{margin-bottom:0;}
+
     // Info Tab Styling
     ion-content.infoTab{
-        background: #f4f4f7;
+        //background: #f4f4f7;
         
         .accountOverview{
             text-align: center;

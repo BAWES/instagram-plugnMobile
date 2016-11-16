@@ -1,6 +1,6 @@
 // Core
-import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { Component, ApplicationRef } from '@angular/core';
+import { NavController, AlertController, Events } from 'ionic-angular';
 // Services
 import { AuthService } from '../../../providers/auth.service';
 import { KeyboardService } from '../../../providers/keyboard.service';
@@ -38,11 +38,18 @@ export class LoginPage {
     private _auth: AuthService,
     private _alertCtrl: AlertController,
     public keyboard: KeyboardService,
+    events: Events,
+    ref:ApplicationRef
     ){
       // Initialize the Login Form
       this.loginForm = this._fb.group({
         email: ["", [Validators.required, CustomValidator.emailValidator]],
         password: ["", Validators.required]
+      });
+
+      // Force trigger Angular2 Change Detection when keyboard opens and closes
+      events.subscribe("keyboard:toggle", (keyboardData) => {
+        ref.tick();
       });
     }
 

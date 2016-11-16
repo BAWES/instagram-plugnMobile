@@ -1,6 +1,6 @@
-import { Injectable, ApplicationRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import { Platform } from 'ionic-angular';
+import { Platform, Events } from 'ionic-angular';
 import { Keyboard } from 'ionic-native';
 
 /*
@@ -12,7 +12,7 @@ export class KeyboardService {
   public isKeyboardOpen = false;
   public keyboardHeight = 0;
 
-  constructor(private ref:ApplicationRef, private _platform: Platform) {
+  constructor(private _platform: Platform, private _events: Events) {
     /**
      * Initialize Keyboard service if this is a native device
      */
@@ -23,6 +23,18 @@ export class KeyboardService {
     });
   }
 
+  disableScroll(){
+    if (this._platform.is('cordova')) {
+      Keyboard.disableScroll(true);
+    }
+  }
+
+  enableScroll(){
+    if (this._platform.is('cordova')) {
+      Keyboard.disableScroll(false);
+    }
+  }
+
   initialize(){
     // Subscribe to Keyboard Visible Events
     Keyboard.onKeyboardShow().subscribe(e => {
@@ -30,8 +42,8 @@ export class KeyboardService {
       this.keyboardHeight = e.keyboardHeight;
       document.body.classList.add('keyboard-is-open');
 
-      // Force Change Detection in Angular
-      this.ref.tick();
+      // Publish event that keyboard opened
+      this._events.publish('keyboard:toggle', "open");
     });
 
     // Subscribe to Keyboard Closed Events
@@ -39,8 +51,9 @@ export class KeyboardService {
       this.isKeyboardOpen = false;
       document.body.classList.remove('keyboard-is-open');
 
-      // Force Change Detection in Angular
-      this.ref.tick();
+      // Publish event that keyboard opened
+      this._events.publish('keyboard:toggle', "close");
+      
     });
   }
 
