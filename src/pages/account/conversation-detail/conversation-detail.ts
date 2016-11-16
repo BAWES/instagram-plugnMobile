@@ -39,6 +39,10 @@ export class ConversationDetailPage {
     this._loadComments();
   }
 
+  refreshContentHeight(){
+    this.content.resize();
+  }
+
   private _loadComments(){
     this.isLoading = true;
     this.conversations.getConversationDetail(this.activeConversation).subscribe((jsonResponse) => {

@@ -12,10 +12,10 @@
 
   <ion-toolbar>
     <ion-segment [(ngModel)]="selectedTab" color="dark">
-      <ion-segment-button value="conversation">
+      <ion-segment-button value="conversation" (ionSelect)="refreshContentHeight()">
         Conversation
       </ion-segment-button>
-      <ion-segment-button value="info">
+      <ion-segment-button value="info" (ionSelect)="refreshContentHeight()">
         Info &amp; Notes
       </ion-segment-button>
     </ion-segment>
@@ -23,7 +23,7 @@
 </ion-header>
 
 
-<ion-content>
+<ion-content [class.infoTab]="selectedTab == 'info'">
 
   <!-- When content isn't available, Show Loading -->
   <div class="page-loading" *ngIf="isLoading && !refresherLoading">
@@ -47,7 +47,56 @@
 
     <!-- START Info Tab -->
     <div padding *ngSwitchCase="'info'">
-      Info content will go here
+
+      <!-- Note Card -->
+      <ion-card>
+
+        <ion-card-header>
+          <ion-card-title>Explore Nearby</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <p>
+            Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... 
+            out of a DeLorean?! Whoa. This is heavy.
+          </p>
+
+          <ion-row margin-top>
+            <ion-col no-padding style='font-weight:bold'>
+              Created
+            </ion-col>
+            <ion-col no-padding text-right style='font-weight:bold'>
+              Updated
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col no-padding>
+              <ion-icon name="time"></ion-icon> 22-12-2016
+            </ion-col>
+            <ion-col no-padding text-right>
+              <ion-icon name="time"></ion-icon> 22-12-2016
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col no-padding>
+              <ion-icon name="person"></ion-icon> Khalid Al-Mutawa
+            </ion-col>
+            <ion-col no-padding text-right>
+              <ion-icon name="person"></ion-icon> Khalid Al-Mutawa
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+
+        
+
+      </ion-card>
+
+      <!-- Add Note Button -->
+      <ion-fab bottom right>
+        <button ion-fab color="dark">
+          <ion-icon name="create"></ion-icon>
+        </button>
+      </ion-fab>
     </div>
     <!-- END Info Tab -->
 
