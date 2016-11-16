@@ -48,6 +48,21 @@
     <!-- START Info Tab -->
     <div padding *ngSwitchCase="'info'">
 
+      <!-- User Account Overview -->
+      <ion-card class='accountOverview'>
+        <ion-card-content>
+          <img class='avatar' src="{{ activeConversation.comment_by_photo }}" onError="this.src='assets/user.png';">
+          <ion-card-title>
+            {{ activeConversation.comment_by_fullname }}
+          </ion-card-title>
+          <span>@{{ activeConversation.comment_by_username }}</span>
+
+          <a href='https://instagram.com/{{ activeConversation.comment_by_username }}' target='_blank' block ion-button clear>
+            View Profile on Instagram
+          </a>
+        </ion-card-content>
+      </ion-card>
+
       <!-- Note Card -->
       <ion-card>
 
