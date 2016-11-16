@@ -1,4 +1,4 @@
-import { Injectable, ApplicationRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { Platform, Events } from 'ionic-angular';
 import { Keyboard } from 'ionic-native';
@@ -12,7 +12,7 @@ export class KeyboardService {
   public isKeyboardOpen = false;
   public keyboardHeight = 0;
 
-  constructor(private ref:ApplicationRef, private _platform: Platform, private _events: Events) {
+  constructor(private _platform: Platform, private _events: Events) {
     /**
      * Initialize Keyboard service if this is a native device
      */
@@ -44,9 +44,6 @@ export class KeyboardService {
 
       // Publish event that keyboard opened
       this._events.publish('keyboard:toggle', "open");
-
-      // Force Change Detection in Angular
-      this.ref.tick();
     });
 
     // Subscribe to Keyboard Closed Events
@@ -56,9 +53,7 @@ export class KeyboardService {
 
       // Publish event that keyboard opened
       this._events.publish('keyboard:toggle', "close");
-
-      // Force Change Detection in Angular
-      this.ref.tick();
+      
     });
   }
 
