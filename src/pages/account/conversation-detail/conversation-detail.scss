@@ -8,7 +8,11 @@ page-conversation-detail {
 
     ion-content{background: #f4f4f7 !important;}
 
-    .commentList{margin-bottom:0;}
+    .commentList{margin-bottom:0;
+
+        // When keyboard open
+        &.addKeyboardMargin{margin-bottom:57px}
+    }
 
     // Info Tab Styling
     ion-content.infoTab{

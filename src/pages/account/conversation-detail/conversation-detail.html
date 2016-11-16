@@ -34,7 +34,10 @@
   <div *ngIf="!isLoading || refresherLoading" [ngSwitch]="selectedTab">
 
     <!-- START Conversation Tab -->
-    <ion-list class='commentList' no-lines *ngSwitchCase="'conversation'">
+    <ion-list 
+      class='commentList'
+      [class.addKeyboardMargin] = "addKeyboardMargin"
+      no-lines *ngSwitchCase="'conversation'">
 
       <!-- Comment List Rendered -->
       <div *ngFor="let comment of conversationComments">
