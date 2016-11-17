@@ -96,11 +96,6 @@ export class MyApp implements OnInit{
     // If on web version (browser)
     if (window.location.protocol !== "file:") {
 
-      // Save Nav Control for browser back button.
-      this._events.subscribe("currentView:opened", (viewData) => {
-        this._viewCurrentlyOpen = viewData[0];
-      });
-
       // Register browser back button action(s)
       window.onpopstate = (evt) => {
 
