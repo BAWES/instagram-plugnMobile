@@ -1,5 +1,5 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { Platform, Events, ToastController } from 'ionic-angular';
+import { Platform, Events, ToastController, IonicApp, App, MenuController } from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 
 import { NavigationPage } from '../pages/navigation/navigation';
@@ -15,28 +15,34 @@ import { KeyboardService } from '../providers/keyboard.service';
 export class MyApp implements OnInit{
   rootPage: any;
 
+  private _viewCurrentlyOpen;
+
   constructor(
-    platform: Platform, 
+    private _platform: Platform, 
     private _auth: AuthService,
     private _keyboard: KeyboardService,
     private _events: Events,
     private _toastCtrl: ToastController,
+    private _app: App, private _ionicApp: IonicApp, private _menu: MenuController,
     private _zone: NgZone
     ) {
     
     /**
      * Run Ionic native functions once the platform is ready
      */
-    platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      if (platform.is('cordova')) {
+    this._platform.ready().then(() => {
+
+      if (this._platform.is('cordova')) {
         StatusBar.styleDefault();
       }
 
-      if (platform.is('ios')) {
+      if (this._platform.is('ios')) {
         this._keyboard.disableScroll();
       }
+
+      // Fix back button behavior on browser
+      this._setupBackButtonBehavior();
+
 
       // Figure out which page to load on app start [Based on Auth]
       if(this._auth.isLoggedIn){
@@ -82,6 +88,52 @@ export class MyApp implements OnInit{
     });
 
     toast.present();
+  }
+
+
+  private _setupBackButtonBehavior () {
+
+    // If on web version (browser)
+    if (window.location.protocol !== "file:") {
+
+      // Save Nav Control for browser back button.
+      this._events.subscribe("currentView:opened", (viewData) => {
+        this._viewCurrentlyOpen = viewData[0];
+      });
+
+      // Register browser back button action(s)
+      window.onpopstate = (evt) => {
+
+        // Close menu if open
+        if (this._menu.isOpen()) {
+          this._menu.close ();
+          return;
+        }
+
+        // Close any active modals or overlays
+        let activePortal = this._ionicApp._loadingPortal.getActive() ||
+          this._ionicApp._modalPortal.getActive() ||
+          this._ionicApp._toastPortal.getActive() ||
+          this._ionicApp._overlayPortal.getActive();
+
+        if (activePortal) {
+          activePortal.dismiss();
+          return;
+        }
+
+        // Navigate back
+        if (this._app.getActiveNav().canGoBack()){ 
+          this._app.getActiveNav().pop();
+        };
+
+      };
+
+      // Fake browser history on each view enter
+      this._app.viewDidEnter.subscribe((app) => {
+        history.pushState (null, null, "");
+      });
+
+    }
   }
 
 }

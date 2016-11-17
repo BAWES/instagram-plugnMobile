@@ -18,8 +18,7 @@ export class AccountTabsPage {
   tab2Root: any = MediaPage;
 
   constructor(public navCtrl: NavController) {
-    // Keyboard service is required in constructor to hide the tabs.
-    // If user was already logged in, a singleton wouldn't have been created from login page
+    
   }
 
 }
