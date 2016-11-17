@@ -4,6 +4,7 @@ import { NavController, Events } from 'ionic-angular';
 // Services
 import { ConversationService } from '../../../providers/logged-in/conversation.service';
 import { AccountService } from '../../../providers/logged-in/account.service';
+import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
 
 // Pages
 import { ConversationDetailPage } from '../conversation-detail/conversation-detail';
@@ -23,11 +24,17 @@ export class ConversationPage {
     public navCtrl: NavController, 
     public conversations: ConversationService,
     public accounts: AccountService,
+    private _backBtn: HardwareBackButtonService,
     private _events: Events,
     ) { }
 
   ionViewDidLoad() {
     // Initialize Class Here If Needed
+  }
+
+  ionViewDidEnter() {
+    // Setup Back Button Behavior
+    this._backBtn.toggleMenuOnBack();
   }
 
   /**

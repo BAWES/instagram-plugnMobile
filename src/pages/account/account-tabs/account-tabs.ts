@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController} from 'ionic-angular';
 
 // Pages
 import { MediaPage } from '../media/media';
@@ -17,8 +17,12 @@ export class AccountTabsPage {
   tab1Root: any = ConversationPage;
   tab2Root: any = MediaPage;
 
-  constructor(public navCtrl: NavController) {
+  constructor(
+    public navCtrl: NavController
+    ) {
     
   }
+
+  
 
 }

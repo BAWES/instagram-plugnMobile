@@ -19,7 +19,9 @@ export class NavigationPage {
   constructor(
     public accounts: AccountService,
     private _auth: AuthService,
-    private _menu: MenuController) { }
+    private _menu: MenuController,
+    ) {
+  }
 
   openPage(page){
     console.log("Attempting to open page");

@@ -15,8 +15,6 @@ import { KeyboardService } from '../providers/keyboard.service';
 export class MyApp implements OnInit{
   rootPage: any;
 
-  private _viewCurrentlyOpen;
-
   constructor(
     private _platform: Platform, 
     private _auth: AuthService,
@@ -41,13 +39,14 @@ export class MyApp implements OnInit{
       }
 
       // Fix back button behavior on browser
-      this._setupBackButtonBehavior();
-
+      this._setupBrowserBackButtonBehavior();
 
       // Figure out which page to load on app start [Based on Auth]
       if(this._auth.isLoggedIn){
         this.rootPage = NavigationPage;
-      }else this.rootPage = LoginPage;
+      }else{
+        this.rootPage = LoginPage;
+      }
       
     });
   }
@@ -84,14 +83,17 @@ export class MyApp implements OnInit{
     let toast = this._toastCtrl.create({
       message: content,
       position: 'bottom',
-      duration: 3000,
+      duration: 2500,
     });
 
     toast.present();
   }
 
 
-  private _setupBackButtonBehavior () {
+  /**
+   * Make Desktop Browser back button function better
+   */
+  private _setupBrowserBackButtonBehavior () {
 
     // If on web version (browser)
     if (window.location.protocol !== "file:") {

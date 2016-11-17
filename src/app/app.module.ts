@@ -27,6 +27,7 @@ import { CommentComponent } from '../components/comment/comment';
 // Providers / Services
 import { AuthService } from '../providers/auth.service'
 import { KeyboardService } from '../providers/keyboard.service'
+import { HardwareBackButtonService } from '../providers/hardwarebackbtn.service'
 import { ConfigService } from '../providers/config.service'
 
 import { AuthHttpService } from '../providers/logged-in/authhttp.service'
@@ -105,6 +106,7 @@ export const toDeclare = [
   providers: [
     AuthService, //Handles all Authorization
     KeyboardService, //Handles all Keyboard Activity
+    HardwareBackButtonService, //Handles Hardware back button
     ConfigService, //Handles Environment-specific Variables
     AuthHttpService, //Handles all Authorized HTTP functions with Bearer Token
     

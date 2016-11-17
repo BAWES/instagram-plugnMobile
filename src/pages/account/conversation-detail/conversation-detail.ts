@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavParams, Events, Content } from 'ionic-angular';
+import { NavController, NavParams, Events, Content } from 'ionic-angular';
 
 // Models
 import { Conversation } from '../../../models/conversation';
@@ -7,6 +7,7 @@ import { Comment } from '../../../models/comment';
 
 // Services
 import { ConversationService } from '../../../providers/logged-in/conversation.service';
+import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
 
 /*
   Conversation Detail page.
@@ -30,8 +31,10 @@ export class ConversationDetailPage {
 
   constructor(
     params: NavParams,
+    public navCtrl: NavController,
     public conversations: ConversationService,
     private _events: Events,
+    private _backBtn: HardwareBackButtonService
     ) {
       this.activeConversation = params.get("conversation");      
     }
@@ -49,6 +52,13 @@ export class ConversationDetailPage {
          this.content.scrollToBottom(0);
         }, 50);
       }else this.addKeyboardMargin = false;
+    });
+  }
+
+  ionViewDidEnter() {
+    // Setup Back Button Behavior
+    this._backBtn.callbackOnBack(() => {
+      this.navCtrl.pop();
     });
   }
 

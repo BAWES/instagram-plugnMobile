@@ -3,6 +3,7 @@ import { NavController, Events } from 'ionic-angular';
 
 import { MediaService } from '../../../providers/logged-in/media.service';
 import { AccountService } from '../../../providers/logged-in/account.service';
+import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
 
 /*
   Media page.
@@ -18,10 +19,16 @@ export class MediaPage {
     public media: MediaService,
     public accounts: AccountService,
     private _events: Events,
+    private _backBtn: HardwareBackButtonService
     ) {}
 
   ionViewDidLoad() {
     // Initialize Class Here If Needed
+  }
+
+  ionViewDidEnter() {
+    // Setup Back Button Behavior
+    this._backBtn.toggleMenuOnBack();
   }
 
   /**
