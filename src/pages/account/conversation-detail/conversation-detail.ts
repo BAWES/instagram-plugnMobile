@@ -61,10 +61,13 @@ export class ConversationDetailPage {
       this.navCtrl.pop();
     });
 
-    // Pop this page off on account change
+    // Subscribe to Pop this page off on account change
     this._events.subscribe("account:switching", (eventData) => {
       this.navCtrl.pop();
     });
+
+    // Announce the current navCtrl for browser back button to function if needed
+    this._events.publish("navController:current", this.navCtrl);
   }
 
   refreshContentHeight(){
