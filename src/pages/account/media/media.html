@@ -38,6 +38,12 @@
   <!-- When content available -->
   <div *ngIf="!media.isLoading || media.refresherLoading">
 
+    <!-- Display Message if No Conversations -->
+    <h3 padding text-center align-center 
+      *ngIf="media.mediaList && media.mediaList.length == 0">
+      There seems to be no media posts on your account. If you're new to Plugn please give it a while to gather your accounts information.
+    </h3>
+
     <!-- Unhandled Media -->
     <ion-list class="unhandled" *ngIf="media.unhandledMedia && media.unhandledMedia.length > 0">
       <ion-list-header>

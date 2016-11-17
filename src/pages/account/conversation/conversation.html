@@ -47,6 +47,12 @@
       </ion-searchbar>
     </ion-toolbar>
 
+    <!-- Display Message if No Conversations -->
+    <h3 padding text-center align-center 
+      *ngIf="conversations.conversationList && conversations.conversationList.length == 0">
+      There seems to be no active conversations on your account
+    </h3>
+
     <!-- Unhandled Conversations -->
     <ion-list class="unhandled" *ngIf="conversations.unhandledConversations && conversations.unhandledConversations.length > 0">
       <ion-list-header>
