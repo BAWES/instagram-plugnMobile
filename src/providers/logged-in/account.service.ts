@@ -60,6 +60,10 @@ export class AccountService {
    * @param  {any} account
    */
   public setActiveAccount(account){
+    // Publish an Event that we're switching accounts
+    this._events.publish("account:switching", account);
+
+    // Proceed with switching accounts
     this.activeAccount = account;
     this.loadAccountMediaAndConversations();
   }

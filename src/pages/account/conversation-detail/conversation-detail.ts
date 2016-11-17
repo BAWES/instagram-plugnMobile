@@ -60,6 +60,11 @@ export class ConversationDetailPage {
     this._backBtn.callbackOnBack(() => {
       this.navCtrl.pop();
     });
+
+    // Pop this page off on account change
+    this._events.subscribe("account:switching", (eventData) => {
+      this.navCtrl.pop();
+    });
   }
 
   refreshContentHeight(){

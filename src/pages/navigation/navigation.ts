@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { MenuController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { MenuController, NavController } from 'ionic-angular';
 
 import { AuthService } from '../../providers/auth.service';
 import { AccountService } from '../../providers/logged-in/account.service';
@@ -16,6 +16,8 @@ export class NavigationPage {
 
   rootPage: any = AccountTabsPage;
 
+  @ViewChild('loggedInContent') nav: NavController
+
   constructor(
     public accounts: AccountService,
     private _auth: AuthService,
@@ -28,7 +30,7 @@ export class NavigationPage {
   }
 
   loadAddAccountPage(){
-    this.rootPage = AddAccountPage;
+    this.nav.push(AddAccountPage);
     this._menu.close();
   }
 
