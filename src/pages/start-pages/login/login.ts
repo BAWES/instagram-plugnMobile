@@ -32,29 +32,34 @@ export class LoginPage {
   // Store number of invalid password attempts to suggest reset password 
   private _numberOfLoginAttempts = 0;
 
+  // Event Handlers to subscribe to for when page leaves
+  private _keyboardToggleHandler;
+
   constructor(
     public navCtrl: NavController, 
     private _fb: FormBuilder, 
     private _auth: AuthService,
     private _alertCtrl: AlertController,
     public keyboard: KeyboardService,
-    events: Events,
-    ref:ApplicationRef
+    private _events: Events,
+    private _ref:ApplicationRef
     ){
       // Initialize the Login Form
       this.loginForm = this._fb.group({
         email: ["", [Validators.required, CustomValidator.emailValidator]],
         password: ["", Validators.required]
       });
+  }
 
-      // Force trigger Angular2 Change Detection when keyboard opens and closes
-      events.subscribe("keyboard:toggle", (keyboardData) => {
-        ref.tick();
-      });
-    }
+  ionViewDidEnter() {
+    // Force trigger Angular2 Change Detection when keyboard opens and closes
+    this._events.subscribe("keyboard:toggle", this._keyboardToggleHandler = (keyboardData) => {
+      this._ref.tick();
+    });
+  }
 
-  ionViewDidLoad() {
-    
+  ionViewWillLeave(){
+    this._events.unsubscribe("keyboard:toggle", this._keyboardToggleHandler);
   }
 
 

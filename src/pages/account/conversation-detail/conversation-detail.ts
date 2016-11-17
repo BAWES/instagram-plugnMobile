@@ -29,6 +29,9 @@ export class ConversationDetailPage {
 
   public addKeyboardMargin = false;
 
+  // Variable storing event handlers to unsubscribe from before page leaves
+  private _accountSwitchHandler;
+
   constructor(
     params: NavParams,
     public navCtrl: NavController,
@@ -61,13 +64,17 @@ export class ConversationDetailPage {
       this.navCtrl.pop();
     });
 
+    // Announce the current navCtrl for browser back button to function
+    this._events.publish("navController:current", this.navCtrl);
+
     // Subscribe to Pop this page off on account change
-    this._events.subscribe("account:switching", (eventData) => {
+    this._events.subscribe("account:switching", this._accountSwitchHandler = (eventData) => {
       this.navCtrl.pop();
     });
+  }
 
-    // Announce the current navCtrl for browser back button to function if needed
-    this._events.publish("navController:current", this.navCtrl);
+  ionViewWillLeave(){
+    this._events.unsubscribe("account:switching", this._accountSwitchHandler);
   }
 
   refreshContentHeight(){

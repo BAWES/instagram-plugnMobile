@@ -1,6 +1,6 @@
 // Core
-import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { Component, ApplicationRef } from '@angular/core';
+import { NavController, AlertController, Events } from 'ionic-angular';
 // Services
 import { AuthService } from '../../../providers/auth.service';
 import { KeyboardService } from '../../../providers/keyboard.service';
@@ -22,12 +22,17 @@ export class RegisterPage {
   // Disable submit button if loading response
   public isLoading = false;
 
+  // Event Handlers to Unsubscribe from 
+  private _keyboardToggleHandler;
+
   constructor(
     public navCtrl: NavController, 
     private _fb: FormBuilder, 
     private _auth: AuthService,
     private _alertCtrl: AlertController,
+    private _events: Events,
     public keyboard: KeyboardService,
+    private _ref:ApplicationRef
     ){
       // Initialize the Registration Form
       this.signupForm = this._fb.group({
@@ -35,11 +40,17 @@ export class RegisterPage {
         email: ["", [Validators.required, CustomValidator.emailValidator]],
         password: ["", Validators.required]
       }); 
-    }
+  }
 
+  ionViewDidEnter() {
+    // Force trigger Angular2 Change Detection when keyboard opens and closes
+    this._events.subscribe("keyboard:toggle", this._keyboardToggleHandler = (keyboardData) => {
+      this._ref.tick();
+    });
+  }
 
-  ionViewDidLoad() {
-    
+  ionViewWillLeave(){
+    this._events.unsubscribe("keyboard:toggle", this._keyboardToggleHandler);
   }
 
 
