@@ -24,7 +24,7 @@ export class ConversationDetailPage {
   @ViewChild(Content) content: Content;
 
   public isLoading = false;
-  public refresherLoading = false;
+  public isCommentSubmitting = false; // When comment is being submitted to server
 
   public commentInputControl: FormControl;
 
@@ -88,6 +88,19 @@ export class ConversationDetailPage {
     this._events.subscribe("account:switching", this._accountSwitchHandler = (eventData) => {
       this.navCtrl.pop();
     });
+  }
+
+  /**
+   * User clicked submit button for new comment
+   */
+  onCommentSubmit(){
+    this.isCommentSubmitting = true;
+
+    let commentInput = this.commentInputControl.value;
+    console.log(commentInput);
+
+    //delete this later
+    setTimeout(() => this.isCommentSubmitting=false, 3000);
   }
 
   /**

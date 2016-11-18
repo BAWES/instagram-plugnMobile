@@ -144,8 +144,16 @@
     <ion-buttons right>
       <button ion-button icon-only
         type="submit" 
-        [disabled]="!commentInputControl.valid">
-        <ion-icon name="send"></ion-icon>
+        (click)="onCommentSubmit()"
+        [disabled]="!commentInputControl.valid || isCommentSubmitting">
+
+        <!-- Show Loading button by default -->
+        <span *ngIf="!isCommentSubmitting">
+          <ion-icon name="send"></ion-icon>
+        </span>
+        <!-- Show Loading Spinner if comment being submitted -->
+        <ion-spinner *ngIf="isCommentSubmitting"></ion-spinner>
+
       </button>
     </ion-buttons>
 
