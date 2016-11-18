@@ -53,6 +53,9 @@ export class ConversationDetailPage {
       this.commentInputControl = new FormControl('', Validators.compose([Validators.required]));
     }
 
+  /**
+   * Page Constructed, Initialize
+   */
   ionViewDidLoad() {
     // Load and populate conversation detail
     this._loadComments();
@@ -69,6 +72,9 @@ export class ConversationDetailPage {
     });
   }
 
+  /**
+   * On Page Enter
+   */
   ionViewDidEnter() {
     // Setup Back Button Behavior
     this._backBtn.callbackOnBack(() => {
@@ -82,6 +88,13 @@ export class ConversationDetailPage {
     this._events.subscribe("account:switching", this._accountSwitchHandler = (eventData) => {
       this.navCtrl.pop();
     });
+  }
+
+  /**
+   * Page is leaving
+   */
+  ionViewWillLeave(){
+    this._events.unsubscribe("account:switching", this._accountSwitchHandler);
   }
 
   showCreateNoteForm(){
@@ -114,10 +127,6 @@ export class ConversationDetailPage {
       ]
     });
     prompt.present();
-  }
-
-  ionViewWillLeave(){
-    this._events.unsubscribe("account:switching", this._accountSwitchHandler);
   }
 
   refreshContentHeight(){
