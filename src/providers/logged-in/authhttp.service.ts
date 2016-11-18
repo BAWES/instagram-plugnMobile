@@ -34,7 +34,7 @@ export class AuthHttpService {
     const url = this._config.apiBaseUrl + endpointUrl;
 
     return this._http.get(url, {headers: this._buildAuthHeaders()})
-              .catch(this._handleError)
+              .catch((err) => this._handleError(err))
               .first()
               .map((res: Response) => res.json());
   }
@@ -49,7 +49,7 @@ export class AuthHttpService {
     const url = this._config.apiBaseUrl + endpointUrl;
 
     return this._http.post(url, JSON.stringify(params), {headers: this._buildAuthHeaders()})
-              .catch(this._handleError)
+              .catch((err) => this._handleError(err))
               .first()
               .map((res: Response) => res.json());
   }

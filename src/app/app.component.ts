@@ -85,7 +85,7 @@ export class MyApp implements OnInit{
     let toast = this._toastCtrl.create({
       message: content,
       position: 'bottom',
-      duration: 2500,
+      duration: 3000,
     });
 
     toast.present();
