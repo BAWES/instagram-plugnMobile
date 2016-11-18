@@ -129,10 +129,16 @@ export class ConversationDetailPage {
     prompt.present();
   }
 
+  /**
+   * Recalculate and Refresh the content height
+   */
   refreshContentHeight(){
     this.content.resize();
   }
 
+  /**
+   * Load comments that are available within this conversation
+   */
   private _loadComments(){
     this.isLoading = true;
     this.conversations.getConversationDetail(this.activeConversation).subscribe((jsonResponse) => {
