@@ -26,12 +26,12 @@
 <ion-content [class.infoTab]="selectedTab == 'info'">
 
   <!-- When content isn't available, Show Loading -->
-  <div class="page-loading" *ngIf="isLoading && !refresherLoading">
+  <div class="page-loading" *ngIf="isLoading">
     <img src='assets/brand/loader.gif'>
   </div>
 
   <!-- When content available -->
-  <div *ngIf="!isLoading || refresherLoading" [ngSwitch]="selectedTab">
+  <div *ngIf="!isLoading" [ngSwitch]="selectedTab">
 
     <!-- START Conversation Tab -->
     <ion-list 
