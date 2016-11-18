@@ -79,12 +79,19 @@ export class AuthHttpService {
       let errMsg = (error.message) ? error.message :
           error.status ? `${error.status} - ${error.statusText}` : 'Server error';
 
-      alert("Error: "+errMsg);
+      // Handle No Internet Connection Error
+      if (error.status == 0) {
+          this._auth.logout("Unable to connect to Plugn servers. Please check your internet connection.");
+          return Observable.empty<Response>();
+      }
 
+      // Handle Expired Session Error
       if (error.status === 401) {
           this._auth.logout('Session expired, please log back in.');
           return Observable.empty<Response>();
       }
+
+      alert("Error: "+errMsg);
 
       return Observable.throw(errMsg);
   }
