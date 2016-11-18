@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Events, Content } from 'ionic-angular';
+import { NavController, NavParams, Events, Content, AlertController } from 'ionic-angular';
 
 // Models
 import { Conversation } from '../../../models/conversation';
@@ -37,7 +37,8 @@ export class ConversationDetailPage {
     public navCtrl: NavController,
     public conversations: ConversationService,
     private _events: Events,
-    private _backBtn: HardwareBackButtonService
+    private _backBtn: HardwareBackButtonService,
+    private _alertCtrl: AlertController
     ) {
       this.activeConversation = params.get("conversation");      
     }
@@ -71,6 +72,38 @@ export class ConversationDetailPage {
     this._events.subscribe("account:switching", this._accountSwitchHandler = (eventData) => {
       this.navCtrl.pop();
     });
+  }
+
+  showCreateNoteForm(){
+    let prompt = this._alertCtrl.create({
+      title: 'Add Note',
+      inputs: [
+        {
+          name: 'title',
+          placeholder: 'Title'
+        },
+        {
+          name: 'note',
+          placeholder: 'Note'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            console.log('Saved clicked');
+          }
+        }
+      ]
+    });
+    prompt.present();
   }
 
   ionViewWillLeave(){
