@@ -7,6 +7,7 @@ import { Comment } from '../../../models/comment';
 
 // Services
 import { ConversationService } from '../../../providers/logged-in/conversation.service';
+import { AccountService } from '../../../providers/logged-in/account.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
 
 /*
@@ -36,6 +37,7 @@ export class ConversationDetailPage {
     params: NavParams,
     public navCtrl: NavController,
     public conversations: ConversationService,
+    public accounts: AccountService,
     private _events: Events,
     private _backBtn: HardwareBackButtonService,
     private _alertCtrl: AlertController
