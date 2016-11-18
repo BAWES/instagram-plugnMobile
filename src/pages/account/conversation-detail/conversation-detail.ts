@@ -10,6 +10,9 @@ import { ConversationService } from '../../../providers/logged-in/conversation.s
 import { AccountService } from '../../../providers/logged-in/account.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
 
+// Forms
+import { FormControl, Validators } from '@angular/forms';
+
 /*
   Conversation Detail page.
 */
@@ -22,6 +25,8 @@ export class ConversationDetailPage {
 
   public isLoading = false;
   public refresherLoading = false;
+
+  public commentInputControl: FormControl;
 
   public activeConversation: Conversation;
   public selectedTab: string = "conversation";
@@ -42,7 +47,10 @@ export class ConversationDetailPage {
     private _backBtn: HardwareBackButtonService,
     private _alertCtrl: AlertController
     ) {
-      this.activeConversation = params.get("conversation");      
+      this.activeConversation = params.get("conversation");
+
+      // Initialize the Comment Input Form Control
+      this.commentInputControl = new FormControl('', Validators.compose([Validators.required]));
     }
 
   ionViewDidLoad() {
