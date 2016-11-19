@@ -181,6 +181,8 @@ export class ConversationDetailPage {
 
   /**
    * Load comments that are available within this conversation
+   * If a callback is specified then it will load the comments in the background
+   * and won't be showing the loading indicator which covers the page.
    * @param {any} [callback]
    */
   private _loadComments(callback?){
