@@ -35,7 +35,11 @@
     "cordova-plugin-console",
     "cordova-plugin-device",
     "cordova-plugin-splashscreen",
-    "cordova-plugin-inappbrowser"
+    "cordova-plugin-inappbrowser",
+    {
+      "locator": "https://github.com/VersoSolutions/CordovaClipboard.git",
+      "id": "com.verso.cordova.clipboard"
+    }
   ],
   "cordovaPlatforms": [
     "ios",

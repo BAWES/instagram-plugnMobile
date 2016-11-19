@@ -1,7 +1,8 @@
 <!-- Sliding Item -->
-<ion-item-sliding>
+<ion-item-sliding (press)="copyToClipboard()" (tap)="notifyOptions()">
+
   <!-- The Ion Item -->
-  <ion-item text-wrap 
+  <ion-item text-wrap [class.slideOpen]="isSlideOpen"
     [class.queued]="comment.commentType == 'queue'"
     [class.handled]="(comment.comment_handled == '1') && (comment.comment_deleted == '0') && (comment.commentType != 'queue')"
     [class.unhandled]="(comment.comment_handled != '1') && (comment.comment_deleted == '0') && (comment.commentType != 'queue')"
@@ -46,7 +47,7 @@
 
   <!-- Right Sliding Options -->
   <ion-item-options side="right">
-    <button ion-button color="danger">
+    <button ion-button color="danger" *ngIf="comment.commentType != 'queue'">
       <ion-icon name="trash"></ion-icon>
       Delete
     </button>
