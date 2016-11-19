@@ -25,15 +25,16 @@ import { Autosize } from '../directives/autosize/autosize';
 import { CommentComponent } from '../components/comment/comment';
 
 // Providers / Services
-import { AuthService } from '../providers/auth.service'
-import { KeyboardService } from '../providers/keyboard.service'
-import { HardwareBackButtonService } from '../providers/hardwarebackbtn.service'
-import { ConfigService } from '../providers/config.service'
+import { AuthService } from '../providers/auth.service';
+import { KeyboardService } from '../providers/keyboard.service';
+import { HardwareBackButtonService } from '../providers/hardwarebackbtn.service';
+import { ConfigService } from '../providers/config.service';
 
-import { AuthHttpService } from '../providers/logged-in/authhttp.service'
-import { AccountService } from '../providers/logged-in/account.service'
-import { MediaService } from '../providers/logged-in/media.service'
-import { ConversationService } from '../providers/logged-in/conversation.service'
+import { AuthHttpService } from '../providers/logged-in/authhttp.service';
+import { AccountService } from '../providers/logged-in/account.service';
+import { MediaService } from '../providers/logged-in/media.service';
+import { ConversationService } from '../providers/logged-in/conversation.service';
+import { CommentService } from '../providers/logged-in/comment.service';
 
 export const pages = [
   MyApp,
@@ -112,7 +113,8 @@ export const toDeclare = [
     
     AccountService, //Manages Instagram Accounts assigned to Agent
     MediaService, //Manage Media for accounts
-    ConversationService // Manages Conversations for accounts
+    ConversationService, // Manages Conversations for accounts
+    CommentService // Handle Comment Posting and Deletion
   ],
   bootstrap: [IonicApp]
 })
