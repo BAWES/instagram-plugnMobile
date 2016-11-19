@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { Observable } from 'rxjs/Observable';
+
 // Services
 import { AuthHttpService } from './authhttp.service';
 
@@ -21,8 +23,9 @@ export class CommentService {
    * @param {number} mediaId
    * @param {string} commentMessage
    * @param {string} [respondingTo] (optional)
+   * @returns {Observable<any>}
    */
-  postComment(accountId: number, mediaId: number, commentMessage: string, respondingTo?: string){
+  postComment(accountId: number, mediaId: number, commentMessage: string, respondingTo?: string): Observable<any>{
     let postUrl = `${this._commentEndpoint}`;
     let params = {
       "accountId": accountId,
@@ -31,10 +34,7 @@ export class CommentService {
       "respondingTo": respondingTo
     };
     
-    this._authhttp.post(postUrl, params).subscribe(jsonResponse => {
-      // Response of request from here
-      console.log(jsonResponse);
-    });
+    return this._authhttp.post(postUrl, params);
   }
 
 

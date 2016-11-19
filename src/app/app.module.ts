@@ -94,6 +94,7 @@ export const toDeclare = [
     IonicModule.forRoot(MyApp, {
       // Global Config
       tabsHideOnSubPages: true,
+      //mode: "ios",
 
       // Platform Specific Config
       platforms : {
