@@ -47,6 +47,10 @@
 
   <!-- Right Sliding Options -->
   <ion-item-options side="right">
+    <button ion-button color="primary" *ngIf="comment.commentType != 'queue'">
+      <ion-icon name="checkmark"></ion-icon>
+      Handled
+    </button>
     <button ion-button color="dark" *ngIf="comment.commentType != 'queue'">
       <ion-icon name="image"></ion-icon>
       Where?
