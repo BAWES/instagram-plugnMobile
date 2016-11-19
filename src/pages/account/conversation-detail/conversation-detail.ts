@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Events, Content, AlertController } from 'ionic-angular';
+import { NavController, NavParams, Events, Content, AlertController, MenuController } from 'ionic-angular';
 
 // Models
 import { Conversation } from '../../../models/conversation';
@@ -55,7 +55,8 @@ export class ConversationDetailPage {
     private _commentService: CommentService,
     private _events: Events,
     private _backBtn: HardwareBackButtonService,
-    private _alertCtrl: AlertController
+    private _alertCtrl: AlertController,
+    private _menuCtrl: MenuController
     ) {
       this.activeConversation = params.get("conversation");
 
@@ -92,6 +93,9 @@ export class ConversationDetailPage {
     this._backBtn.callbackOnBack(() => {
       this.navCtrl.pop();
     });
+
+    // Disable Swipe on Right Menu
+    this._menuCtrl.swipeEnable(false, "right");
 
     // Announce the current navCtrl for browser back button to function
     this._events.publish("navController:current", this.navCtrl);

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Events } from 'ionic-angular';
+import { NavController, Events, MenuController } from 'ionic-angular';
 
 import { MediaService } from '../../../providers/logged-in/media.service';
 import { AccountService } from '../../../providers/logged-in/account.service';
@@ -19,7 +19,8 @@ export class MediaPage {
     public media: MediaService,
     public accounts: AccountService,
     private _events: Events,
-    private _backBtn: HardwareBackButtonService
+    private _backBtn: HardwareBackButtonService,
+    private _menuCtrl: MenuController
     ) {}
 
   ionViewDidLoad() {
@@ -29,6 +30,8 @@ export class MediaPage {
   ionViewDidEnter() {
     // Setup Back Button Behavior
     this._backBtn.toggleMenuOnBack();
+    // Enable Swipe on Right Menu
+    this._menuCtrl.swipeEnable(true, "right");
   }
 
   /**

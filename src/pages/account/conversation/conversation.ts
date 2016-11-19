@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Events } from 'ionic-angular';
+import { NavController, Events, MenuController } from 'ionic-angular';
 
 // Services
 import { ConversationService } from '../../../providers/logged-in/conversation.service';
@@ -26,6 +26,7 @@ export class ConversationPage {
     public accounts: AccountService,
     private _backBtn: HardwareBackButtonService,
     private _events: Events,
+    private _menuCtrl: MenuController
     ) { }
 
   ionViewDidLoad() {
@@ -35,6 +36,8 @@ export class ConversationPage {
   ionViewDidEnter() {
     // Setup Back Button Behavior
     this._backBtn.toggleMenuOnBack();
+    // Enable Swipe on Right Menu
+    this._menuCtrl.swipeEnable(true, "right");
   }
 
   /**
