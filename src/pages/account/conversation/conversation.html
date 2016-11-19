@@ -39,7 +39,7 @@
   <div *ngIf="!conversations.isLoading || conversations.refresherLoading">
 
     <!-- Search Input -->
-    <ion-toolbar>
+    <ion-toolbar no-border>
       <ion-searchbar
         [(ngModel)]="searchInput"
         (ionInput)="searchFilter($event)"
