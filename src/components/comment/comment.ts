@@ -28,16 +28,26 @@ export class CommentComponent {
 
   /**
    * Present toast showing available options when dealing with this item
+   * TOAST IS TO BE SHOWN ONCE A DAY ONLY!
    */
   notifyOptions(){
+    let dayOfTheMonth = new Date().getDate();
+    let previouslyNotifiedDay = parseInt(localStorage.getItem("swipeNotificationDate"));
 
-    // Add link to Media view on swipe
-    let toast = this._toastCtrl.create({
-        message: 'Swipe the comment left for additional options',
+    // If user hasn't been previously notified, or if he's been notified but on a different day
+    if(!previouslyNotifiedDay || (dayOfTheMonth != previouslyNotifiedDay)){
+      // Present Toast
+      let toast = this._toastCtrl.create({
+        message: 'Swipe a comment to the left for additional options',
         position: 'bottom',
-        duration: 1500
+        showCloseButton: true,
+        closeButtonText: "Ok"
       });
       toast.present();
+      
+      // Save today as the previously notified day
+      window.localStorage.setItem('swipeNotificationDate', dayOfTheMonth+"");
+    }
   }
 
   /**
@@ -49,7 +59,7 @@ export class CommentComponent {
       this._haptic.notification({type: 'success'});
       let toast = this._toastCtrl.create({
         message: 'Comment has been copied to the clipboard',
-        position: 'top',
+        position: 'bottom',
         duration: 1500
       });
       toast.present();
