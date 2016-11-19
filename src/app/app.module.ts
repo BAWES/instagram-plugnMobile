@@ -20,6 +20,7 @@ import { MediaPage } from '../pages/account/media/media';
 
 // Directives 
 import { Autosize } from '../directives/autosize/autosize';
+import { KeyboardAttachDirective } from '../directives/keyboard-attach/keyboard-attach';
 
 // Components 
 import { CommentComponent } from '../components/comment/comment';
@@ -60,6 +61,7 @@ export const toDeclare = [
    * Directives
    */
   Autosize,
+  KeyboardAttachDirective,
 
   /**
    * Components

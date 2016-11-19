@@ -23,7 +23,7 @@
 </ion-header>
 
 
-<ion-content [class.infoTab]="selectedTab == 'info'">
+<ion-content #contentArea [class.infoTab]="selectedTab == 'info'">
 
   <!-- When content isn't available, Show Loading -->
   <div class="page-loading" *ngIf="isLoading">
@@ -124,7 +124,7 @@
 
 </ion-content>
 
-<ion-footer *ngIf="selectedTab == 'conversation'">
+<ion-footer [keyboardAttach]="contentArea" *ngIf="selectedTab == 'conversation'">
   <!-- Comment Box Toolbar -->
   <ion-toolbar>
     <ion-buttons left>

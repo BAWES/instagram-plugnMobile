@@ -20,6 +20,9 @@ export class KeyboardService {
       if (_platform.is('cordova')) {
         this.initialize();
       }
+      if (_platform.is('ios')) {
+        this.disableScroll();
+      }
     });
   }
 
