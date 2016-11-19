@@ -2,7 +2,7 @@
 <ion-item-sliding (press)="copyToClipboard()" (tap)="notifyOptions()">
 
   <!-- The Ion Item -->
-  <ion-item text-wrap [class.slideOpen]="isSlideOpen"
+  <ion-item text-wrap
     [class.queued]="comment.commentType == 'queue'"
     [class.handled]="(comment.comment_handled == '1') && (comment.comment_deleted == '0') && (comment.commentType != 'queue')"
     [class.unhandled]="(comment.comment_handled != '1') && (comment.comment_deleted == '0') && (comment.commentType != 'queue')"
