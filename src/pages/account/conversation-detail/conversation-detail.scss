@@ -32,7 +32,8 @@ page-conversation-detail {
             -webkit-border-radius: 200px
         }
     }
-
-    
     
 }
+
+// Fix Comment Input
+.ios ion-textarea.commentInput{padding-left:5px;}
