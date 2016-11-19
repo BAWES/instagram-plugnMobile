@@ -35,10 +35,17 @@ export class ConversationDetailPage {
   public conversationComments: Comment[];
   private _lastCommentsMediaId: number; // Stores the last comments media id for posting response
 
+  // Comment Count within Conversation 
+  public commentCount: number;
+  public previousCommentCount: number; // Stored to check if there's updates since last refresh
+
   public addKeyboardMargin = false;
 
   // Variable storing event handlers to unsubscribe from before page leaves
   private _accountSwitchHandler;
+
+  // Interval Refresh Timer
+  private _refreshTimer;
 
   constructor(
     params: NavParams,
@@ -79,6 +86,8 @@ export class ConversationDetailPage {
    * On Page Enter
    */
   ionViewDidEnter() {
+    this._initRefresher();
+
     // Setup Back Button Behavior
     this._backBtn.callbackOnBack(() => {
       this.navCtrl.pop();
@@ -91,6 +100,37 @@ export class ConversationDetailPage {
     this._events.subscribe("account:switching", this._accountSwitchHandler = (eventData) => {
       this.navCtrl.pop();
     });
+  }
+  /**
+   * Page is leaving
+   */
+  ionViewWillLeave(){
+    // Disable Refresh Timer 
+    clearInterval(this._refreshTimer);
+
+    // Unsubscribe
+    this._events.unsubscribe("account:switching", this._accountSwitchHandler);
+  }
+
+  /**
+   * Initialize the comment content refresher
+   */
+  private _initRefresher(){
+    // Refresh Comments every X Seconds
+    let numSeconds = 20 * 1000;
+    this._refreshTimer = setInterval(() => {
+      // Reload comments then execute callback
+      this._loadComments(() => {
+        // If the comment count has changed, scroll to bottom
+        if(this.commentCount != this.previousCommentCount){
+          setTimeout(() => {
+            this.content.scrollToBottom();
+          }, 100);
+          // Update comment count 
+          this.previousCommentCount = this.commentCount;
+        }
+      }, "refresh");
+    }, numSeconds);
   }
 
   /**
@@ -115,7 +155,11 @@ export class ConversationDetailPage {
             this.commentInputControl.setValue("");
             // Hide loading indicator
             this.isCommentSubmitting = false;
-          });
+            // Scroll to the comment at the bottom 
+            setTimeout(() => {
+              this.content.scrollToBottom(0);
+            }, 100);
+          }, "postedComment");
 
           return;
         }
@@ -134,10 +178,55 @@ export class ConversationDetailPage {
   }
 
   /**
-   * Page is leaving
+   * Recalculate and Refresh the content height
    */
-  ionViewWillLeave(){
-    this._events.unsubscribe("account:switching", this._accountSwitchHandler);
+  refreshContentHeight(){
+    this.content.resize();
+  }
+
+  /**
+   * Load comments that are available within this conversation
+   * If a callback is specified then it will load the comments in the background
+   * and won't be showing the loading indicator which covers the page.
+   * @param {any} [callback]
+   * @param {string} [operation]
+   */
+  private _loadComments(callback?, operation?: string){
+    if(!callback){
+      this.isLoading = true;
+    }
+    
+    this.conversations.getConversationDetail(this.activeConversation).subscribe((jsonResponse) => {
+      this.isLoading = false;
+      this.conversationComments = jsonResponse.conversationComments;
+
+      // Transform All MySQL Dates into Time Since
+      this.conversationComments = this.conversationComments.map((conversation) => {
+        conversation.comment_datetime = this.conversations.getTimeSinceDate(conversation.comment_datetime);
+        return conversation;
+      });
+
+      // Store the last comments media id for posting comment response
+      this._lastCommentsMediaId = this.conversationComments[this.conversationComments.length - 1].media_id;
+
+      // Store the comment count for this conversation 
+      this.commentCount = this.conversationComments.length;
+      // Store previous number of comments on refresh or posted comment
+      if(!callback || (operation && operation == "postedComment")){
+        this.previousCommentCount = this.conversationComments.length;
+      }
+
+      // Scroll to last Message in Conversation
+      if(!callback){
+        setTimeout(() => {
+         this.content.scrollToBottom();
+        }, 100);
+      }else{
+        // Execute the callback
+        callback();
+      }
+      
+    });
   }
 
   showCreateNoteForm(){
@@ -170,53 +259,6 @@ export class ConversationDetailPage {
       ]
     });
     prompt.present();
-  }
-
-  /**
-   * Recalculate and Refresh the content height
-   */
-  refreshContentHeight(){
-    this.content.resize();
-  }
-
-  /**
-   * Load comments that are available within this conversation
-   * If a callback is specified then it will load the comments in the background
-   * and won't be showing the loading indicator which covers the page.
-   * @param {any} [callback]
-   */
-  private _loadComments(callback?){
-    if(!callback){
-      this.isLoading = true;
-    }
-    
-    this.conversations.getConversationDetail(this.activeConversation).subscribe((jsonResponse) => {
-      this.isLoading = false;
-      this.conversationComments = jsonResponse.conversationComments;
-
-      // Transform All MySQL Dates into Time Since
-      this.conversationComments = this.conversationComments.map((conversation) => {
-        conversation.comment_datetime = this.conversations.getTimeSinceDate(conversation.comment_datetime);
-        return conversation;
-      });
-
-      // Store the last comments media id for posting comment response
-      this._lastCommentsMediaId = this.conversationComments[this.conversationComments.length - 1].media_id;
-
-      // Scroll to last Message in Conversation
-      if(!callback){
-        setTimeout(() => {
-         this.content.scrollToBottom();
-        }, 100);
-      }else{
-        // Execute the callback and scroll to bottom
-        callback();
-        setTimeout(() => {
-         this.content.scrollToBottom(0);
-        }, 100);
-      }
-      
-    });
   }
 
 }
