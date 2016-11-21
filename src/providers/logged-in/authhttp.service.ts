@@ -55,6 +55,36 @@ export class AuthHttpService {
   }
 
   /**
+   * Requests via PATCH verb
+   * @param {string} endpointUrl
+   * @param {*} params
+   * @returns {Observable<any>}
+   */
+  patch(endpointUrl: string, params: any): Observable<any>{
+    const url = this._config.apiBaseUrl + endpointUrl;
+
+    return this._http.patch(url, JSON.stringify(params), {headers: this._buildAuthHeaders()})
+              .catch((err) => this._handleError(err))
+              .first()
+              .map((res: Response) => res.json());
+  }
+
+  /**
+   * Requests via DELETE verb. Params should be a part of the url string 
+   * similar to get requests.
+   * @param {string} endpointUrl
+   * @returns {Observable<any>}
+   */
+  delete(endpointUrl: string): Observable<any>{
+    const url = this._config.apiBaseUrl + endpointUrl;
+
+    return this._http.delete(url, {headers: this._buildAuthHeaders()})
+              .catch((err) => this._handleError(err))
+              .first()
+              .map((res: Response) => res.json());
+  }
+
+  /**
    * Build the Auth Headers for All Verb Requests
    * @returns {Headers}
    */
