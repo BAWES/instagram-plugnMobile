@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 // Models
 import { Media } from '../../models/media';
@@ -45,6 +46,22 @@ export class MediaService {
       this.mediaList = jsonResponse;
       this._sortMediaList();
     });
+  }
+
+  /**
+   * Marks comments within a conversation as handled
+   * @param {number} accountId
+   * @param {number} mediaId
+   * @returns {Observable<any>}
+   */
+  markMediaHandled(accountId: number, mediaId: number){
+    let handleUrl = `${this._mediaEndpoint}`;
+    let params = {
+      "accountId": accountId,
+      "mediaId": mediaId
+    };
+
+    return this._authhttp.patch(handleUrl, params);
   }
 
   /**

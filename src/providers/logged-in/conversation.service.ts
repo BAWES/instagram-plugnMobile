@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 
 // Models
 import { Conversation } from '../../models/conversation';
 import { InstagramAccount } from '../../models/instagram-account';
-
-import { Observable } from 'rxjs/Observable';
 
 // Services
 import { AuthHttpService } from './authhttp.service';
@@ -43,6 +42,24 @@ export class ConversationService {
                     +`&commenterUsername=${conversation.comment_by_username}`;
 
     return this._authhttp.get(detailUrl);
+  }
+
+  /**
+   * Marks comments within a conversation as handled
+   * @param {number} accountId
+   * @param {number} commenterId
+   * @param {string} commenterUsername
+   * @returns {Observable<any>}
+   */
+  markConversationHandled(accountId: number, commenterId: number, commenterUsername: string){
+    let handleUrl = `${this._conversationDetailEndpoint}`;
+    let params = {
+      "accountId": accountId,
+      "commenterId": commenterId,
+      "commenterUsername": commenterUsername
+    };
+
+    return this._authhttp.patch(handleUrl, params);
   }
 
   /**
