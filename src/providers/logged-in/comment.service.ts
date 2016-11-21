@@ -37,5 +37,32 @@ export class CommentService {
     return this._authhttp.post(postUrl, params);
   }
 
+  /**
+   * Deletes a comment
+   * @param {number} accountId
+   * @param {number} commentId
+   * @returns {Observable<any>}
+   */
+  deleteComment(accountId: number, commentId: number){
+    let deleteUrl = `${this._commentEndpoint}/accountId=${accountId}&commentId=${commentId}`;
+
+    return this._authhttp.delete(deleteUrl);
+  }
+
+  /**
+   * Mark comment as handled
+   * @param {number} accountId
+   * @param {number} commentId
+   */
+  markCommentHandled(accountId: number, commentId: number){
+    let handleUrl = `${this._commentEndpoint}`;
+    let params = {
+      "accountId": accountId,
+      "commentId": commentId
+    };
+
+    return this._authhttp.patch(handleUrl, params);
+  }
+
 
 }
