@@ -49,7 +49,7 @@
   <ion-item-options side="right">
 
     <button ion-button (click)="handleComment(slidingItem)" [disabled]="handleLoading"
-      color="primary" *ngIf="comment.commentType != 'queue'">
+      color="primary" *ngIf="comment.commentType != 'queue' && comment.comment_handled != '1'">
       <!-- Show icon by default -->
       <ion-icon name="checkmark" *ngIf="!handleLoading"></ion-icon>
       <!-- Show Loading Spinner if being submitted -->
