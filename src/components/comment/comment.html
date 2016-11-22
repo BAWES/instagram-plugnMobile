@@ -1,5 +1,5 @@
 <!-- Sliding Item -->
-<ion-item-sliding (press)="copyToClipboard()" (tap)="notifyOptions()">
+<ion-item-sliding #slidingItem (press)="copyToClipboard()" (tap)="notifyOptions()">
 
   <!-- The Ion Item -->
   <ion-item text-wrap
@@ -47,20 +47,30 @@
 
   <!-- Right Sliding Options -->
   <ion-item-options side="right">
-    <button ion-button (click)="handleComment()"
+
+    <button ion-button (click)="handleComment(slidingItem)" [disabled]="handleLoading"
       color="primary" *ngIf="comment.commentType != 'queue'">
-      <ion-icon name="checkmark"></ion-icon>
+      <!-- Show icon by default -->
+      <ion-icon name="checkmark" *ngIf="!handleLoading"></ion-icon>
+      <!-- Show Loading Spinner if being submitted -->
+      <ion-spinner *ngIf="handleLoading"></ion-spinner>
       Handled
     </button>
-    <button ion-button (click)="locateComment()"
+
+    <button ion-button (click)="locateComment(slidingItem)"
       color="dark" *ngIf="comment.commentType != 'queue'">
       <ion-icon name="image"></ion-icon>
       Where?
     </button>
-    <button ion-button (click)="deleteComment()"
+
+    <button ion-button (click)="deleteComment(slidingItem)" [disabled]="deleteLoading"
       color="danger" *ngIf="comment.commentType != 'queue'">
-      <ion-icon name="trash"></ion-icon>
+      <!-- Show icon by default -->
+      <ion-icon name="trash" *ngIf="!deleteLoading"></ion-icon>
+      <!-- Show Loading Spinner if being submitted -->
+      <ion-spinner *ngIf="deleteLoading"></ion-spinner>
       Delete
     </button>
+
   </ion-item-options>
 </ion-item-sliding>

@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { Platform, Haptic, ToastController } from 'ionic-angular';
+import { Platform, Haptic, ToastController, AlertController } from 'ionic-angular';
 import { Clipboard } from 'ionic-native';
 
 // Models
 import { Comment } from '../../models/comment';
 // Services
 import { AccountService } from '../../providers/logged-in/account.service';
+import { CommentService } from '../../providers/logged-in/comment.service';
 
 /*
   Comment Component to setup styling for comments based on requirements
@@ -18,32 +19,71 @@ export class CommentComponent {
 
   @Input('value') comment: Comment;
 
+  // Loading Indicator for Sliding buttons 
+  public handleLoading = false;
+  public deleteLoading = false;
+
   constructor(
     public accounts: AccountService,
+    private _commentSrvc: CommentService,
     private _platform: Platform,
     private _haptic: Haptic,
-    private _toastCtrl: ToastController
+    private _toastCtrl: ToastController,
+    private _alertCtrl: AlertController
     ) {
   }
 
   /**
    * Mark Comment as Handled
    */
-  handleComment(){
-    console.log("Attempting to handle");
+  handleComment(slidingItem){
+    // Show Loading
+    this.handleLoading = true;
+
+    // Mark Comment as Handled
+    this._commentSrvc
+      .markCommentHandled(this.comment.user_id, this.comment.comment_id)
+      .subscribe((jsonResp: {operation: string, message: string}) => {
+        // Hide loading 
+        this.handleLoading = false
+
+        // Process response from server
+        if(jsonResp.operation == "success"){
+          // On Success, set handled by you
+          this.comment.comment_handled = "1";
+          this.comment.handler_name = "you";
+
+          slidingItem.close();
+        }else if(jsonResp.operation == "error"){
+          // Show Alert with the message
+          let alert = this._alertCtrl.create({
+            subTitle: jsonResp.message,
+            buttons: ['Ok']
+          });
+          alert.present();
+        }else{
+          // Show alert with error not accounted for
+          let alert = this._alertCtrl.create({
+            title: "Unable to mark comment handled",
+            message: "Please contact us for assistance",
+            buttons: ['Ok']
+          });
+          alert.present();
+        }
+    });
   }
 
   /**
    * Delete this comment
    */
-  deleteComment(){
+  deleteComment(slidingItem){
     console.log("Attempting to delete");
   }
 
   /**
    * Switch to Media View to find this comment
    */
-  locateComment(){
+  locateComment(slidingItem){
     console.log("Attempting to locate media");
   }
 
