@@ -3,8 +3,13 @@
     <ion-title>{{ activeConversation.comment_by_fullname }}</ion-title>
 
     <ion-buttons right>
-      <button ion-button icon-left solid color="primary">
-        <ion-icon name="checkmark-circle-outline"></ion-icon>
+      <button ion-button (click)="markConversationHandled()" [disabled]="handleLoading"
+        icon-left solid color="primary">
+        <!-- Show icon by default -->
+        <ion-icon name="checkmark-circle-outline" *ngIf="!handleLoading"></ion-icon>
+        <!-- Show Loading Spinner if being submitted -->
+        <ion-spinner *ngIf="handleLoading"></ion-spinner>
+
         Mark Handled
       </button>
     </ion-buttons>

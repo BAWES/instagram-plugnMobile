@@ -26,6 +26,7 @@ export class ConversationDetailPage {
 
   public isLoading = false;
   public isCommentSubmitting = false; // When comment is being submitted to server
+  public handleLoading = false; // When conversation is being marked as handled
 
   public commentInputControl: FormControl;
 
@@ -135,6 +136,51 @@ export class ConversationDetailPage {
         }
       }, "refresh");
     }, numSeconds);
+  }
+
+  /**
+   * Marks conversation comments as handled
+   */
+  markConversationHandled(){
+    // Initiate Loading
+    this.handleLoading = true;
+
+    // Request from Server
+    this.conversations
+      .markConversationHandled(
+        this.activeConversation.user_id, 
+        +this.activeConversation.comment_by_id, 
+        this.activeConversation.comment_by_username)
+      .subscribe((jsonResp: {operation: string, message: string}) => {
+        // Process response from server
+        if(jsonResp.operation == "success"){
+          // Reload comments on success, stop loading on callback
+          this._loadComments(() => {
+            this.handleLoading = false;
+            // Scroll to the comment at the bottom 
+            setTimeout(() => {
+              this.content.scrollToBottom(0);
+            }, 100);
+          }, "handledConversation");
+        }else if(jsonResp.operation == "error"){
+          this.handleLoading = false
+          // Show Alert with the message
+          let alert = this._alertCtrl.create({
+            subTitle: jsonResp.message,
+            buttons: ['Ok']
+          });
+          alert.present();
+        }else{
+          this.handleLoading = false
+          // Show alert with error not accounted for
+          let alert = this._alertCtrl.create({
+            title: "Unable to mark comment handled",
+            message: "Please contact us for assistance",
+            buttons: ['Ok']
+          });
+          alert.present();
+        }
+      });
   }
 
   /**

@@ -52,7 +52,7 @@ export class ConversationService {
    * @returns {Observable<any>}
    */
   markConversationHandled(accountId: number, commenterId: number, commenterUsername: string){
-    let handleUrl = `${this._conversationDetailEndpoint}`;
+    let handleUrl = `${this._conversationsEndpoint}`;
     let params = {
       "accountId": accountId,
       "commenterId": commenterId,
