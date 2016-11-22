@@ -77,7 +77,39 @@ export class CommentComponent {
    * Delete this comment
    */
   deleteComment(slidingItem){
-    console.log("Attempting to delete");
+    // Show Loading
+    this.deleteLoading = true;
+
+    // Mark Comment as Handled
+    this._commentSrvc
+      .deleteComment(this.comment.user_id, this.comment.comment_id)
+      .subscribe((jsonResp: {operation: string, message: string}) => {
+        // Hide loading 
+        this.deleteLoading = false
+
+        // Process response from server
+        if(jsonResp.operation == "success"){
+          // On Success, set comment as queued to be deleted
+          this.comment.comment_deleted = '2';
+
+          slidingItem.close();
+        }else if(jsonResp.operation == "error"){
+          // Show Alert with the message
+          let alert = this._alertCtrl.create({
+            subTitle: jsonResp.message,
+            buttons: ['Ok']
+          });
+          alert.present();
+        }else{
+          // Show alert with error not accounted for
+          let alert = this._alertCtrl.create({
+            title: "Unable to delete comment",
+            message: "Please contact us for assistance",
+            buttons: ['Ok']
+          });
+          alert.present();
+        }
+    });
   }
 
   /**

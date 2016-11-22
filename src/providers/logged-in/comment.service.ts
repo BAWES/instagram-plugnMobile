@@ -44,8 +44,8 @@ export class CommentService {
    * @returns {Observable<any>}
    */
   deleteComment(accountId: number, commentId: number){
-    let deleteUrl = `${this._commentEndpoint}/accountId=${accountId}&commentId=${commentId}`;
-
+    let deleteUrl = `${this._commentEndpoint}?accountId=${accountId}&commentId=${commentId}`;
+    
     return this._authhttp.delete(deleteUrl);
   }
 
