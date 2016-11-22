@@ -47,15 +47,18 @@
 
   <!-- Right Sliding Options -->
   <ion-item-options side="right">
-    <button ion-button color="primary" *ngIf="comment.commentType != 'queue'">
+    <button ion-button (click)="handleComment()"
+      color="primary" *ngIf="comment.commentType != 'queue'">
       <ion-icon name="checkmark"></ion-icon>
       Handled
     </button>
-    <button ion-button color="dark" *ngIf="comment.commentType != 'queue'">
+    <button ion-button (click)="locateComment()"
+      color="dark" *ngIf="comment.commentType != 'queue'">
       <ion-icon name="image"></ion-icon>
       Where?
     </button>
-    <button ion-button color="danger" *ngIf="comment.commentType != 'queue'">
+    <button ion-button (click)="deleteComment()"
+      color="danger" *ngIf="comment.commentType != 'queue'">
       <ion-icon name="trash"></ion-icon>
       Delete
     </button>

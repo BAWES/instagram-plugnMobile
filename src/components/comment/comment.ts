@@ -27,6 +27,27 @@ export class CommentComponent {
   }
 
   /**
+   * Mark Comment as Handled
+   */
+  handleComment(){
+    console.log("Attempting to handle");
+  }
+
+  /**
+   * Delete this comment
+   */
+  deleteComment(){
+    console.log("Attempting to delete");
+  }
+
+  /**
+   * Switch to Media View to find this comment
+   */
+  locateComment(){
+    console.log("Attempting to locate media");
+  }
+
+  /**
    * Present toast showing available options when dealing with this item
    * TOAST IS TO BE SHOWN ONCE A DAY ONLY!
    */
