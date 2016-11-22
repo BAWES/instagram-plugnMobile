@@ -1,0 +1,156 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ activeConversation.comment_by_fullname }}</ion-title>
+
+    <ion-buttons right>
+      <button ion-button (click)="markConversationHandled()" [disabled]="handleLoading"
+        icon-left solid color="primary">
+        <!-- Show icon by default -->
+        <ion-icon name="checkmark-circle-outline" *ngIf="!handleLoading"></ion-icon>
+        <!-- Show Loading Spinner if being submitted -->
+        <ion-spinner *ngIf="handleLoading"></ion-spinner>
+
+        Mark Handled
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content #contentArea>
+
+  <!-- When content isn't available, Show Loading -->
+  <div class="page-loading" *ngIf="isLoading">
+    <img src='assets/brand/loader.gif'>
+  </div>
+
+  <!-- When content available -->
+  <div *ngIf="!isLoading" [ngSwitch]="selectedTab">
+
+    <!-- START Conversation Tab -->
+    <ion-list 
+      class='commentList'
+      [class.addKeyboardMargin] = "addKeyboardMargin"
+      no-lines *ngSwitchCase="'conversation'">
+
+      <!-- Comment List Rendered -->
+      <div *ngFor="let comment of conversationComments">
+        <comment [value]="comment"></comment>
+      </div>
+
+    </ion-list>
+    <!-- END Conversation Tab -->
+
+    <!-- START Info Tab -->
+    <div padding *ngSwitchCase="'info'">
+
+      <!-- User Account Overview -->
+      <ion-card class='accountOverview'>
+        <ion-card-content>
+          <img class='avatar' src="{{ activeConversation.comment_by_photo }}" onError="this.src='assets/user.png';">
+          <ion-card-title>
+            {{ activeConversation.comment_by_fullname }}
+          </ion-card-title>
+          <span>@{{ activeConversation.comment_by_username }}</span>
+
+          <a href='https://instagram.com/{{ activeConversation.comment_by_username }}' target='_blank' block ion-button clear>
+            View Profile on Instagram
+          </a>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Note Card -->
+      <ion-card>
+
+        <ion-card-header>
+          Home Address
+        </ion-card-header>
+
+        <ion-card-content>
+          <p>
+            He gave us this address:<br/>
+            Mishref,<br/>
+            Block 1, St 6.
+          </p>
+
+          <ion-row margin-top>
+            <ion-col no-padding style='font-weight:bold'>
+              Created
+            </ion-col>
+            <ion-col no-padding text-right style='font-weight:bold'>
+              Updated
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col no-padding>
+              <ion-icon name="time"></ion-icon> 22-12-2016
+            </ion-col>
+            <ion-col no-padding text-right>
+              <ion-icon name="time"></ion-icon> 22-12-2016
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col no-padding>
+              <ion-icon name="person"></ion-icon> Khalid Al-Mutawa
+            </ion-col>
+            <ion-col no-padding text-right>
+              <ion-icon name="person"></ion-icon> Khalid Al-Mutawa
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+
+        
+
+      </ion-card>
+
+      <!-- Add Note Button -->
+      <ion-fab bottom right style='position:fixed;'>
+        <button ion-fab color="dark" (click)="showCreateNoteForm()">
+          <i class="material-icons">note_add</i>
+        </button>
+      </ion-fab>
+
+
+    </div>
+    <!-- END Info Tab -->
+
+  </div>
+
+</ion-content>
+
+<ion-footer [keyboardAttach]="contentArea" *ngIf="selectedTab == 'conversation'">
+  <!-- Comment Box Toolbar -->
+  <ion-toolbar>
+    <ion-buttons left>
+      <ion-chip>
+        <ion-avatar>
+          <img src="{{ activeConversation.comment_by_photo }}" onError="this.src='assets/user.png';">
+        </ion-avatar>
+        <ion-label>@{{ activeConversation.comment_by_username }}</ion-label>
+      </ion-chip>
+    </ion-buttons>
+    
+    <ion-textarea autosize 
+      class="commentInput"
+      [formControl]="commentInputControl" rows="1" 
+      placeholder="Comment as {{ accounts.activeAccount.user_name }}...">
+    </ion-textarea>
+
+    <ion-buttons right>
+      <button ion-button icon-only
+        type="submit" 
+        (click)="onCommentSubmit()"
+        [disabled]="!commentInputControl.valid || isCommentSubmitting">
+
+        <!-- Show Loading button by default -->
+        <span *ngIf="!isCommentSubmitting">
+          <ion-icon name="send"></ion-icon>
+        </span>
+        <!-- Show Loading Spinner if comment being submitted -->
+        <ion-spinner *ngIf="isCommentSubmitting"></ion-spinner>
+
+      </button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-footer>
