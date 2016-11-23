@@ -2,11 +2,11 @@ import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, Events, Content, AlertController, MenuController } from 'ionic-angular';
 
 // Models
-import { Conversation } from '../../../models/conversation';
+import { Media } from '../../../models/media';
 import { Comment } from '../../../models/comment';
 
 // Services
-import { ConversationService } from '../../../providers/logged-in/conversation.service';
+import { MediaService } from '../../../providers/logged-in/media.service';
 import { CommentService } from '../../../providers/logged-in/comment.service';
 import { AccountService } from '../../../providers/logged-in/account.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
@@ -15,7 +15,7 @@ import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.se
 import { FormControl, Validators } from '@angular/forms';
 
 /*
-  Conversation Detail page.
+  Media Detail page.
 */
 @Component({
   selector: 'page-media-detail',
@@ -26,16 +26,15 @@ export class MediaDetailPage {
 
   public isLoading = false;
   public isCommentSubmitting = false; // When comment is being submitted to server
-  public handleLoading = false; // When conversation is being marked as handled
+  public handleLoading = false; // When media is being marked as handled
 
   public commentInputControl: FormControl;
 
-  public activeMedia: Conversation;
+  public activeMedia: Media;
 
-  public conversationComments: Comment[];
-  private _lastCommentsMediaId: number; // Stores the last comments media id for posting response
+  public mediaComments: Comment[];
 
-  // Comment Count within Conversation 
+  // Comment Count within Media 
   public commentCount: number;
   public previousCommentCount: number; // Stored to check if there's updates since last refresh
 
@@ -50,7 +49,7 @@ export class MediaDetailPage {
   constructor(
     params: NavParams,
     public navCtrl: NavController,
-    public conversations: ConversationService,
+    public mediaService: MediaService,
     public accounts: AccountService,
     private _commentService: CommentService,
     private _events: Events,
@@ -68,7 +67,7 @@ export class MediaDetailPage {
    * Page Constructed, Initialize
    */
   ionViewDidLoad() {
-    // Load and populate conversation detail
+    // Load and populate media detail
     this._loadComments();
 
     // Add margin to ion-list of comments when keyboard opens
@@ -120,6 +119,7 @@ export class MediaDetailPage {
    * Initialize the comment content refresher
    */
   private _initRefresher(){
+    /*
     // Refresh Comments every X Seconds
     let numSeconds = 20 * 1000;
     this._refreshTimer = setInterval(() => {
@@ -135,12 +135,14 @@ export class MediaDetailPage {
         }
       }, "refresh");
     }, numSeconds);
+    */
   }
 
   /**
    * Marks media comments as handled
    */
   markMediaHandled(){
+    /*
     // Initiate Loading
     this.handleLoading = true;
 
@@ -180,16 +182,18 @@ export class MediaDetailPage {
           alert.present();
         }
       });
+      */
   }
 
   /**
    * User clicked submit button for new comment
    */
   onCommentSubmit(){
+    /*
     this.isCommentSubmitting = true;
 
     let accountId = this.accounts.activeAccount.user_id;
-    let mediaId = this._lastCommentsMediaId;
+    let mediaId = this.activeMedia.media_id;
     let commentMessage = `@${this.activeMedia.comment_by_username} ${this.commentInputControl.value}`;
     let respondingTo = this.activeMedia.comment_by_username;
 
@@ -224,16 +228,18 @@ export class MediaDetailPage {
 
         this.isCommentSubmitting=false;
     });
+    */
   }
 
   /**
-   * Load comments that are available within this conversation
+   * Load comments that are available within this media
    * If a callback is specified then it will load the comments in the background
    * and won't be showing the loading indicator which covers the page.
    * @param {any} [callback]
    * @param {string} [operation]
    */
   private _loadComments(callback?, operation?: string){
+    /*
     if(!callback){
       this.isLoading = true;
     }
@@ -247,9 +253,6 @@ export class MediaDetailPage {
         conversation.comment_datetime = this.conversations.getTimeSinceDate(conversation.comment_datetime);
         return conversation;
       });
-
-      // Store the last comments media id for posting comment response
-      this._lastCommentsMediaId = this.conversationComments[this.conversationComments.length - 1].media_id;
 
       // Store the comment count for this conversation 
       this.commentCount = this.conversationComments.length;
@@ -269,6 +272,7 @@ export class MediaDetailPage {
       }
       
     });
+    */
   }
 
 }
