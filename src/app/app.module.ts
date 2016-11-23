@@ -17,6 +17,7 @@ import { AccountTabsPage } from '../pages/account/account-tabs/account-tabs';
 import { ConversationPage } from '../pages/account/conversation/conversation';
 import { ConversationDetailPage } from '../pages/account/conversation-detail/conversation-detail';
 import { MediaPage } from '../pages/account/media/media';
+import { MediaDetailPage } from '../pages/account/media-detail/media-detail';
 
 // Directives 
 import { Autosize } from '../directives/autosize/autosize';
@@ -49,6 +50,7 @@ export const pages = [
   ConversationPage,
   ConversationDetailPage,
   MediaPage,
+  MediaDetailPage,
 
   // Start-Pages
   LoginPage,
@@ -82,6 +84,7 @@ export const toDeclare = [
   ConversationPage,
   ConversationDetailPage,
   MediaPage,
+  MediaDetailPage,
 
   // Start-Pages
   LoginPage,

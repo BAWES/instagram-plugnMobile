@@ -30,7 +30,7 @@ export class MediaDetailPage {
 
   public commentInputControl: FormControl;
 
-  public activeConversation: Conversation;
+  public activeMedia: Conversation;
   public selectedTab: string = "conversation";
 
   public conversationComments: Comment[];
@@ -59,7 +59,7 @@ export class MediaDetailPage {
     private _alertCtrl: AlertController,
     private _menuCtrl: MenuController
     ) {
-      this.activeConversation = params.get("conversation");
+      this.activeMedia = params.get("media");
 
       // Initialize the Comment Input Form Control
       this.commentInputControl = new FormControl('', Validators.compose([Validators.required]));
@@ -148,9 +148,9 @@ export class MediaDetailPage {
     // Request from Server
     this.conversations
       .markConversationHandled(
-        this.activeConversation.user_id, 
-        +this.activeConversation.comment_by_id, 
-        this.activeConversation.comment_by_username)
+        this.activeMedia.user_id, 
+        +this.activeMedia.comment_by_id, 
+        this.activeMedia.comment_by_username)
       .subscribe((jsonResp: {operation: string, message: string}) => {
         // Process response from server
         if(jsonResp.operation == "success"){
@@ -191,8 +191,8 @@ export class MediaDetailPage {
 
     let accountId = this.accounts.activeAccount.user_id;
     let mediaId = this._lastCommentsMediaId;
-    let commentMessage = `@${this.activeConversation.comment_by_username} ${this.commentInputControl.value}`;
-    let respondingTo = this.activeConversation.comment_by_username;
+    let commentMessage = `@${this.activeMedia.comment_by_username} ${this.commentInputControl.value}`;
+    let respondingTo = this.activeMedia.comment_by_username;
 
     this._commentService
       .postComment(accountId, mediaId, commentMessage, respondingTo)
@@ -239,7 +239,7 @@ export class MediaDetailPage {
       this.isLoading = true;
     }
     
-    this.conversations.getConversationDetail(this.activeConversation).subscribe((jsonResponse) => {
+    this.conversations.getConversationDetail(this.activeMedia).subscribe((jsonResponse) => {
       this.isLoading = false;
       this.conversationComments = jsonResponse.conversationComments;
 

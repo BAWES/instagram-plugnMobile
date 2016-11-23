@@ -5,6 +5,9 @@ import { MediaService } from '../../../providers/logged-in/media.service';
 import { AccountService } from '../../../providers/logged-in/account.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
 
+// Pages
+import { MediaDetailPage } from '../media-detail/media-detail';
+
 /*
   Media page.
 */
@@ -39,6 +42,16 @@ export class MediaPage {
    */
   ionViewWillEnter(){
     this._events.publish('view:selected', "media");
+  }
+
+  /**
+   * Load Media Detail Page
+   * @param  {} mediaItem
+   */
+  loadMediaDetail(mediaItem){
+      this.navCtrl.push(MediaDetailPage, { 
+        media: mediaItem
+      });
   }
 
   
