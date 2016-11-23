@@ -31,7 +31,6 @@ export class MediaDetailPage {
   public commentInputControl: FormControl;
 
   public activeMedia: Conversation;
-  public selectedTab: string = "conversation";
 
   public conversationComments: Comment[];
   private _lastCommentsMediaId: number; // Stores the last comments media id for posting response
@@ -139,9 +138,9 @@ export class MediaDetailPage {
   }
 
   /**
-   * Marks conversation comments as handled
+   * Marks media comments as handled
    */
-  markConversationHandled(){
+  markMediaHandled(){
     // Initiate Loading
     this.handleLoading = true;
 
