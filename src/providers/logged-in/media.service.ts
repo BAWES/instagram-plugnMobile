@@ -21,8 +21,21 @@ export class MediaService {
   public unhandledMedia: Media[]; // Unhandled Subset of mediaList
 
   private _mediaEndpoint: string = "/media";
+  private _mediaDetailEndpoint: string = "/media/detail";
 
   constructor(private _authhttp: AuthHttpService) { }
+
+  /**
+   * Get media comments
+   * @param  {Media} media
+   * @returns {Observable<any>}
+   */
+  getMediaDetail(media: Media): Observable<any>{
+    let detailUrl = `${this._mediaDetailEndpoint}`
+                    +`?mediaId=${media.media_id}`;
+
+    return this._authhttp.get(detailUrl);
+  }
 
   /**
    * Load up to date media list for the specified account id
