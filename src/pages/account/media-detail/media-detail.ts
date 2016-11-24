@@ -119,7 +119,6 @@ export class MediaDetailPage {
    * Initialize the comment content refresher
    */
   private _initRefresher(){
-    /*
     // Refresh Comments every X Seconds
     let numSeconds = 20 * 1000;
     this._refreshTimer = setInterval(() => {
@@ -135,7 +134,6 @@ export class MediaDetailPage {
         }
       }, "refresh");
     }, numSeconds);
-    */
   }
 
   /**
@@ -239,26 +237,25 @@ export class MediaDetailPage {
    * @param {string} [operation]
    */
   private _loadComments(callback?, operation?: string){
-    /*
     if(!callback){
       this.isLoading = true;
     }
     
-    this.conversations.getConversationDetail(this.activeMedia).subscribe((jsonResponse) => {
+    this.mediaService.getMediaDetail(this.activeMedia).subscribe((jsonResponse) => {
       this.isLoading = false;
-      this.conversationComments = jsonResponse.conversationComments;
+      this.mediaComments = jsonResponse;
 
       // Transform All MySQL Dates into Time Since
-      this.conversationComments = this.conversationComments.map((conversation) => {
-        conversation.comment_datetime = this.conversations.getTimeSinceDate(conversation.comment_datetime);
+      this.mediaComments = this.mediaComments.map((conversation) => {
+        conversation.comment_datetime = this.mediaService.getTimeSinceDate(conversation.comment_datetime);
         return conversation;
       });
 
       // Store the comment count for this conversation 
-      this.commentCount = this.conversationComments.length;
+      this.commentCount = this.mediaComments.length;
       // Store previous number of comments on refresh or posted comment
       if(!callback || (operation && operation == "postedComment")){
-        this.previousCommentCount = this.conversationComments.length;
+        this.previousCommentCount = this.mediaComments.length;
       }
 
       // Scroll to last Message in Conversation
@@ -272,7 +269,6 @@ export class MediaDetailPage {
       }
       
     });
-    */
   }
 
 }

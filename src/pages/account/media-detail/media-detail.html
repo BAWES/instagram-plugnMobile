@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{ activeMedia.comment_by_fullname }}</ion-title>
+    <ion-title>{{ activeMedia.caption }}</ion-title>
 
     <ion-buttons right>
       <button ion-button (click)="markMediaHandled()" [disabled]="handleLoading"
@@ -30,7 +30,7 @@
       [class.addKeyboardMargin] = "addKeyboardMargin">
 
       <!-- Comment List Rendered -->
-      <div *ngFor="let comment of conversationComments">
+      <div *ngFor="let comment of mediaComments">
         <comment [value]="comment"></comment>
       </div>
     </ion-list>
@@ -41,14 +41,6 @@
 <ion-footer [keyboardAttach]="contentArea">
   <!-- Comment Box Toolbar -->
   <ion-toolbar>
-    <ion-buttons left>
-      <ion-chip>
-        <ion-avatar>
-          <img src="{{ activeMedia.comment_by_photo }}" onError="this.src='assets/user.png';">
-        </ion-avatar>
-        <ion-label>@{{ activeMedia.comment_by_username }}</ion-label>
-      </ion-chip>
-    </ion-buttons>
     
     <ion-textarea autosize 
       class="commentInput"
