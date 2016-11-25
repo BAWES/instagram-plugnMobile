@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>{{ activeMedia.caption }}</ion-title>
+    <ion-title>Media</ion-title>
 
     <ion-buttons right>
       <button ion-button (click)="markMediaHandled()" [disabled]="handleLoading"
@@ -14,6 +14,24 @@
       </button>
     </ion-buttons>
   </ion-navbar>
+
+  <ion-toolbar no-border-top>
+      <ion-grid>
+        <ion-row>
+          <ion-col width-20>
+            <img src='{{ activeMedia.image.thumb }}' onError="this.src='assets/user.png';"
+             style="width:50px; height:50px;">
+          </ion-col>
+          <ion-col style="height: 4em; overflow: hidden;">
+              {{ activeMedia.caption }}
+          </ion-col>
+          <ion-col width-20>
+            <ion-icon name="heart"></ion-icon> {{ activeMedia.numLikes }} <br/>
+            <ion-icon name="chatbubbles"></ion-icon> {{ activeMedia.numComments }}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+  </ion-toolbar>
 </ion-header>
 
 
