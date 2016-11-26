@@ -1,9 +1,7 @@
 <!-- Sliding Item -->
 <ion-item-sliding #slidingItem 
   (press) = "copyToClipboard()" 
-  (tap) = "comment.commentType != 'queue'?
-              type == 'conversation'? switchToMedia():switchToConversation()
-            :null">
+  (tap) = "type == 'conversation'? switchToMedia():switchToConversation()">
 
   <!-- The Ion Item -->
   <ion-item text-wrap

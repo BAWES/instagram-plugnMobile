@@ -126,6 +126,9 @@ export class CommentComponent {
    * Switch to Media View to find this comment
    */
   switchToMedia(){
+    // Do nothing if its a queued comment
+    if(this.comment.commentType == 'queue') return;
+
     // Search for the Media Item from Media List
     let mediaId = this.comment.media_id;
     let mediaItem;
@@ -160,6 +163,10 @@ export class CommentComponent {
    * Switch to Conversation View to find this comment
    */
   switchToConversation(){
+    // Do nothing if it does not pass these rules
+    if(this.comment.commentType == 'queue' ||
+      this.comment.comment_by_username == this.accounts.activeAccount.user_name) return;
+
     // Navigate to conv detail page
     this._navCtrl.push(ConversationDetailPage, { 
         conversation: this.comment,
