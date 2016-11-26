@@ -73,7 +73,9 @@
         Media
       </ion-list-header>
 
-      <button ion-item *ngFor="let mediaItem of media.handledMedia;trackBy:mediaItem?.media_id">
+      <button ion-item 
+        *ngFor="let mediaItem of media.handledMedia;trackBy:mediaItem?.media_id"
+        (click)="loadMediaDetail(mediaItem)">
         <ion-thumbnail item-left>
           <img src="{{ mediaItem.image.thumb }}" onError="this.src='assets/deleted.png';">
         </ion-thumbnail>
