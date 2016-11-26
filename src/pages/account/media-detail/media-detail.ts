@@ -90,6 +90,7 @@ export class MediaDetailPage {
 
     // Setup Back Button Behavior
     this._backBtn.callbackOnBack(() => {
+      this._backBtn.clearBackFunctionality();
       this.navCtrl.pop();
     });
 

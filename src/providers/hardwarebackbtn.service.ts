@@ -19,6 +19,14 @@ export class HardwareBackButtonService {
   }
 
   /**
+   * Clear back functionality
+   */
+  clearBackFunctionality(){
+    this._platform.registerBackButtonAction(() => {
+    });
+  }
+
+  /**
    * Execute a callback function on back
    */
   callbackOnBack(fn){

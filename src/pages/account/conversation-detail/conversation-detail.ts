@@ -93,6 +93,7 @@ export class ConversationDetailPage {
 
     // Setup Back Button Behavior
     this._backBtn.callbackOnBack(() => {
+      this._backBtn.clearBackFunctionality();
       this.navCtrl.pop();
     });
 
