@@ -40,7 +40,6 @@ export class CommentComponent {
     private _toastCtrl: ToastController,
     private _alertCtrl: AlertController
     ) {
-      this.notifyOptions();
   }
 
   /**
@@ -172,30 +171,6 @@ export class CommentComponent {
         conversation: this.comment,
         locate: this.comment
     });
-  }
-
-  /**
-   * Present toast showing available options when dealing with this item
-   * TOAST IS TO BE SHOWN ONCE A DAY ONLY!
-   */
-  notifyOptions(){
-    let dayOfTheMonth = new Date().getDate();
-    let previouslyNotifiedDay = parseInt(localStorage.getItem("swipeNotificationDate"));
-
-    // If user hasn't been previously notified, or if he's been notified but on a different day
-    if(!previouslyNotifiedDay || (dayOfTheMonth != previouslyNotifiedDay)){
-      // Present Toast
-      let toast = this._toastCtrl.create({
-        message: 'Swipe a comment to the left for additional options',
-        position: 'bottom',
-        showCloseButton: true,
-        closeButtonText: "Ok"
-      });
-      toast.present();
-      
-      // Save today as the previously notified day
-      window.localStorage.setItem('swipeNotificationDate', dayOfTheMonth+"");
-    }
   }
 
   /**

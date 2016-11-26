@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Events, Content, AlertController, MenuController } from 'ionic-angular';
+import { NavController, NavParams, Events, Content, AlertController, MenuController, ToastController } from 'ionic-angular';
 
 // Models
 import { Conversation } from '../../../models/conversation';
@@ -57,7 +57,8 @@ export class ConversationDetailPage {
     private _events: Events,
     private _backBtn: HardwareBackButtonService,
     private _alertCtrl: AlertController,
-    private _menuCtrl: MenuController
+    private _menuCtrl: MenuController,
+    private _toastCtrl: ToastController
     ) {
       this.activeConversation = params.get("conversation");
 
@@ -309,6 +310,30 @@ export class ConversationDetailPage {
       ]
     });
     prompt.present();
+  }
+
+  /**
+   * Present toast showing available options when dealing with this item
+   * TOAST IS TO BE SHOWN ONCE A DAY ONLY!
+   */
+  notifyOptions(){
+    let dayOfTheMonth = new Date().getDate();
+    let previouslyNotifiedDay = parseInt(localStorage.getItem("swipeNotificationDate"));
+
+    // If user hasn't been previously notified, or if he's been notified but on a different day
+    if(!previouslyNotifiedDay || (dayOfTheMonth != previouslyNotifiedDay)){
+      // Present Toast
+      let toast = this._toastCtrl.create({
+        message: 'Swipe a comment to the left for additional options',
+        position: 'bottom',
+        showCloseButton: true,
+        closeButtonText: "Ok"
+      });
+      toast.present();
+      
+      // Save today as the previously notified day
+      window.localStorage.setItem('swipeNotificationDate', dayOfTheMonth+"");
+    }
   }
 
 }
