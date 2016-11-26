@@ -40,6 +40,7 @@ export class CommentComponent {
     private _toastCtrl: ToastController,
     private _alertCtrl: AlertController
     ) {
+      this.notifyOptions();
   }
 
   /**
