@@ -25,6 +25,13 @@ export class NavigationPage {
     ) {
   }
 
+  /**
+   * Loads the Instagram account to manage
+   */
+  loadInstagramAccount(account){
+    this.accounts.setActiveAccount(account);
+  }
+
   openPage(page){
     console.log("Attempting to open page");
   }

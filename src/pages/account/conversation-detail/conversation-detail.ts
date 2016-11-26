@@ -105,7 +105,7 @@ export class ConversationDetailPage {
 
     // Subscribe to Pop this page off on account change
     this._events.subscribe("account:switching", this._accountSwitchHandler = (eventData) => {
-      this.navCtrl.pop();
+      this.navCtrl.popToRoot();
     });
   }
   /**

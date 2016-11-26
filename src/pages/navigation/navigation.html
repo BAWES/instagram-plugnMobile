@@ -11,7 +11,7 @@
       <ion-list-header>Managed Accounts</ion-list-header>
 
       <div *ngIf="accounts.managedAccounts">
-        <button ion-item *ngFor="let account of accounts.managedAccounts" (click)="accounts.setActiveAccount(account); menuLeft.close();">
+        <button ion-item *ngFor="let account of accounts.managedAccounts" (click)="loadInstagramAccount(account); menuLeft.close();">
           <ion-avatar item-left>
             <img src="{{ account.user_profile_pic }}" onError="this.src='assets/user.png';">
           </ion-avatar>
