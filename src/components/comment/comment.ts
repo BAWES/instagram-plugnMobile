@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Platform, Haptic, ToastController, AlertController } from 'ionic-angular';
+import { Platform, Haptic, ToastController, AlertController, NavController } from 'ionic-angular';
 import { Clipboard } from 'ionic-native';
 
 // Models
@@ -7,6 +7,10 @@ import { Comment } from '../../models/comment';
 // Services
 import { AccountService } from '../../providers/logged-in/account.service';
 import { CommentService } from '../../providers/logged-in/comment.service';
+import { MediaService } from '../../providers/logged-in/media.service';
+// Pages
+import { ConversationDetailPage } from '../../pages/account/conversation-detail/conversation-detail';
+import { MediaDetailPage } from '../../pages/account/media-detail/media-detail';
 
 /*
   Comment Component to setup styling for comments based on requirements
@@ -28,7 +32,9 @@ export class CommentComponent {
 
   constructor(
     public accounts: AccountService,
+    private _navCtrl: NavController,
     private _commentSrvc: CommentService,
+    private _mediaSrvc: MediaService,
     private _platform: Platform,
     private _haptic: Haptic,
     private _toastCtrl: ToastController,
@@ -119,14 +125,50 @@ export class CommentComponent {
    * Switch to Media View to find this comment
    */
   locateComment(slidingItem){
-    console.log("Attempting to locate media");
+    // Close sliding
+    slidingItem.close();
+
+    // Search for the Media Item from Media List
+    let mediaId = this.comment.media_id;
+    let mediaItem;
+    
+    for(let i=0; i<this._mediaSrvc.mediaList.length; i++){
+      if(this._mediaSrvc.mediaList[i].media_id == mediaId){
+        mediaItem = this._mediaSrvc.mediaList[i];
+        break;
+      }
+    }
+
+    if(mediaItem){
+      // Switch to Media Detail
+      this._navCtrl.push(MediaDetailPage, { 
+        media: mediaItem,
+        locate: this.comment
+      });
+    }else{
+      // Present Toast
+      let toast = this._toastCtrl.create({
+        message: 'Media not found',
+        position: 'bottom',
+        showCloseButton: true,
+        closeButtonText: "Ok"
+      });
+      toast.present();
+    }
+    
   }
 
   /**
    * Switch to Conversation View to find this comment
    */
   locateConversation(slidingItem){
-    console.log("Attempting to locate conv");
+    // Close sliding
+    slidingItem.close();
+    // Navigate to conv detail page
+    this._navCtrl.push(ConversationDetailPage, { 
+        conversation: this.comment,
+        locate: this.comment
+    });
   }
 
   /**
