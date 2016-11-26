@@ -124,10 +124,7 @@ export class CommentComponent {
   /**
    * Switch to Media View to find this comment
    */
-  locateComment(slidingItem){
-    // Close sliding
-    slidingItem.close();
-
+  switchToMedia(){
     // Search for the Media Item from Media List
     let mediaId = this.comment.media_id;
     let mediaItem;
@@ -161,9 +158,7 @@ export class CommentComponent {
   /**
    * Switch to Conversation View to find this comment
    */
-  locateConversation(slidingItem){
-    // Close sliding
-    slidingItem.close();
+  switchToConversation(){
     // Navigate to conv detail page
     this._navCtrl.push(ConversationDetailPage, { 
         conversation: this.comment,

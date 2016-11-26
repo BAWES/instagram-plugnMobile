@@ -1,5 +1,9 @@
 <!-- Sliding Item -->
-<ion-item-sliding #slidingItem (press)="copyToClipboard()" (tap)="notifyOptions()">
+<ion-item-sliding #slidingItem 
+  (press) = "copyToClipboard()" 
+  (tap) = "comment.commentType != 'queue'?
+              type == 'conversation'? switchToMedia():switchToConversation()
+            :null">
 
   <!-- The Ion Item -->
   <ion-item text-wrap
@@ -55,17 +59,6 @@
       <!-- Show Loading Spinner if being submitted -->
       <ion-spinner *ngIf="handleLoading"></ion-spinner>
       Handle
-    </button>
-
-    <button ion-button (click)="locateComment(slidingItem)"
-      color="dark" *ngIf="comment.commentType != 'queue' && type == 'conversation'">
-      <ion-icon name="image"></ion-icon>
-      Where?
-    </button>
-    <button ion-button (click)="locateConversation(slidingItem)"
-      color="dark" *ngIf="comment.commentType != 'queue' && type == 'media'">
-      <ion-icon name="person"></ion-icon>
-      Conv.
     </button>
 
     <button ion-button (click)="deleteComment(slidingItem)" [disabled]="deleteLoading"
