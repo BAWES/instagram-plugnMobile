@@ -45,7 +45,10 @@ export class CommentComponent {
   /**
    * Mark Comment as Handled
    */
-  handleComment(slidingItem){
+  handleComment(slidingItem, clickEvent){
+    // Stop click event from propagation
+    clickEvent.stopPropagation();
+    
     // Show Loading
     this.handleLoading = true;
 
@@ -85,7 +88,10 @@ export class CommentComponent {
   /**
    * Delete this comment
    */
-  deleteComment(slidingItem){
+  deleteComment(slidingItem, clickEvent){
+    // Stop click event from propagation
+    clickEvent.stopPropagation();
+
     // Show Loading
     this.deleteLoading = true;
 

@@ -1,7 +1,7 @@
 <!-- Sliding Item -->
 <ion-item-sliding #slidingItem 
   (press) = "copyToClipboard()" 
-  (tap) = "type == 'conversation'? switchToMedia():switchToConversation()">
+  (click) = "type == 'conversation'? switchToMedia():switchToConversation()">
 
   <!-- The Ion Item -->
   <ion-item text-wrap
@@ -50,7 +50,7 @@
   <!-- Right Sliding Options -->
   <ion-item-options side="right">
 
-    <button ion-button (click)="handleComment(slidingItem)" [disabled]="handleLoading"
+    <button ion-button (click)="handleComment(slidingItem, $event)" [disabled]="handleLoading"
       color="primary" *ngIf="comment.commentType != 'queue' && comment.comment_handled != '1'">
       <!-- Show icon by default -->
       <ion-icon name="checkmark" *ngIf="!handleLoading"></ion-icon>
@@ -59,7 +59,7 @@
       Handle
     </button>
 
-    <button ion-button (click)="deleteComment(slidingItem)" [disabled]="deleteLoading"
+    <button ion-button (click)="deleteComment(slidingItem, $event)" [disabled]="deleteLoading"
       color="danger" *ngIf="comment.commentType != 'queue'">
       <!-- Show icon by default -->
       <ion-icon name="trash" *ngIf="!deleteLoading"></ion-icon>
