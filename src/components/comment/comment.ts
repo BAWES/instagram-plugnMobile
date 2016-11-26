@@ -19,6 +19,9 @@ export class CommentComponent {
 
   @Input('value') comment: Comment;
 
+  // Comment Type (Whether its a `media` comment or `conversation` comment)
+  @Input() type: string = "conversation";
+
   // Loading Indicator for Sliding buttons 
   public handleLoading = false;
   public deleteLoading = false;
@@ -117,6 +120,13 @@ export class CommentComponent {
    */
   locateComment(slidingItem){
     console.log("Attempting to locate media");
+  }
+
+  /**
+   * Switch to Conversation View to find this comment
+   */
+  locateConversation(slidingItem){
+    console.log("Attempting to locate conv");
   }
 
   /**
