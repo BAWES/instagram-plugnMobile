@@ -176,7 +176,7 @@ export class ConversationDetailPage {
           this.handleLoading = false
           // Show alert with error not accounted for
           let alert = this._alertCtrl.create({
-            title: "Unable to mark comment handled",
+            title: "Unable to mark handled",
             message: "Please contact us for assistance",
             buttons: ['Ok']
           });

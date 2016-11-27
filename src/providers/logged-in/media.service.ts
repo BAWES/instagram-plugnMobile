@@ -63,14 +63,12 @@ export class MediaService {
 
   /**
    * Marks comments within a conversation as handled
-   * @param {number} accountId
    * @param {number} mediaId
    * @returns {Observable<any>}
    */
-  markMediaHandled(accountId: number, mediaId: number){
+  markMediaHandled(mediaId: number){
     let handleUrl = `${this._mediaEndpoint}`;
     let params = {
-      "accountId": accountId,
       "mediaId": mediaId
     };
 

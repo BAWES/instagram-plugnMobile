@@ -141,16 +141,12 @@ export class MediaDetailPage {
    * Marks media comments as handled
    */
   markMediaHandled(){
-    /*
     // Initiate Loading
     this.handleLoading = true;
 
     // Request from Server
-    this.conversations
-      .markConversationHandled(
-        this.activeMedia.user_id, 
-        +this.activeMedia.comment_by_id, 
-        this.activeMedia.comment_by_username)
+    this.mediaService
+      .markMediaHandled(this.activeMedia.media_id)
       .subscribe((jsonResp: {operation: string, message: string}) => {
         // Process response from server
         if(jsonResp.operation == "success"){
@@ -174,14 +170,13 @@ export class MediaDetailPage {
           this.handleLoading = false
           // Show alert with error not accounted for
           let alert = this._alertCtrl.create({
-            title: "Unable to mark comment handled",
+            title: "Unable to mark handled",
             message: "Please contact us for assistance",
             buttons: ['Ok']
           });
           alert.present();
         }
       });
-      */
   }
 
   /**
