@@ -57,6 +57,7 @@ export class NavigationPage {
         this.nav.push(FollowersPage);
         break;
     }
+    this._menu.close();
   }
 
   loadAddAccountPage(){
