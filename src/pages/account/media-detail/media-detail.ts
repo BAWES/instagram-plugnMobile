@@ -183,16 +183,14 @@ export class MediaDetailPage {
    * User clicked submit button for new comment
    */
   onCommentSubmit(){
-    /*
     this.isCommentSubmitting = true;
 
     let accountId = this.accounts.activeAccount.user_id;
     let mediaId = this.activeMedia.media_id;
-    let commentMessage = `@${this.activeMedia.comment_by_username} ${this.commentInputControl.value}`;
-    let respondingTo = this.activeMedia.comment_by_username;
+    let commentMessage = `${this.commentInputControl.value}`;
 
     this._commentService
-      .postComment(accountId, mediaId, commentMessage, respondingTo)
+      .postComment(accountId, mediaId, commentMessage)
       .subscribe((jsonResponse:{operation: string, message: string}) => {
         // On Success execute logic and return
         if(jsonResponse.operation == "success"){
@@ -222,7 +220,6 @@ export class MediaDetailPage {
 
         this.isCommentSubmitting=false;
     });
-    */
   }
 
   /**
