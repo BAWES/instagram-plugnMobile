@@ -66,7 +66,7 @@
   </ion-header>
   <ion-content>
 
-    <ion-card class="statCount">
+    <ion-card class="statCount" (click)="openStatisticsPage('followers')">
       <div class="number">{{ accounts.activeAccount.user_follower_count }}</div>
       <ion-icon class='main' name="people"></ion-icon>
       <div class='card-title'>
@@ -75,7 +75,7 @@
       <ion-icon class='forward' name="ios-arrow-forward"></ion-icon>
     </ion-card>
 
-    <ion-card class="statCount">
+    <ion-card class="statCount" (click)="openStatisticsPage('following')">
       <div class="number">{{ accounts.activeAccount.user_following_count }}</div>
       <ion-icon class='main' name="walk"></ion-icon>
       <div class='card-title'>
@@ -84,7 +84,7 @@
       <ion-icon class='forward' name="ios-arrow-forward"></ion-icon>
     </ion-card>
 
-    <ion-card class="statCount">
+    <ion-card class="statCount" (click)="openStatisticsPage('media-stats')">
       <div class="number">{{ accounts.activeAccount.user_media_count }}</div>
       <ion-icon class='main' name="images"></ion-icon>
       <div class='card-title'>
@@ -93,7 +93,7 @@
       <ion-icon class='forward' name="ios-arrow-forward"></ion-icon>
     </ion-card>
 
-    <ion-card class="statCount">
+    <ion-card class="statCount" (click)="openStatisticsPage('agent-activity')">
       <div class="number">{{ accounts.activeAccount.lastAgentActivity }}</div>
       <ion-icon class='main' name="pulse"></ion-icon>
       <div class='card-title'>

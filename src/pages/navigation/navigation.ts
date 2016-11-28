@@ -8,6 +8,12 @@ import { AccountService } from '../../providers/logged-in/account.service';
 import { AccountTabsPage } from '../account/account-tabs/account-tabs';
 import { AddAccountPage } from '../add-account/add-account';
 
+// Account Stats Pages available on Right Menu
+import { AgentActivityPage } from '../statistics/agent-activity/agent-activity';
+import { MediaStatsPage } from '../statistics/media-stats/media-stats';
+import { FollowingPage } from '../statistics/following/following';
+import { FollowersPage } from '../statistics/followers/followers';
+
 @Component({
   selector: 'page-navigation',
   templateUrl: 'navigation.html'
@@ -34,6 +40,23 @@ export class NavigationPage {
 
   openPage(page){
     console.log("Attempting to open page");
+  }
+
+  openStatisticsPage(pageName: string){
+    switch(pageName){
+      case "agent-activity":
+        this.nav.push(AgentActivityPage);
+        break;
+      case "media-stats":
+        this.nav.push(MediaStatsPage);
+        break;
+      case "following":
+        this.nav.push(FollowingPage);
+        break;
+      case "followers":
+        this.nav.push(FollowersPage);
+        break;
+    }
   }
 
   loadAddAccountPage(){
