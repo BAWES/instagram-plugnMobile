@@ -19,6 +19,12 @@ import { ConversationDetailPage } from '../pages/account/conversation-detail/con
 import { MediaPage } from '../pages/account/media/media';
 import { MediaDetailPage } from '../pages/account/media-detail/media-detail';
 
+// Account Stats Pages available on Right Menu
+import { AgentActivityPage } from '../pages/statistics/agent-activity/agent-activity';
+import { MediaStatsPage } from '../pages/statistics/media-stats/media-stats';
+import { FollowingPage } from '../pages/statistics/following/following';
+import { FollowersPage } from '../pages/statistics/followers/followers';
+
 // Directives 
 import { Autosize } from '../directives/autosize/autosize';
 import { KeyboardAttachDirective } from '../directives/keyboard-attach/keyboard-attach';
@@ -51,6 +57,12 @@ export const pages = [
   ConversationDetailPage,
   MediaPage,
   MediaDetailPage,
+
+  // Statistics Pages
+  AgentActivityPage,
+  MediaStatsPage,
+  FollowingPage,
+  FollowersPage,
 
   // Start-Pages
   LoginPage,
@@ -85,6 +97,12 @@ export const toDeclare = [
   ConversationDetailPage,
   MediaPage,
   MediaDetailPage,
+
+  // Statistics Pages
+  AgentActivityPage,
+  MediaStatsPage,
+  FollowingPage,
+  FollowersPage,
 
   // Start-Pages
   LoginPage,
