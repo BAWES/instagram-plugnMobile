@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController} from 'ionic-angular';
 
+import { AccountService } from '../../../providers/logged-in/account.service';
+
 /*
   Media Stats Page
 */
@@ -11,7 +13,8 @@ import { NavController} from 'ionic-angular';
 export class MediaStatsPage {
 
   constructor(
-    public navCtrl: NavController
+    public navCtrl: NavController,
+    public accounts: AccountService,
     ) {
     
   }

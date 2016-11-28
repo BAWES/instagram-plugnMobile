@@ -35,6 +35,7 @@ export class NavigationPage {
    * Loads the Instagram account to manage
    */
   loadInstagramAccount(account){
+    this.rootPage = AccountTabsPage;
     this.accounts.setActiveAccount(account);
   }
 
@@ -45,16 +46,16 @@ export class NavigationPage {
   openStatisticsPage(pageName: string){
     switch(pageName){
       case "agent-activity":
-        this.nav.push(AgentActivityPage);
+        this.rootPage = AgentActivityPage;
         break;
       case "media-stats":
-        this.nav.push(MediaStatsPage);
+        this.rootPage = MediaStatsPage;
         break;
       case "following":
-        this.nav.push(FollowingPage);
+        this.rootPage = FollowingPage;
         break;
       case "followers":
-        this.nav.push(FollowersPage);
+        this.rootPage = FollowersPage;
         break;
     }
     this._menu.close();
