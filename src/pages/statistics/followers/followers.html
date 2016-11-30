@@ -31,4 +31,16 @@
     <img src='assets/brand/loader.gif'>
   </div>
 
+  <!-- Display Stats in Table View -->
+  <ion-grid *ngIf="accounts.activeAccountStats">
+    <ion-row>
+      <ion-col><b>Date</b></ion-col>
+      <ion-col><b># Followers</b></ion-col>
+    </ion-row>
+    <ion-row *ngFor="let record of accounts.activeAccountStats">
+      <ion-col>{{ record.record_date | date }}</ion-col>
+      <ion-col>{{ record.record_follower_count }}</ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>
