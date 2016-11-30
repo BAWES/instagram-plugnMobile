@@ -15,8 +15,13 @@ export class AgentActivityPage {
   constructor(
     public navCtrl: NavController,
     public accounts: AccountService,
-    ) {
-    
+    ) {}
+
+  /**
+   * On Page Enter
+   */
+  ionViewDidEnter() {
+
   }
 
   

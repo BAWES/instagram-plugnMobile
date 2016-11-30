@@ -15,8 +15,14 @@ export class FollowingPage {
   constructor(
     public navCtrl: NavController,
     public accounts: AccountService,
-    ) {
-    
+    ) {}
+
+  /**
+   * On Page Enter
+   */
+  ionViewDidEnter() {
+    // Load this account stats if not already loaded
+    this.accounts.loadAccountStats();
   }
 
   

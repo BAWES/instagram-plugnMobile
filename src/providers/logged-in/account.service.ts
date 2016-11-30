@@ -4,6 +4,7 @@ import { Platform, Events } from 'ionic-angular';
 
 // Models
 import { InstagramAccount } from '../../models/instagram-account';
+import { StatsRecord } from '../../models/stats-record';
 
 // Services
 import { AuthHttpService } from './authhttp.service';
@@ -17,6 +18,7 @@ import { ConversationService } from './conversation.service';
 export class AccountService {
 
   public activeAccount: InstagramAccount; // The account currently being viewed by agent
+  public activeAccountStats:StatsRecord[]; // Stats belonging to the active account
   public managedAccounts: InstagramAccount[]; // Array of managed accounts stored here
 
   /**
@@ -26,6 +28,7 @@ export class AccountService {
   public currentView = "media";
 
   public isLoading = false;
+  public statsLoading = false;
 
   private _accountEndpoint: string = "/accounts";
 
@@ -55,6 +58,24 @@ export class AccountService {
   }
 
   /**
+   * Loads lifetime stats belonging to this account
+   * if not already loaded
+   */
+  public loadAccountStats(){
+    // Return if already loaded
+    if(this.activeAccountStats) 
+      return;
+
+    // Otherwise load the stats
+    this.statsLoading = true;
+    let statsUrl = `${this._accountEndpoint}/stats?accountId=${this.activeAccount.user_id}`;
+    this._authhttp.get(statsUrl).subscribe(jsonResp => {
+      this.statsLoading = false;
+      this.activeAccountStats = jsonResp;
+    });
+  }
+
+  /**
    * Sets the currently active account to the one passed as param
    * then publishes event `account:selected`
    * @param  {any} account
@@ -65,6 +86,7 @@ export class AccountService {
 
     // Proceed with switching accounts
     this.activeAccount = account;
+    this.activeAccountStats = null;
     this.loadAccountMediaAndConversations();
   }
 
