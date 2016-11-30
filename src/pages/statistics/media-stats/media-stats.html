@@ -31,6 +31,34 @@
     <img src='assets/brand/loader.gif'>
   </div>
 
+  <!-- Chart test -->
+  <div class="row">
+    <div class="col-md-6">
+      <div style="display: block;">
+      <canvas baseChart width="400" height="400"
+                  [datasets]="lineChartData"
+                  [labels]="lineChartLabels"
+                  [options]="lineChartOptions"
+                  [colors]="lineChartColors"
+                  [legend]="lineChartLegend"
+                  [chartType]="lineChartType"
+                  (chartHover)="chartHovered($event)"
+                  (chartClick)="chartClicked($event)"></canvas>
+      </div>
+    </div>
+    <div class="col-md-6" style="margin-bottom: 10px">
+      <table class="table table-responsive table-condensed">
+        <tr>
+          <th *ngFor="let label of lineChartLabels"></th>
+        </tr>
+        <tr *ngFor="let d of lineChartData">
+          <td *ngFor="let label of lineChartLabels; let j=index"></td>
+        </tr>
+      </table>
+      <button (click)="randomize()">CLICK</button>
+    </div>
+  </div>
+
   <!-- Display Stats in Table View -->
   <ion-grid *ngIf="accounts.activeAccountStats">
     <ion-row>
