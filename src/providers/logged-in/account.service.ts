@@ -18,8 +18,14 @@ import { ConversationService } from './conversation.service';
 export class AccountService {
 
   public activeAccount: InstagramAccount; // The account currently being viewed by agent
-  public activeAccountStats:StatsRecord[]; // Stats belonging to the active account
   public managedAccounts: InstagramAccount[]; // Array of managed accounts stored here
+
+  public activeAccountStats:StatsRecord[]; // Stats belonging to the active account
+  // Storing arrays for graphing of historical data
+  public statsDatesArray = [];
+  public statsFollowingArray = [];
+  public statsFollowersArray = [];
+  public statsMediaArray = [];
 
   /**
    * Whether the user is currently using "media" or "conversation" view
@@ -70,6 +76,13 @@ export class AccountService {
     this.statsLoading = true;
     let statsUrl = `${this._accountEndpoint}/stats?accountId=${this.activeAccount.user_id}`;
     this._authhttp.get(statsUrl).subscribe(jsonResp => {
+      this.activeAccountStats = jsonResp;
+      for (var i = 0; i < this.activeAccountStats.length; i++) {
+        this.statsDatesArray.push(this.activeAccountStats[i].record_date);
+        this.statsFollowersArray.push(this.activeAccountStats[i].record_follower_count);
+        this.statsFollowingArray.push(this.activeAccountStats[i].record_following_count);
+        this.statsMediaArray.push(this.activeAccountStats[i].record_media_count);
+      }
       this.statsLoading = false;
       this.activeAccountStats = jsonResp;
     });
