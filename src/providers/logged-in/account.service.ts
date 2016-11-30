@@ -77,12 +77,14 @@ export class AccountService {
     let statsUrl = `${this._accountEndpoint}/stats?accountId=${this.activeAccount.user_id}`;
     this._authhttp.get(statsUrl).subscribe(jsonResp => {
       this.activeAccountStats = jsonResp;
+      // Populate data for graphing (push to front of array for chronological graphing)
       for (var i = 0; i < this.activeAccountStats.length; i++) {
-        this.statsDatesArray.push(this.activeAccountStats[i].record_date);
-        this.statsFollowersArray.push(this.activeAccountStats[i].record_follower_count);
-        this.statsFollowingArray.push(this.activeAccountStats[i].record_following_count);
-        this.statsMediaArray.push(this.activeAccountStats[i].record_media_count);
+        this.statsDatesArray.unshift(this.activeAccountStats[i].record_date);
+        this.statsFollowersArray.unshift(this.activeAccountStats[i].record_follower_count);
+        this.statsFollowingArray.unshift(this.activeAccountStats[i].record_following_count);
+        this.statsMediaArray.unshift(this.activeAccountStats[i].record_media_count);
       }
+
       this.statsLoading = false;
       this.activeAccountStats = jsonResp;
     });

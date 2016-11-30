@@ -31,6 +31,19 @@
     <img src='assets/brand/loader.gif'>
   </div>
 
+  <!-- Chart -->
+  <div class="row" *ngIf="accounts.activeAccountStats">
+      <div style="display: block;">
+      <canvas baseChart width="400" height="400"
+                  [datasets]="lineChartData"
+                  [labels]="accounts.statsDatesArray"
+                  [options]="lineChartOptions"
+                  [colors]="lineChartColors"
+                  [legend]="lineChartLegend"
+                  [chartType]="lineChartType"></canvas>
+      </div>
+  </div>
+
   <!-- Display Stats in Table View -->
   <ion-grid *ngIf="accounts.activeAccountStats">
     <ion-row>
