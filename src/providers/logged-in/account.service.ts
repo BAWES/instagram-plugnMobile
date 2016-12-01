@@ -101,7 +101,13 @@ export class AccountService {
 
     // Proceed with switching accounts
     this.activeAccount = account;
+    // reset stats
     this.activeAccountStats = null;
+    this.statsDatesArray = [];
+    this.statsFollowersArray = [];
+    this.statsFollowingArray = [];
+    this.statsMediaArray = [];
+
     this.loadAccountMediaAndConversations();
   }
 
