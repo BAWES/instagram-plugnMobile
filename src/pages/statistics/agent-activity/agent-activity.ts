@@ -13,7 +13,7 @@ import { ActivityService } from '../../../providers/logged-in/activity.service';
 })
 export class AgentActivityPage {
 
-  public isLoading = false;
+  public isLoading = true;
   public accountActivity; // Loaded activity data
 
   constructor(
