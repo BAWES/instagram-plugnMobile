@@ -45,6 +45,7 @@ import { AccountService } from '../providers/logged-in/account.service';
 import { MediaService } from '../providers/logged-in/media.service';
 import { ConversationService } from '../providers/logged-in/conversation.service';
 import { CommentService } from '../providers/logged-in/comment.service';
+import { ActivityService } from '../providers/logged-in/activity.service';
 
 export const pages = [
   MyApp,
@@ -141,7 +142,8 @@ export const toDeclare = [
     AccountService, //Manages Instagram Accounts assigned to Agent
     MediaService, //Manage Media for accounts
     ConversationService, // Manages Conversations for accounts
-    CommentService // Handle Comment Posting and Deletion
+    CommentService, // Handle Comment Posting and Deletion
+    ActivityService // Agent Activity on Accounts
   ],
   bootstrap: [IonicApp]
 })
