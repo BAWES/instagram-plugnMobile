@@ -38,11 +38,17 @@ export class NavigationPage {
     this.rootPage = AccountTabsPage;
     this.accounts.setActiveAccount(account);
   }
-
-  openPage(page){
+  
+  /**
+   * Load Activity Page showing all activity for the logged in agent
+   */
+  loadMyActivityPage(){
     console.log("Attempting to open page");
   }
 
+  /**
+   * Stats Pages on right nav menu
+   */
   openStatisticsPage(pageName: string){
     switch(pageName){
       case "agent-activity":
@@ -61,11 +67,17 @@ export class NavigationPage {
     this._menu.close();
   }
 
+  /**
+   * Page to add new Instagram account
+   */
   loadAddAccountPage(){
     this.nav.push(AddAccountPage);
     this._menu.close();
   }
 
+  /**
+   * Log Agent out of the app
+   */
   logout(){
     this._auth.logout();
   }
