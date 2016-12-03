@@ -7,6 +7,7 @@ import { AccountService } from '../../providers/logged-in/account.service';
 // Page Imports
 import { AccountTabsPage } from '../account/account-tabs/account-tabs';
 import { AddAccountPage } from '../add-account/add-account';
+import { MyActivityPage } from '../my-activity/my-activity';
 
 // Account Stats Pages available on Right Menu
 import { AgentActivityPage } from '../statistics/agent-activity/agent-activity';
@@ -43,7 +44,8 @@ export class NavigationPage {
    * Load Activity Page showing all activity for the logged in agent
    */
   loadMyActivityPage(){
-    console.log("Attempting to open page");
+    this.nav.push(MyActivityPage);
+    this._menu.close();
   }
 
   /**

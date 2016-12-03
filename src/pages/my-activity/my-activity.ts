@@ -2,18 +2,18 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 /*
-  Class for the add-account page.
+  Class for the my-activity page.
 */
 @Component({
-  selector: 'page-add-account',
-  templateUrl: 'add-account.html'
+  selector: 'page-my-activity',
+  templateUrl: 'my-activity.html'
 })
-export class AddAccountPage {
+export class MyActivityPage {
 
   constructor(public navCtrl: NavController) {}
 
   ionViewDidLoad() {
-    //console.log('Hello Add Account Page');
+    console.log('Hello My Activity Page');
   }
 
 }
