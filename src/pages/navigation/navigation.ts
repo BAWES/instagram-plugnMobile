@@ -54,16 +54,16 @@ export class NavigationPage {
   openStatisticsPage(pageName: string){
     switch(pageName){
       case "agent-activity":
-        this.rootPage = AgentActivityPage;
+        this.nav.push(AgentActivityPage);
         break;
       case "media-stats":
-        this.rootPage = MediaStatsPage;
+        this.nav.push(MediaStatsPage);
         break;
       case "following":
-        this.rootPage = FollowingPage;
+        this.nav.push(FollowingPage);
         break;
       case "followers":
-        this.rootPage = FollowersPage;
+        this.nav.push(FollowersPage);
         break;
     }
     this._menu.close();

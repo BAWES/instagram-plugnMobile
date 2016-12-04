@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { ActivityService } from '../../providers/logged-in/activity.service';
+import { HardwareBackButtonService } from '../../providers/hardwarebackbtn.service';
 
 /*
   Class for the my-activity page.
@@ -18,6 +19,7 @@ export class MyActivityPage {
   constructor(
     public navCtrl: NavController,
     public activityService: ActivityService,
+    private _backBtn: HardwareBackButtonService
     ) {}
 
   /**
@@ -26,6 +28,12 @@ export class MyActivityPage {
   ionViewDidEnter() {
     // Load and populate media detail
     this._loadActivity();
+
+    // Setup Back Button Behavior
+    this._backBtn.callbackOnBack(() => {
+      this._backBtn.clearBackFunctionality();
+      this.navCtrl.pop();
+    });
   }
 
   /**

@@ -7,22 +7,8 @@
 
     <img menuToggle="left" left style='width:25px; height:25px; float:left;' src="assets/brand/icon.png" />
 
-    <ion-buttons right *ngIf="accounts.activeAccount">
-      <button ion-button icon-right menuToggle="right">
-        @{{ accounts.activeAccount.user_name }} 
-        <img style='width:25px; height:25px;
-        margin-left:5px;
-        border-radius: 200px;
-        -moz-border-radius: 200px;
-        -webkit-border-radius: 200px' 
-          src="{{ accounts.activeAccount.user_profile_pic }}"/> 
-      </button>
-    </ion-buttons>
-
+    <ion-title>Agent Activity</ion-title>
   </ion-navbar>
-  <ion-toolbar text-center>
-    <h3>Agent Activity</h3>
-  </ion-toolbar>
 </ion-header>
 
 <ion-content>

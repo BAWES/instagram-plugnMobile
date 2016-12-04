@@ -3,6 +3,7 @@ import { NavController} from 'ionic-angular';
 
 import { AccountService } from '../../../providers/logged-in/account.service';
 import { ActivityService } from '../../../providers/logged-in/activity.service';
+import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
 
 /*
   Agent Activity Statistics Page
@@ -20,6 +21,7 @@ export class AgentActivityPage {
     public navCtrl: NavController,
     public accounts: AccountService,
     public activityService: ActivityService,
+    private _backBtn: HardwareBackButtonService
     ) {}
 
   /**
@@ -28,6 +30,12 @@ export class AgentActivityPage {
   ionViewDidEnter() {
     // Load and populate media detail
     this._loadAgentActivity();
+
+    // Setup Back Button Behavior
+    this._backBtn.callbackOnBack(() => {
+      this._backBtn.clearBackFunctionality();
+      this.navCtrl.pop();
+    });
   }
 
 

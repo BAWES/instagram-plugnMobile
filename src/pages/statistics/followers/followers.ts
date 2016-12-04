@@ -4,6 +4,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, Events } from 'ionic-angular';
 
 import { AccountService } from '../../../providers/logged-in/account.service';
+import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
 
 /*
   Followers Page
@@ -19,7 +20,8 @@ export class FollowersPage {
   constructor(
     public navCtrl: NavController,
     public accounts: AccountService,
-    private _events: Events
+    private _events: Events,
+    private _backBtn: HardwareBackButtonService
     ) {}
 
   /**
@@ -37,6 +39,12 @@ export class FollowersPage {
         this.renderChart();
       });
     }
+
+    // Setup Back Button Behavior
+    this._backBtn.callbackOnBack(() => {
+      this._backBtn.clearBackFunctionality();
+      this.navCtrl.pop();
+    });
   }
 
   /**
