@@ -17,6 +17,9 @@ export class FollowingPage {
 
   @ViewChild('canvas') canvas:ElementRef;
 
+  // Variable storing event handlers to unsubscribe from before page leaves
+  private _accountSwitchHandler;
+
   constructor(
     public navCtrl: NavController,
     public accounts: AccountService,
@@ -47,6 +50,18 @@ export class FollowingPage {
       this._backBtn.clearBackFunctionality();
       this.navCtrl.pop();
     });
+
+    // Subscribe to Pop this page off on account change
+    this._events.subscribe("account:switching", this._accountSwitchHandler = (eventData) => {
+      this.navCtrl.popToRoot();
+    });
+  }
+  /**
+   * Page is leaving
+   */
+  ionViewWillLeave(){
+    // Unsubscribe
+    this._events.unsubscribe("account:switching", this._accountSwitchHandler);
   }
 
   /**
