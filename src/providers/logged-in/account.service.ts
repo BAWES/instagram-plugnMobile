@@ -69,8 +69,9 @@ export class AccountService {
    */
   public loadAccountStats(){
     // Return if already loaded
-    if(this.activeAccountStats) 
+    if(this.activeAccountStats){
       return;
+    }
 
     // Otherwise load the stats
     this.statsLoading = true;
@@ -87,6 +88,8 @@ export class AccountService {
 
       this.statsLoading = false;
       this.activeAccountStats = jsonResp;
+
+      this._events.publish("chartdata:ready");
     });
   }
 

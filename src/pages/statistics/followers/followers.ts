@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { NavController} from 'ionic-angular';
+import 'chart.js/src/chart';
+declare var Chart;
+import { Component, ViewChild, ElementRef } from '@angular/core';
+import { NavController, Events } from 'ionic-angular';
 
 import { AccountService } from '../../../providers/logged-in/account.service';
 
@@ -12,31 +14,12 @@ import { AccountService } from '../../../providers/logged-in/account.service';
 })
 export class FollowersPage {
 
-  // lineChart
-  public lineChartData:Array<any> = [
-    {data: this.accounts.statsFollowersArray}
-  ];
-  public lineChartOptions:any = {
-    animation: false,
-    responsive: true,
-    maintainAspectRatio: false
-  };
-  public lineChartColors:Array<any> = [
-    { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    }
-  ];
-  public lineChartLegend:boolean = false;
-  public lineChartType:string = 'line';
+  @ViewChild('canvas') canvas:ElementRef;
 
   constructor(
     public navCtrl: NavController,
     public accounts: AccountService,
+    private _events: Events
     ) {}
 
   /**
@@ -45,6 +28,53 @@ export class FollowersPage {
   ionViewDidEnter() {
     // Load this account stats if not already loaded
     this.accounts.loadAccountStats();
+
+    // Render the chart after data ready
+    if(this.accounts.activeAccountStats){
+      this.renderChart();
+    }else{
+      this._events.subscribe("chartdata:ready", () => {
+        this.renderChart();
+      });
+    }
+  }
+
+  /**
+   * Render the chart
+   */
+  renderChart(){
+    // Hide the chart Legend
+    Chart.defaults.global.legend.display = false;
+
+    // Get the Canvas
+    let ctx = this.canvas.nativeElement;
+    // Prepare the data
+    let data = {
+        labels: this.accounts.statsDatesArray,
+        datasets: [
+            {
+                data: this.accounts.statsFollowersArray,
+                // Colors
+                backgroundColor: 'rgba(148,159,177,0.2)',
+                borderColor: 'rgba(148,159,177,1)',
+                pointBackgroundColor: 'rgba(148,159,177,1)',
+                pointBorderColor: '#fff',
+                pointHoverBackgroundColor: '#fff',
+                pointHoverBorderColor: 'rgba(148,159,177,0.8)'
+            }
+        ]
+    };
+
+    // Create the chart
+    new Chart(ctx, {
+      type: 'line',
+      data: data,
+      options: {
+        animation: false,
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    });
   }
 
   

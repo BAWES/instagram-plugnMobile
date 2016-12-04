@@ -2,9 +2,6 @@ import { NgModule } from '@angular/core';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-// Chart
-import {ChartsModule} from '../assets/chartnodemodules/ng2-charts/components/charts/charts';
-
 // Start Pages [Logged Out]
 import { LoginPage } from '../pages/start-pages/login/login';
 import { RegisterPage } from '../pages/start-pages/register/register';
@@ -120,7 +117,6 @@ export const toDeclare = [
   declarations: toDeclare,
   entryComponents: pages,
   imports: [
-    ChartsModule,
     IonicModule.forRoot(MyApp, {
       // Global Config
       tabsHideOnSubPages: true,
