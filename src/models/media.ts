@@ -7,5 +7,6 @@ export interface Media{
     numCommentsUnhandled: number;
     caption: string;
     image: MediaImage;
+    link: string;
     datePosted: string;
 }

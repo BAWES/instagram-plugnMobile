@@ -19,8 +19,10 @@
       <ion-grid>
         <ion-row>
           <ion-col width-20>
-            <img src='{{ activeMedia.image.thumb }}' onError="this.src='assets/user.png';"
-             style="width:50px; height:50px;">
+            <a href="{{ activeMedia.link }}" target='_blank'>
+              <img src='{{ activeMedia.image.thumb }}' onError="this.src='assets/user.png';"
+              style="width:50px; height:50px; cursor:pointer;">
+             </a>
           </ion-col>
           <ion-col style="height: 4em; overflow: hidden;">
               {{ activeMedia.caption }}
