@@ -73,6 +73,9 @@ export class ConversationDetailPage {
     // Load and populate conversation detail
     this._loadComments();
 
+    // Present Sliding Tutorial
+    this.notifyOptions();
+
     // Add margin to ion-list of comments when keyboard opens
     // This will help scroll through and read comments while typing
     this._events.subscribe("keyboard:toggle", (keyboardData) => {
@@ -281,36 +284,11 @@ export class ConversationDetailPage {
     });
   }
 
-  showCreateNoteForm(){
-    let prompt = this._alertCtrl.create({
-      title: 'Add Note',
-      inputs: [
-        {
-          name: 'title',
-          placeholder: 'Title'
-        },
-        {
-          name: 'note',
-          placeholder: 'Note'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Save',
-          handler: data => {
-            console.log('Saved clicked');
-          }
-        }
-      ]
-    });
-    prompt.present();
+  /**
+   * When user wants to create a new note
+   */
+  createNewNote(){
+    //logic here
   }
 
   /**
