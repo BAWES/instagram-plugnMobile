@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Events } from 'ionic-angular';
+import { NavController, Events, MenuController } from 'ionic-angular';
 
 import { AccountService } from '../../../providers/logged-in/account.service';
 import { ActivityService } from '../../../providers/logged-in/activity.service';
@@ -25,7 +25,8 @@ export class AgentActivityPage {
     public accounts: AccountService,
     public activityService: ActivityService,
     private _events: Events,
-    private _backBtn: HardwareBackButtonService
+    private _backBtn: HardwareBackButtonService,
+    private _menuCtrl: MenuController
     ) {}
 
   /**
@@ -34,6 +35,9 @@ export class AgentActivityPage {
   ionViewDidEnter() {
     // Load and populate media detail
     this._loadAgentActivity();
+
+    // Disable Swipe on Right Menu
+    this._menuCtrl.swipeEnable(false, "right");
 
     // Setup Back Button Behavior
     this._backBtn.callbackOnBack(() => {
@@ -52,6 +56,8 @@ export class AgentActivityPage {
   ionViewWillLeave(){
     // Unsubscribe
     this._events.unsubscribe("account:switching", this._accountSwitchHandler);
+    // Enable Swipe on Right Menu
+    this._menuCtrl.swipeEnable(true, "right");
   }
 
 

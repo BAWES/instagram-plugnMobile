@@ -1,7 +1,7 @@
 import 'chart.js/src/chart';
 declare var Chart;
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, Events } from 'ionic-angular';
+import { NavController, Events, MenuController } from 'ionic-angular';
 
 import { AccountService } from '../../../providers/logged-in/account.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
@@ -24,7 +24,8 @@ export class MediaStatsPage {
     public navCtrl: NavController,
     public accounts: AccountService,
     private _events: Events,
-    private _backBtn: HardwareBackButtonService
+    private _backBtn: HardwareBackButtonService,
+    private _menuCtrl: MenuController
     ) {}
 
   /**
@@ -45,6 +46,9 @@ export class MediaStatsPage {
       });
     }
 
+    // Disable Swipe on Right Menu
+    this._menuCtrl.swipeEnable(false, "right");
+
     // Setup Back Button Behavior
     this._backBtn.callbackOnBack(() => {
       this._backBtn.clearBackFunctionality();
@@ -62,6 +66,8 @@ export class MediaStatsPage {
   ionViewWillLeave(){
     // Unsubscribe
     this._events.unsubscribe("account:switching", this._accountSwitchHandler);
+    // Enable Swipe on Right Menu
+    this._menuCtrl.swipeEnable(true, "right");
   }
 
   /**
