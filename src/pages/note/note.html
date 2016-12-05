@@ -9,12 +9,23 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
 
   <!-- When content isn't available, Show Loading -->
   <div class="page-loading" *ngIf="isLoading">
     <img src='assets/brand/loader.gif'>
   </div>
+
+  <form>
+
+    <ion-input class="titleInput"
+      type="text" placeholder="Title"></ion-input>
+
+    <ion-textarea autosize rows="1" class="contentInput"
+      placeholder="Note">
+    </ion-textarea>
+
+  </form>
 
 
 </ion-content>
