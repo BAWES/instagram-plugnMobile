@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+
+    <button ion-button menuToggle="left">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>Note</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- When content isn't available, Show Loading -->
+  <div class="page-loading" *ngIf="isLoading">
+    <img src='assets/brand/loader.gif'>
+  </div>
+
+
+</ion-content>

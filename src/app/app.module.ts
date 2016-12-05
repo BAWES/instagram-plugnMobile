@@ -10,6 +10,7 @@ import { ForgotPasswordPage } from '../pages/start-pages/forgot-password/forgot-
 // Main Navigation once Logged In
 import { NavigationPage } from '../pages/navigation/navigation';
 import { AddAccountPage } from '../pages/add-account/add-account';
+import { NotePage } from '../pages/note/note';
 import { MyActivityPage } from '../pages/my-activity/my-activity';
 
 // Account Management Pages via Conversation / Media View
@@ -53,6 +54,7 @@ export const pages = [
   NavigationPage,
   AddAccountPage,
   MyActivityPage,
+  NotePage,
 
   // Account Mgmt Pages Media/Conv View 
   AccountTabsPage,
@@ -94,6 +96,7 @@ export const toDeclare = [
   NavigationPage,
   AddAccountPage,
   MyActivityPage,
+  NotePage,
 
   // Account Mgmt Pages Media/Conv View 
   AccountTabsPage,
