@@ -14,6 +14,9 @@ import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.se
 // Forms
 import { FormControl, Validators } from '@angular/forms';
 
+// Pages
+import { NotePage } from '../../note/note';
+
 /*
   Conversation Detail page.
 */
@@ -288,7 +291,7 @@ export class ConversationDetailPage {
    * When user wants to create a new note
    */
   createNewNote(){
-    //logic here
+    this.navCtrl.push(NotePage);
   }
 
   /**
