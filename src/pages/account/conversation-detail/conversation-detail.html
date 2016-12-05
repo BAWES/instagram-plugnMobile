@@ -53,7 +53,7 @@
     <!-- END Conversation Tab -->
 
     <!-- START Info Tab -->
-    <div padding *ngSwitchCase="'info'">
+    <div *ngSwitchCase="'info'">
 
       <!-- User Account Overview -->
       <ion-card class='accountOverview'>
@@ -69,6 +69,14 @@
           </a>
         </ion-card-content>
       </ion-card>
+
+      <!-- Add Note Button -->
+      <div text-center>
+        <button ion-button icon-left clear>
+          <ion-icon name="add-circle"></ion-icon>
+          Add Note
+        </button>
+      </div>
 
       <!-- Note Card -->
       <ion-card>
@@ -110,16 +118,7 @@
           </ion-row>
         </ion-card-content>
 
-        
-
       </ion-card>
-
-      <!-- Add Note Button -->
-      <ion-fab bottom right style='position:fixed;'>
-        <button ion-fab color="dark" (click)="showCreateNoteForm()">
-          <i class="material-icons">note_add</i>
-        </button>
-      </ion-fab>
 
 
     </div>
