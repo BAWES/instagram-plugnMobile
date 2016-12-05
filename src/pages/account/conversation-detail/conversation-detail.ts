@@ -294,6 +294,17 @@ export class ConversationDetailPage {
     this.navCtrl.push(NotePage);
   }
 
+  updateNote(){
+    console.log("attempting to update note");
+  }
+
+  deleteNote(event){
+    // Stop Propagation since delete button is inside the update button
+    event.stopPropagation();
+    
+    console.log("attempting to delete note");
+  }
+
   /**
    * Present toast showing available options when dealing with this item
    * TOAST IS TO BE SHOWN ONCE A DAY ONLY!
