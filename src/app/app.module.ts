@@ -44,6 +44,7 @@ import { MediaService } from '../providers/logged-in/media.service';
 import { ConversationService } from '../providers/logged-in/conversation.service';
 import { CommentService } from '../providers/logged-in/comment.service';
 import { ActivityService } from '../providers/logged-in/activity.service';
+import { NoteService } from '../providers/logged-in/note.service';
 
 export const pages = [
   MyApp,
@@ -142,7 +143,8 @@ export const toDeclare = [
     MediaService, //Manage Media for accounts
     ConversationService, // Manages Conversations for accounts
     CommentService, // Handle Comment Posting and Deletion
-    ActivityService // Agent Activity on Accounts
+    ActivityService, // Agent Activity on Accounts
+    NoteService // Note on users / CRM
   ],
   bootstrap: [IonicApp]
 })
