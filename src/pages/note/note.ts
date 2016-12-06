@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, Events } from 'ionic-angular';
+import { NavController, Events, NavParams } from 'ionic-angular';
 
 import { AccountService } from '../../providers/logged-in/account.service';
+import { NoteService } from '../../providers/logged-in/note.service';
 import { HardwareBackButtonService } from '../../providers/hardwarebackbtn.service';
 
 // Forms
@@ -28,16 +29,21 @@ export class NotePage {
   private _accountSwitchHandler;
 
   constructor(
+    params: NavParams,
     public navCtrl: NavController,
     public accounts: AccountService,
+    public noteService: NoteService,
     private _fb: FormBuilder,
     private _events: Events,
     private _backBtn: HardwareBackButtonService
     ) {
+      // Load the passed Note model
+      this.activeNote = params.get('note');
+
       // Initialize the Note Form
       this.noteForm = this._fb.group({
-        title: [""],
-        content: [""]
+        title: [this.activeNote.title],
+        content: [this.activeNote.content]
       });
     }
 
@@ -70,13 +76,16 @@ export class NotePage {
    * Save the note
    */
   saveNote(){
-    let noteTitle = this.noteForm.value.title;
-    let noteContent = this.noteForm.value.content;
+    this.activeNote.title = this.noteForm.value.title;
+    this.activeNote.content = this.noteForm.value.content;
 
-    console.log(noteTitle, noteContent);
+    
+
+    console.log(this.activeNote);
+    //this.noteService.createNote(this.accounts.activeAccount.user_id, );
 
     // Close the page
-    this.navCtrl.pop();
+    //this.navCtrl.pop();
   }
   
 

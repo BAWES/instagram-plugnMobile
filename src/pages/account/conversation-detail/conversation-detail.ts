@@ -4,6 +4,7 @@ import { NavController, NavParams, Events, Content, AlertController, MenuControl
 // Models
 import { Conversation } from '../../../models/conversation';
 import { Comment } from '../../../models/comment';
+import { Note } from '../../../models/note';
 
 // Services
 import { ConversationService } from '../../../providers/logged-in/conversation.service';
@@ -291,13 +292,24 @@ export class ConversationDetailPage {
    * When user wants to create a new note
    */
   createNewNote(){
-    this.navCtrl.push(NotePage);
+    let newNote = new Note();
+    this.navCtrl.push(NotePage, {
+      note: newNote
+    });
   }
 
-  updateNote(){
-    console.log("attempting to update note");
+  /**
+   * Load note page for updating
+   */
+  updateNote(noteToUpdate: Note){
+    this.navCtrl.push(NotePage, {
+      note: noteToUpdate
+    });
   }
 
+  /**
+   * Delete note from server then refresh
+   */
   deleteNote(event){
     // Stop Propagation since delete button is inside the update button
     event.stopPropagation();
