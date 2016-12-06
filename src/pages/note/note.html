@@ -6,7 +6,9 @@
     </button>
 
     <ion-buttons right>
-      <button ion-button clear color="primary">
+      <button ion-button clear color="primary" 
+        [disabled]="isLoading"
+        (click)="saveNote()">
         Save
       </button>
     </ion-buttons>
@@ -20,12 +22,12 @@
     <img src='assets/brand/loader.gif'>
   </div>
 
-  <form>
+  <form [formGroup]="noteForm">
 
-    <ion-input class="titleInput"
+    <ion-input class="titleInput" formControlName="title"
       type="text" placeholder="Title"></ion-input>
 
-    <ion-textarea autosize rows="1" class="contentInput"
+    <ion-textarea autosize rows="1" class="contentInput" formControlName="content"
       placeholder="Note">
     </ion-textarea>
 
