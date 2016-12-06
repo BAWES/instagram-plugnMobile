@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, Events, NavParams } from 'ionic-angular';
+import { NavController, Events, NavParams, AlertController } from 'ionic-angular';
 
 import { AccountService } from '../../providers/logged-in/account.service';
 import { NoteService } from '../../providers/logged-in/note.service';
 import { HardwareBackButtonService } from '../../providers/hardwarebackbtn.service';
 
 // Forms
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 // Models
 import { Note } from '../../models/note';
@@ -21,6 +21,8 @@ import { Note } from '../../models/note';
 export class NotePage {
 
   public isLoading = false;
+  public isSaving = false;
+
   public noteForm: FormGroup;
 
   private activeNote: Note;
@@ -35,6 +37,7 @@ export class NotePage {
     public noteService: NoteService,
     private _fb: FormBuilder,
     private _events: Events,
+    private _alertCtrl: AlertController,
     private _backBtn: HardwareBackButtonService
     ) {
       // Load the passed Note model
@@ -76,16 +79,29 @@ export class NotePage {
    * Save the note
    */
   saveNote(){
+    this.isSaving = true;
     this.activeNote.title = this.noteForm.value.title;
     this.activeNote.content = this.noteForm.value.content;
 
-    
+    // Save NEW note on server
+    this.noteService.createNote(this.activeNote).subscribe(jsonResponse => {
+      this.isSaving = false;
 
-    console.log(this.activeNote);
-    //this.noteService.createNote(this.accounts.activeAccount.user_id, );
+      // On Success
+      if(jsonResponse == "success"){
+        // Close the page
+        this.navCtrl.pop();
+      }
 
-    // Close the page
-    //this.navCtrl.pop();
+      // On Failure
+      if(jsonResponse.operation == "error"){
+          let prompt = this._alertCtrl.create({
+            message: jsonResponse.message,
+            buttons: ["Ok"]
+          });
+          prompt.present();
+        }
+    });
   }
   
 

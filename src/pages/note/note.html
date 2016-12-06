@@ -7,7 +7,7 @@
 
     <ion-buttons right>
       <button ion-button clear color="primary" 
-        [disabled]="isLoading"
+        [disabled]="isLoading || isSaving"
         (click)="saveNote()">
         Save
       </button>
