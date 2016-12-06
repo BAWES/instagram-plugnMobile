@@ -293,6 +293,8 @@ export class ConversationDetailPage {
    */
   createNewNote(){
     let newNote = new Note();
+    newNote.noteAboutUsername = this.activeConversation.comment_by_username;
+
     this.navCtrl.push(NotePage, {
       note: newNote
     });
