@@ -305,7 +305,7 @@ export class ConversationDetailPage {
     this._noteService
       .getNotes(this.activeConversation.user_id, this.activeConversation.comment_by_username)
       .subscribe(jsonResponse => {
-        //this.notesLoading = false;
+        this.notesLoading = false;
         this.userNotes = jsonResponse;
       });
   }
@@ -335,7 +335,7 @@ export class ConversationDetailPage {
   /**
    * Delete note from server then refresh
    */
-  deleteNote(event){
+  deleteNote(event, noteToDelete: Note){
     // Stop Propagation since delete button is inside the update button
     event.stopPropagation();
     
