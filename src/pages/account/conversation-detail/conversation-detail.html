@@ -76,6 +76,9 @@
           <ion-icon name="add-circle"></ion-icon>
           Add Note
         </button>
+        
+        <!-- When Notes are loading show spinner -->
+        <ion-spinner *ngIf="notesLoading"></ion-spinner>
       </div>
 
       <!-- Note Card -->

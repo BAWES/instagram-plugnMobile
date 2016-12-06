@@ -10,6 +10,7 @@ import { Note } from '../../../models/note';
 import { ConversationService } from '../../../providers/logged-in/conversation.service';
 import { CommentService } from '../../../providers/logged-in/comment.service';
 import { AccountService } from '../../../providers/logged-in/account.service';
+import { NoteService } from '../../../providers/logged-in/note.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
 
 // Forms
@@ -29,6 +30,7 @@ export class ConversationDetailPage {
   @ViewChild(Content) content: Content;
 
   public isLoading = false;
+  public notesLoading = false;
   public isCommentSubmitting = false; // When comment is being submitted to server
   public handleLoading = false; // When conversation is being marked as handled
 
@@ -39,6 +41,8 @@ export class ConversationDetailPage {
 
   public conversationComments: Comment[];
   private _lastCommentsMediaId: number; // Stores the last comments media id for posting response
+
+  public userNotes: Note[]; // Notes made on this user
 
   // Comment Count within Conversation 
   public commentCount: number;
@@ -57,6 +61,7 @@ export class ConversationDetailPage {
     public navCtrl: NavController,
     public conversations: ConversationService,
     public accounts: AccountService,
+    private _noteService: NoteService,
     private _commentService: CommentService,
     private _events: Events,
     private _backBtn: HardwareBackButtonService,
@@ -97,6 +102,9 @@ export class ConversationDetailPage {
    */
   ionViewDidEnter() {
     this._initRefresher();
+
+    // Load Notes on Page Open 
+    this._loadNotes();
 
     // Setup Back Button Behavior
     this._backBtn.callbackOnBack(() => {
@@ -286,6 +294,20 @@ export class ConversationDetailPage {
       }
       
     });
+  }
+
+  /**
+   * Loads notes for display on user detail tab
+   */
+  private _loadNotes(){
+    this.notesLoading = true;
+
+    this._noteService
+      .getNotes(this.activeConversation.user_id, this.activeConversation.comment_by_username)
+      .subscribe(jsonResponse => {
+        //this.notesLoading = false;
+        this.userNotes = jsonResponse;
+      });
   }
 
   /**

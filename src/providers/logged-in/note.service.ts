@@ -28,7 +28,7 @@ export class NoteService {
   getNotes(accountId: number, username: string): Observable<any>{
     let url = `${this._noteEndpoint}`
                     +`?accountId=${accountId}`
-                    +`?username=${username}`;
+                    +`&username=${username}`;
     return this._authhttp.get(url);
   }
 
