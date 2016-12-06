@@ -5,6 +5,9 @@ import { Observable } from 'rxjs/Observable';
 // Services
 import { AuthHttpService } from './authhttp.service';
 
+// Models
+import { Note } from '../../models/note';
+
 /*
   Manages Note Functionality on the server
 */
@@ -32,19 +35,16 @@ export class NoteService {
   /**
    * Create a new note
    * 
-   * @param {number} accountId
-   * @param {string} username
-   * @param {string} noteTitle
-   * @param {string} noteText
+   * @param {Note} note
    * @returns {Observable<any>}
    */
-  createNote(accountId: number, username: string, noteTitle: string, noteText: string): Observable<any>{
+  createNote(note: Note): Observable<any>{
     let postUrl = `${this._noteEndpoint}`;
     let params = {
-      "accountId": accountId,
-      "note_about_username": username,
-      "note_title": noteTitle,
-      "note_text": noteText
+      "accountId": note.userId,
+      "note_about_username": note.noteAboutUsername,
+      "note_title": note.title,
+      "note_text": note.content
     };
     return this._authhttp.post(postUrl, params);
   }
@@ -52,31 +52,28 @@ export class NoteService {
   /**
    * Update an existing note
    * 
-   * @param {number} accountId
-   * @param {number} noteId
-   * @param {string} noteTitle
-   * @param {string} noteText
+   * @param {Note} note
    * @returns {Observable<any>}
    */
-  updateNote(accountId: number, noteId: number, noteTitle: string, noteText: string): Observable<any>{
+  updateNote(note: Note): Observable<any>{
     let postUrl = `${this._noteEndpoint}`;
     let params = {
-      "accountId": accountId,
-      "noteId": noteId,
-      "note_title": noteTitle,
-      "note_text": noteText
+      "accountId": note.userId,
+      "noteId": note.id,
+      "note_title": note.title,
+      "note_text": note.content
     };
     return this._authhttp.patch(postUrl, params);
   }
 
   /**
    * Deletes a comment
-   * @param {number} accountId
+   * @param {Note} note
    * @param {number} noteId
    * @returns {Observable<any>}
    */
-  deleteNote(accountId: number, noteId: number){
-    let deleteUrl = `${this._noteEndpoint}?accountId=${accountId}&noteId=${noteId}`;
+  deleteNote(note: Note){
+    let deleteUrl = `${this._noteEndpoint}?accountId=${note.userId}&noteId=${note.id}`;
     return this._authhttp.delete(deleteUrl);
   }
 
