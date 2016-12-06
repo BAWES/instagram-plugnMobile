@@ -294,6 +294,7 @@ export class ConversationDetailPage {
   createNewNote(){
     let newNote = new Note();
     newNote.noteAboutUsername = this.activeConversation.comment_by_username;
+    newNote.userId = this.activeConversation.user_id;
 
     this.navCtrl.push(NotePage, {
       note: newNote

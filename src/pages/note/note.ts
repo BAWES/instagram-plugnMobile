@@ -88,7 +88,7 @@ export class NotePage {
       this.isSaving = false;
 
       // On Success
-      if(jsonResponse == "success"){
+      if(jsonResponse.operation == "success"){
         // Close the page
         this.navCtrl.pop();
       }
