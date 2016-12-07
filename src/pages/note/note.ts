@@ -54,7 +54,6 @@ export class NotePage {
    * On Page Enter
    */
   ionViewDidEnter() {
-
     // Setup Back Button Behavior
     this._backBtn.callbackOnBack(() => {
       this._backBtn.clearBackFunctionality();
@@ -83,8 +82,16 @@ export class NotePage {
     this.activeNote.title = this.noteForm.value.title;
     this.activeNote.content = this.noteForm.value.content;
 
-    // Save NEW note on server
-    this.noteService.createNote(this.activeNote).subscribe(jsonResponse => {
+    let action;
+    if(!this.activeNote.id){
+      // Create
+      action = this.noteService.createNote(this.activeNote);
+    }else{
+      // Update
+      action = this.noteService.updateNote(this.activeNote);
+    }
+    
+    action.subscribe(jsonResponse => {
       this.isSaving = false;
 
       // On Success
