@@ -25,8 +25,6 @@ export class NavigationPage {
   rootPage: any = AccountTabsPage;
 
   cordovaAvailable:boolean = false;
-  intercomUnreadMessages: number = 0;
-  private _intercomRefreshTimer;
 
   @ViewChild('loggedInContent') nav: NavController
 
@@ -37,21 +35,8 @@ export class NavigationPage {
     private _platform: Platform
     ) {
       if(_platform.is("cordova")){
-        this.cordovaAvailable = true;
-        this.intercomUnreadMessages = intercom.unreadConversationCount();
-        this._initIntercomRefresher();
+        this.cordovaAvailable = true;      
       }
-  }
-
-  /**
-   * Initialize the comment content refresher
-   */
-  private _initIntercomRefresher(){
-    // Refresh Comments every X Seconds
-    let numSeconds = 20 * 1000;
-    this._intercomRefreshTimer = setInterval(() => {
-      this.intercomUnreadMessages = intercom.unreadConversationCount();
-    }, numSeconds);
   }
 
   /**
