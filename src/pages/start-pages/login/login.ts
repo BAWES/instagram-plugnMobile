@@ -78,7 +78,7 @@ export class LoginPage {
 
       if(res.operation == "success"){
         // Successfully logged in, set the access token within AuthService
-        this._auth.setAccessToken(res.token);
+        this._auth.setAccessToken(res.token, +res.agentId, res.name, res.email);
       }else if(res.operation == "error" && res.errorType == "email-not-verified"){
         let alert = this._alertCtrl.create({
             title: 'Email not verified',

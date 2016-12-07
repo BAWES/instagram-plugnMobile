@@ -17,7 +17,12 @@ import { ConfigService } from './config.service';
 export class AuthService {
 
   public isLoggedIn = false;
+
+  // Logged in agent details
   private _accessToken;
+  public agentId: number;
+  public name: string;
+  public email: string;
 
   private _browser: InAppBrowser;
   private _browserLoadEvents;
@@ -56,6 +61,9 @@ export class AuthService {
    */
   logout(reason?: string){
     window.localStorage.removeItem('bearer');
+    window.localStorage.removeItem('agentId');
+    window.localStorage.removeItem('name');
+    window.localStorage.removeItem('email');
     this._accessToken = null;
     this.isLoggedIn = false;
 
@@ -65,15 +73,24 @@ export class AuthService {
   /**
    * Set the access token
    * @param {string} token
+   * @param {number} id
+   * @param {string} name
+   * @param {string} email
    */
-  setAccessToken(token: string){
+  setAccessToken(token: string, id: number, name: string, email: string){
     this._accessToken = token;
+    this.name = name;
+    this.agentId = id;
+    this.email = email;
 
     // Update Public Login Status
     this._updateLoginStatus();
 
     // Save Token in LocalStorage
     window.localStorage.setItem('bearer', token);
+    window.localStorage.setItem('agentId', id+"");
+    window.localStorage.setItem('name', name);
+    window.localStorage.setItem('email', email);
 
     // Log User In by Triggering Event that Access Token has been Set 
     this._events.publish('user:login', 'TokenSet');
@@ -91,7 +108,11 @@ export class AuthService {
 
     // Check Local Storage and Try Again
     if(localStorage.getItem("bearer")){
-      this.setAccessToken(localStorage.getItem("bearer"));
+      this.setAccessToken(
+        localStorage.getItem("bearer"), 
+        +localStorage.getItem("agentId"), 
+        localStorage.getItem("name"), 
+        localStorage.getItem("email"));
       return this.getAccessToken();
     }
 
@@ -221,9 +242,12 @@ export class AuthService {
         code: "localStorage.getItem('response')"
       }).then(resp => {
         this._browser.close();
-        
-        this.setAccessToken(resp);
-        
+
+        resp = resp+""; // cast to str
+        let agentInfo = resp.split(':!:');
+
+        // Set the access token
+        this.setAccessToken(agentInfo[0], agentInfo[1], agentInfo[2], agentInfo[3]);
       });
     }
   }
