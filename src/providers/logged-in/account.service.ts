@@ -183,7 +183,7 @@ export class AccountService {
    */
   private _initAccountsRefresher(){
     // Refresh Comments every X Seconds
-    let numSeconds = 60 * 1000;
+    let numSeconds = 20 * 1000;
     this._refreshTimerAccounts = setInterval(() => {
       this._populateManagedAccounts(false);
     }, numSeconds);
