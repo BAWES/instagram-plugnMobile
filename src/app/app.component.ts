@@ -32,7 +32,7 @@ export class MyApp implements OnInit{
      */
     this._platform.ready().then(() => {
 
-      if (this._platform.is('cordova')) {
+      if (this._platform.is('mobile')) {
         StatusBar.styleDefault();
       }
 

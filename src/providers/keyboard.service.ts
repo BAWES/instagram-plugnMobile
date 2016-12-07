@@ -17,7 +17,7 @@ export class KeyboardService {
      * Initialize Keyboard service if this is a native device
      */
     _platform.ready().then(() => {
-      if (_platform.is('cordova')) {
+      if (_platform.is('cordova') && _platform.is('mobile')) {
         this.initialize();
       }
       if (_platform.is('ios')) {
@@ -27,13 +27,13 @@ export class KeyboardService {
   }
 
   disableScroll(){
-    if (this._platform.is('cordova')) {
+    if (this._platform.is('cordova') && this._platform.is('mobile')) {
       Keyboard.disableScroll(true);
     }
   }
 
   enableScroll(){
-    if (this._platform.is('cordova')) {
+    if (this._platform.is('cordova') && this._platform.is('mobile')) {
       Keyboard.disableScroll(false);
     }
   }

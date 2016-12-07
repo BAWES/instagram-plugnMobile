@@ -183,7 +183,7 @@ export class CommentComponent {
    * Copy comment content to device clipboard
    */
   copyToClipboard(){
-    if (this._platform.is('cordova')) {
+    if (this._platform.is('cordova') && this._platform.is('mobile')) {
       Clipboard.copy(`@${this.comment.comment_by_username}: ${this.comment.comment_text}`);
       this._haptic.notification({type: 'success'});
       let toast = this._toastCtrl.create({
