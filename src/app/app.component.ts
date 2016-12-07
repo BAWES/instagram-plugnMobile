@@ -62,7 +62,12 @@ export class MyApp implements OnInit{
     this._events.subscribe('user:login', (userEventData) => {
       this._zone.run(() => {
         this.rootPage = NavigationPage;
-      })
+      });
+
+      // Initialize User on Intercom.io
+      if (this._platform.is('cordova')) {
+
+      }
     });
 
     // On Logout Event, set root to Login Page
