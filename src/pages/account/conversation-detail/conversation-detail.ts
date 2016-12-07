@@ -338,8 +338,42 @@ export class ConversationDetailPage {
   deleteNote(event, noteToDelete: Note){
     // Stop Propagation since delete button is inside the update button
     event.stopPropagation();
-    
-    console.log("attempting to delete note");
+
+    // Confirm if user really wants to delete 
+    let confirm = this._alertCtrl.create({
+      title: 'Delete this note?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            // Proceed with deletion
+            noteToDelete.isDeleting = true;
+
+            this._noteService.deleteNote(noteToDelete).subscribe(jsonResponse => {
+              // On Success
+              if(jsonResponse.operation == "success"){
+                // Refresh Notes
+                this._loadNotes();
+              }
+
+              // On Failure
+              if(jsonResponse.operation == "error"){
+                let prompt = this._alertCtrl.create({
+                  message: jsonResponse.message,
+                  buttons: ["Ok"]
+                });
+                prompt.present();
+              }
+            });
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
 
   /**

@@ -72,7 +72,7 @@ export class NoteService {
    * @param {number} noteId
    * @returns {Observable<any>}
    */
-  deleteNote(note: Note){
+  deleteNote(note: Note): Observable<any>{
     let deleteUrl = `${this._noteEndpoint}?accountId=${note.userId}&noteId=${note.id}`;
     return this._authhttp.delete(deleteUrl);
   }

@@ -95,12 +95,12 @@ export class NotePage {
 
       // On Failure
       if(jsonResponse.operation == "error"){
-          let prompt = this._alertCtrl.create({
-            message: jsonResponse.message,
-            buttons: ["Ok"]
-          });
-          prompt.present();
-        }
+        let prompt = this._alertCtrl.create({
+          message: jsonResponse.message,
+          buttons: ["Ok"]
+        });
+        prompt.present();
+      }
     });
   }
   

@@ -9,4 +9,5 @@ export class Note{
     updated_by: string;
     created_datetime: string;
     updated_datetime: string;
+    isDeleting: boolean; // to show deletion progress where needed
 }

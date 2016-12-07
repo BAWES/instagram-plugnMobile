@@ -85,9 +85,11 @@
       <ion-card *ngFor="let note of userNotes"
         style='position:relative;' (click)="updateNote(note)">
 
-        <button ion-button icon-only clear color="dark" (click)="deleteNote($event, note)"
+        <button ion-button icon-only clear color="dark" 
+          (click)="deleteNote($event, note)"
           style='position: absolute; top:3px; right:3px;'>
-          <ion-icon name="trash"></ion-icon>
+          <ion-icon name="trash" *ngIf="!note.isDeleting"></ion-icon>
+          <ion-spinner *ngIf="note.isDeleting"></ion-spinner>
         </button>
 
         <ion-card-header *ngIf="note.title">
