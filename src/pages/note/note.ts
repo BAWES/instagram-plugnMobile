@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavController, Events, NavParams, AlertController } from 'ionic-angular';
 
 import { AccountService } from '../../providers/logged-in/account.service';
 import { NoteService } from '../../providers/logged-in/note.service';
 import { HardwareBackButtonService } from '../../providers/hardwarebackbtn.service';
+import { KeyboardService } from '../../providers/keyboard.service';
 
 // Forms
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -24,6 +25,7 @@ export class NotePage {
   public isSaving = false;
 
   public noteForm: FormGroup;
+  @ViewChild('noteInput') noteInput: any;
 
   private activeNote: Note;
 
@@ -35,6 +37,7 @@ export class NotePage {
     public navCtrl: NavController,
     public accounts: AccountService,
     public noteService: NoteService,
+    private _keyboard: KeyboardService,
     private _fb: FormBuilder,
     private _events: Events,
     private _alertCtrl: AlertController,
@@ -64,6 +67,12 @@ export class NotePage {
     this._events.subscribe("account:switching", this._accountSwitchHandler = (eventData) => {
       this.navCtrl.popToRoot();
     });
+
+    // Focus the note input area
+    setTimeout(() => {
+      this.noteInput.setFocus();
+      this._keyboard.open();
+    }, 100);
   }
   /**
    * Page is leaving

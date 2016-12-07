@@ -26,6 +26,12 @@ export class KeyboardService {
     });
   }
 
+  open(){
+    if (this._platform.is('cordova') && this._platform.is('mobile')) {
+      Keyboard.show();
+    }
+  }
+
   disableScroll(){
     if (this._platform.is('cordova') && this._platform.is('mobile')) {
       Keyboard.disableScroll(true);
