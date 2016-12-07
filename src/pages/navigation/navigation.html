@@ -42,8 +42,8 @@
         <ion-icon name="help-circle" item-left></ion-icon>
         Help and Support
 
-        <ion-badge item-right color="danger" *ngIf="intercom.unreadConversationCount() > 0">
-          {{ intercom.unreadConversationCount() }}
+        <ion-badge item-right color="danger" *ngIf="intercomUnreadMessages > 0">
+          {{ intercomUnreadMessages }}
         </ion-badge>
       </button>
       <!--
