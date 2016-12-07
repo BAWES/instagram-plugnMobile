@@ -43,10 +43,12 @@ export class MediaService {
    * @param  {} callback?
    * @param  {} refresherLoading
    */
-  loadMediaForAccount(account, callback?, refresherLoading = false){
+  loadMediaForAccount(account, callback?, refresherLoading = false, showLoading = true){
     let mediaUrl = `${this._mediaEndpoint}?accountId=${account.user_id}`;
 
-    this.isLoading = true;
+    if(showLoading){
+      this.isLoading = true;
+    }
     this.refresherLoading = refresherLoading;
     
     this._authhttp.get(mediaUrl).subscribe(jsonResponse => {

@@ -38,6 +38,10 @@ export class AccountService {
 
   private _accountEndpoint: string = "/accounts";
 
+  // Interval Refresh Timer
+  private _refreshTimerAccounts;
+  private _refreshTimerMedia;
+
   constructor(
     private _platform: Platform,
     private _events: Events,
@@ -48,6 +52,7 @@ export class AccountService {
     _platform.ready().then(() => {
       // Get list of accounts managed by the currently logged in agent 
       this._populateManagedAccounts();
+      this._initAccountsRefresher();
     });
 
     // Set current view when triggered
@@ -111,7 +116,14 @@ export class AccountService {
     this.statsFollowingArray = [];
     this.statsMediaArray = [];
 
+    // Destroy Media refresher
+    this._destroyMediaRefresher();
+
+    // Load
     this.loadAccountMediaAndConversations();
+
+    // Enable Media Refresher
+    this._initMediaConversationsRefresher();
   }
 
   /**
@@ -122,7 +134,7 @@ export class AccountService {
    * 
    * @param  {} refresher? The ionic refresher to complete if its used
    */
-  loadAccountMediaAndConversations(refresher?){
+  loadAccountMediaAndConversations(refresher?, showLoading = true){
     if(!this.activeAccount) return;
 
     // Loading priority is based on the active view 
@@ -132,26 +144,28 @@ export class AccountService {
         if(refresher){
           refresher.complete();
         }
-        this._conversation.loadConversationsForAccount(this.activeAccount);
+        this._conversation.loadConversationsForAccount(this.activeAccount, false, false, showLoading);
       }, 
-      refresher? true: false);
+      refresher? true: false, showLoading);
     }else if(this.currentView == "conversation"){
       // Load Conversations > Follow up by Loading Media as Callback
       this._conversation.loadConversationsForAccount(this.activeAccount, () => {
         if(refresher){
           refresher.complete();
         }
-        this._media.loadMediaForAccount(this.activeAccount);
+        this._media.loadMediaForAccount(this.activeAccount, false, false, showLoading);
       }, 
-      refresher? true: false);
+      refresher? true: false, showLoading);
     }
   }
 
   /**
    * Get updated list of accounts managed by agent and store in variable
    */
-  private _populateManagedAccounts(){
-    this.isLoading = true;
+  private _populateManagedAccounts(showLoading = true){
+    if(showLoading){
+      this.isLoading = true;
+    }
 
     this._authhttp.get(this._accountEndpoint).subscribe(jsonResponse => {
       this.isLoading = false;
@@ -162,6 +176,34 @@ export class AccountService {
         this.setActiveAccount(this.managedAccounts[0]);
       }
     });
+  }
+
+  /**
+   * Initialize the Account List refresher
+   */
+  private _initAccountsRefresher(){
+    // Refresh Comments every X Seconds
+    let numSeconds = 60 * 1000;
+    this._refreshTimerAccounts = setInterval(() => {
+      this._populateManagedAccounts(false);
+    }, numSeconds);
+  }
+
+  /**
+   * Initialize the Media and Conversation List refresher
+   */
+  private _initMediaConversationsRefresher(){
+    // Refresh Comments every X Seconds
+    let numSeconds = 20 * 1000;
+    this._refreshTimerMedia = setInterval(() => {
+      // Reload media and conversations 
+      this.loadAccountMediaAndConversations(false, false);
+    }, numSeconds);
+  }
+  private _destroyMediaRefresher(){
+    if(this._refreshTimerMedia){
+      clearInterval(this._refreshTimerMedia);
+    }
   }
 
 

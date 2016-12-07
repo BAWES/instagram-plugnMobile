@@ -68,10 +68,12 @@ export class ConversationService {
    * @param  {fn} callback?
    * @param  {boolean} refresherLoading=false
    */
-  loadConversationsForAccount(account: InstagramAccount, callback?, refresherLoading = false){
+  loadConversationsForAccount(account: InstagramAccount, callback?, refresherLoading = false, showLoading = true){
     let convUrl = `${this._conversationsEndpoint}?accountId=${account.user_id}`;
 
-    this.isLoading = true;
+    if(showLoading){
+      this.isLoading = true;
+    }
     this.refresherLoading = refresherLoading;
     
     this._authhttp.get(convUrl).subscribe(jsonResponse => {
