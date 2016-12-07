@@ -38,6 +38,14 @@
         <ion-icon name="ios-analytics" item-left></ion-icon>
         My Activity
       </button>
+      <button ion-item (click)="offerSupport()" *ngIf="cordovaAvailable">
+        <ion-icon name="help-circle" item-left></ion-icon>
+        Help and Support
+
+        <ion-badge item-right color="danger" *ngIf="intercom.unreadConversationCount() > 0">
+          {{ intercom.unreadConversationCount() }}
+        </ion-badge>
+      </button>
       <!--
       <button ion-item (click)="openPage(2)">
         <ion-icon name="ios-settings" item-left></ion-icon>

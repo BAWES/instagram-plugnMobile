@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { MenuController, NavController } from 'ionic-angular';
+import { MenuController, NavController, Platform } from 'ionic-angular';
 
 import { AuthService } from '../../providers/auth.service';
 import { AccountService } from '../../providers/logged-in/account.service';
@@ -15,6 +15,7 @@ import { MediaStatsPage } from '../statistics/media-stats/media-stats';
 import { FollowingPage } from '../statistics/following/following';
 import { FollowersPage } from '../statistics/followers/followers';
 
+declare var intercom: any;
 @Component({
   selector: 'page-navigation',
   templateUrl: 'navigation.html'
@@ -23,13 +24,19 @@ export class NavigationPage {
 
   rootPage: any = AccountTabsPage;
 
+  cordovaAvailable:boolean = false;
+
   @ViewChild('loggedInContent') nav: NavController
 
   constructor(
     public accounts: AccountService,
     private _auth: AuthService,
     private _menu: MenuController,
+    private _platform: Platform
     ) {
+      if(_platform.is("cordova")){
+        this.cordovaAvailable = true;
+      }
   }
 
   /**
@@ -46,6 +53,13 @@ export class NavigationPage {
   loadMyActivityPage(){
     this.nav.push(MyActivityPage);
     this._menu.close();
+  }
+
+  /**
+   * Load Intercom support
+   */
+  offerSupport(){
+    intercom.displayMessenger();
   }
 
   /**
