@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
+import { AuthService } from '../../providers/auth.service';
+
 /*
   Class for the add-account page.
 */
@@ -10,7 +12,7 @@ import { NavController } from 'ionic-angular';
 })
 export class AddAccountPage {
 
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController, public auth: AuthService) {}
 
   ionViewDidLoad() {
     //console.log('Hello Add Account Page');
