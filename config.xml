@@ -86,11 +86,6 @@
   <plugin name="cordova-plugin-splashscreen" spec="~4.0.0"/>
   <plugin name="cordova-plugin-statusbar" spec="~2.2.0"/>
   <plugin name="ionic-plugin-keyboard" spec="~2.2.1"/>
-  <plugin name="cordova-plugin-intercom" version="~3.0.19" />
-  <preference name="intercom-app-id" value="a25z3ilz"/>
-  <preference name="intercom-ios-api-key" value="ios_sdk-9490fa6070ddab4fc751355538c39ee3c2757293"/>
-  <preference name="intercom-android-api-key" value="android_sdk-57c9662394145f43c2c6fdb654bd0e63fc069c61"/>
-  <preference name="intercom-android-sender-id" value="YOUR_ANDROID_SENDER_ID"/>
   <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
   <allow-navigation href="http://192.168.0.31:8100"/>
   <allow-navigation href="http://192.168.1.71:8100"/>

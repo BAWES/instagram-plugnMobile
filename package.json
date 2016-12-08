@@ -40,8 +40,7 @@
     {
       "locator": "https://github.com/VersoSolutions/CordovaClipboard.git",
       "id": "com.verso.cordova.clipboard"
-    },
-    "cordova-plugin-intercom"
+    }
   ],
   "cordovaPlatforms": [
     "ios",

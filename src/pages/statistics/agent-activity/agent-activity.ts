@@ -43,6 +43,7 @@ export class AgentActivityPage {
     this._backBtn.callbackOnBack(() => {
       this._backBtn.clearBackFunctionality();
       this.navCtrl.pop();
+      this._backBtn.toggleMenuOnBack();
     });
 
     // Subscribe to Pop this page off on account change

@@ -8,7 +8,6 @@ import { LoginPage } from '../pages/start-pages/login/login';
 import { AuthService } from '../providers/auth.service';
 import { KeyboardService } from '../providers/keyboard.service';
 
-declare var intercom: any;
 @Component({
   template: `<ion-nav [root]="rootPage"></ion-nav>`
 })
@@ -63,22 +62,10 @@ export class MyApp implements OnInit{
       this._zone.run(() => {
         this.rootPage = NavigationPage;
       });
-
-      // Initialize User on Intercom.io
-      if (this._platform.is('cordova')) {
-        intercom.registerIdentifiedUser({
-          userId: this._auth.agentId,
-          email: this._auth.email,
-          name: this._auth.name
-        });
-      }
     });
 
     // On Logout Event, set root to Login Page
     this._events.subscribe('user:logout', (userEventData) => {
-      // Logout from Intercom 
-      intercom.reset();
-
       // Set root to Login Page
       this.rootPage = LoginPage;
 
