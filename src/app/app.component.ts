@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { Platform, Events, ToastController, IonicApp, App, MenuController } from 'ionic-angular';
-import { StatusBar } from 'ionic-native';
+import { StatusBar, OneSignal } from 'ionic-native';
 
 import { NavigationPage } from '../pages/navigation/navigation';
 import { LoginPage } from '../pages/start-pages/login/login';
@@ -25,6 +25,9 @@ export class MyApp implements OnInit{
     private _app: App, private _ionicApp: IonicApp, private _menu: MenuController,
     private _zone: NgZone
     ) {
+
+    // Push Notification Setup via OneSignal
+    this._setupPushNotifs();
     
     /**
      * Run Ionic native functions once the platform is ready
@@ -50,6 +53,31 @@ export class MyApp implements OnInit{
       }
       
     });
+  }
+
+  /**
+   * Setup push notification service via OneSignal
+   */
+  private _setupPushNotifs(){
+    // Setup Push Notifications via OneSignal 
+    OneSignal.startInit('6ca2c182-dda4-4749-aed6-0b4310188986', '882152609344');
+    OneSignal.inFocusDisplaying(OneSignal.OSInFocusDisplayOption.InAppAlert);
+    OneSignal.setSubscription(true);
+    
+
+    OneSignal.handleNotificationReceived().subscribe(() => {
+    // do something when notification is received
+    });
+
+    OneSignal.handleNotificationOpened().subscribe(() => {
+      // do something when a notification is opened
+    });
+
+    OneSignal.endInit();
+
+    // OneSignal.getIds().then(data => {
+    //   // this gives you back the new userId and pushToken associated with the device. Helpful.
+    // });
   }
 
   
