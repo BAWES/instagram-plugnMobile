@@ -24,18 +24,17 @@ export class MyApp implements OnInit{
     private _toastCtrl: ToastController,
     private _app: App, private _ionicApp: IonicApp, private _menu: MenuController,
     private _zone: NgZone
-    ) {
-
-    // Push Notification Setup via OneSignal
-    this._setupPushNotifs();
-    
+    ) {    
     /**
      * Run Ionic native functions once the platform is ready
      */
     this._platform.ready().then(() => {
 
       if (this._platform.is('mobile')) {
-        StatusBar.styleDefault();
+        StatusBar.styleBlackOpaque();
+
+        // Push Notification Setup via OneSignal
+        this._setupPushNotifs();
       }
 
       if (this._platform.is('ios')) {
