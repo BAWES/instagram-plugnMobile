@@ -40,7 +40,7 @@
     <!-- If Comment is Handled and not Deleted -->
     <p class="status" 
       *ngIf="(comment.comment_by_id != accounts.activeAccount?.user_instagram_id) &&
-        (comment.comment_handled == '1') && (comment.comment_deleted == '0') && (comment.commentType != 'queue')">
+        (comment.comment_handled == '1' && comment.handler_name) && (comment.comment_deleted == '0') && (comment.commentType != 'queue')">
       Handled by {{ comment.handler_name }}
     </p>
 
