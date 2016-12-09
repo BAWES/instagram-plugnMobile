@@ -89,12 +89,22 @@ export class MyApp implements OnInit{
       this._zone.run(() => {
         this.rootPage = NavigationPage;
       });
+
+      // Create Tags on OneSignal for this user 
+      OneSignal.sendTags({
+        "agentId": this._auth.agentId,
+        "name": this._auth.name,
+        "email": this._auth.email
+      });
     });
 
     // On Logout Event, set root to Login Page
     this._events.subscribe('user:logout', (userEventData) => {
       // Set root to Login Page
       this.rootPage = LoginPage;
+
+      // Delete Tags on OneSignal for this user
+      OneSignal.deleteTags(['agentId', 'name', 'email']);
 
       // Show Toast Message explaining logout reason if there's one set
       let logoutReason = userEventData[0];

@@ -65,7 +65,7 @@ export class AuthService {
     window.localStorage.removeItem('name');
     window.localStorage.removeItem('email');
     this._accessToken = null;
-    this.isLoggedIn = false;
+    this._updateLoginStatus();
 
     this._events.publish('user:logout', reason?reason:false);
   }
