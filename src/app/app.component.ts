@@ -6,7 +6,6 @@ import { NavigationPage } from '../pages/navigation/navigation';
 import { LoginPage } from '../pages/start-pages/login/login';
 
 import { AuthService } from '../providers/auth.service';
-import { AccountService } from '../providers/logged-in/account.service';
 import { KeyboardService } from '../providers/keyboard.service';
 
 @Component({
@@ -23,7 +22,6 @@ export class MyApp implements OnInit{
     private _keyboard: KeyboardService,
     private _events: Events,
     private _toastCtrl: ToastController,
-    private _accounts: AccountService,
     private _app: App, private _ionicApp: IonicApp, private _menu: MenuController,
     private _zone: NgZone
     ) {    
@@ -32,7 +30,7 @@ export class MyApp implements OnInit{
      */
     this._platform.ready().then(() => {
 
-      if (this._platform.is('mobile')) {
+      if (this._platform.is('cordova') && this._platform.is('mobile')) {
         StatusBar.styleBlackOpaque();
 
         // Push Notification Setup via OneSignal
@@ -93,11 +91,14 @@ export class MyApp implements OnInit{
       });
 
       // Create Tags on OneSignal for this user 
-      OneSignal.sendTags({
-        "agentId": this._auth.agentId,
-        "name": this._auth.name,
-        "email": this._auth.email
-      });
+      if (this._platform.is('cordova') && this._platform.is('mobile')) {
+        OneSignal.sendTags({
+          "agentId": this._auth.agentId,
+          "name": this._auth.name,
+          "email": this._auth.email
+        });
+      }
+      
     });
 
     // On Logout Event, set root to Login Page
@@ -105,12 +106,10 @@ export class MyApp implements OnInit{
       // Set root to Login Page
       this.rootPage = LoginPage;
 
-      // Destroy Accounts Refresher
-      this._accounts.destroyAccountsRefresher();
-      this._accounts.destroyMediaRefresher();
-
       // Delete Tags on OneSignal for this user
-      OneSignal.deleteTags(['agentId', 'name', 'email']);
+      if (this._platform.is('cordova') && this._platform.is('mobile')) {
+        OneSignal.deleteTags(['agentId', 'name', 'email']);
+      }
 
       // Show Toast Message explaining logout reason if there's one set
       let logoutReason = userEventData[0];

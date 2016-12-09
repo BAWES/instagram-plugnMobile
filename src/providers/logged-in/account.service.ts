@@ -66,6 +66,12 @@ export class AccountService {
       let refresher = refresherData[0];
       this.loadAccountMediaAndConversations(refresher);
     });
+
+    // On Logout Event, destroy refresh timers
+    this._events.subscribe('user:logout', (userEventData) => {
+      this.destroyAccountsRefresher();
+      this.destroyMediaRefresher();
+    });
   }
 
   /**
