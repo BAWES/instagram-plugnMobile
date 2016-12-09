@@ -6,6 +6,7 @@ import { NavigationPage } from '../pages/navigation/navigation';
 import { LoginPage } from '../pages/start-pages/login/login';
 
 import { AuthService } from '../providers/auth.service';
+import { AccountService } from '../providers/logged-in/account.service';
 import { KeyboardService } from '../providers/keyboard.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class MyApp implements OnInit{
     private _keyboard: KeyboardService,
     private _events: Events,
     private _toastCtrl: ToastController,
+    private _accounts: AccountService,
     private _app: App, private _ionicApp: IonicApp, private _menu: MenuController,
     private _zone: NgZone
     ) {    
@@ -102,6 +104,10 @@ export class MyApp implements OnInit{
     this._events.subscribe('user:logout', (userEventData) => {
       // Set root to Login Page
       this.rootPage = LoginPage;
+
+      // Destroy Accounts Refresher
+      this._accounts.destroyAccountsRefresher();
+      this._accounts.destroyMediaRefresher();
 
       // Delete Tags on OneSignal for this user
       OneSignal.deleteTags(['agentId', 'name', 'email']);

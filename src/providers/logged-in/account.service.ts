@@ -117,7 +117,7 @@ export class AccountService {
     this.statsMediaArray = [];
 
     // Destroy Media refresher
-    this._destroyMediaRefresher();
+    this.destroyMediaRefresher();
 
     // Load
     this.loadAccountMediaAndConversations();
@@ -188,6 +188,11 @@ export class AccountService {
       this._populateManagedAccounts(false);
     }, numSeconds);
   }
+  public destroyAccountsRefresher(){
+    if(this._refreshTimerMedia){
+      clearInterval(this._refreshTimerAccounts);
+    }
+  }
 
   /**
    * Initialize the Media and Conversation List refresher
@@ -200,7 +205,7 @@ export class AccountService {
       this.loadAccountMediaAndConversations(false, false);
     }, numSeconds);
   }
-  private _destroyMediaRefresher(){
+  public destroyMediaRefresher(){
     if(this._refreshTimerMedia){
       clearInterval(this._refreshTimerMedia);
     }
