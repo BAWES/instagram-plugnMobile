@@ -88,6 +88,7 @@
   <plugin name="cordova-plugin-statusbar" spec="~2.2.0"/>
   <plugin name="ionic-plugin-keyboard" spec="~2.2.1"/>
   <icon src="resources/android/icon/drawable-xhdpi-icon.png"/>
+  <allow-navigation href="*" />
   <allow-navigation href="http://192.168.0.31:8100"/>
   <allow-navigation href="http://192.168.1.71:8100"/>
   <allow-navigation href="http://192.168.1.25:8100"/>

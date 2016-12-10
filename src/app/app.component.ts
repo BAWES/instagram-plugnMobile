@@ -31,7 +31,7 @@ export class MyApp implements OnInit{
     this._platform.ready().then(() => {
 
       if (this._platform.is('cordova') && this._platform.is('mobile')) {
-        StatusBar.styleBlackOpaque();
+        StatusBar.styleDefault();
 
         // Push Notification Setup via OneSignal
         this._setupPushNotifs();
