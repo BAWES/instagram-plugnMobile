@@ -77,6 +77,7 @@
   <preference name="SplashScreenBackgroundColor" value="0xFFFFFFFF"/>
   <preference name="SplashScreen" value="screen"/>
   <preference name="ShowSplashScreenSpinner" value="false"/>
+  <preference name="KeyboardDisplayRequiresUserAction" value="false"/>
   <feature name="StatusBar">
     <param name="ios-package" onload="true" value="CDVStatusBar"/>
   </feature>
@@ -92,4 +93,5 @@
   <allow-navigation href="http://192.168.1.25:8100"/>
   <allow-navigation href="http://192.168.1.25:8101"/>
   <allow-navigation href="http://192.168.8.105:8100"/>
+  <allow-navigation href="http://192.168.8.103:8100"/>
 </widget>
