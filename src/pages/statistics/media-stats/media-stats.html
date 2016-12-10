@@ -32,7 +32,7 @@
       <ion-col><b># Posts</b></ion-col>
     </ion-row>
     <ion-row *ngFor="let record of accounts.activeAccountStats">
-      <ion-col>{{ record.record_date | date }}</ion-col>
+      <ion-col>{{ record.record_date }}</ion-col>
       <ion-col>{{ record.record_media_count }}</ion-col>
     </ion-row>
   </ion-grid>
