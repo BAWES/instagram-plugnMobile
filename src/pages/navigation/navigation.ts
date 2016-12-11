@@ -35,31 +35,29 @@ export class NavigationPage {
     // Handle Push Notification Navigation
     this._events.subscribe('notification:grouped', (notificationData) => {
       let data = notificationData[0];
-      
-      //If managed accounts already loaded, switch to the account belonging to notification 
-      if(this.accounts.managedAccounts){
-        this.accounts.setActiveAccountById(data.user_id);
-      }else{
-        // Schedule callback to load account within notification
-        this.accounts.notificationAccountToLoad = data.user_id;
-      }
+      this._processNotificationData(data, "grouped");
     });
     this._events.subscribe('notification:single', (notificationData) => {
       let data = notificationData[0];
+      this._processNotificationData(data, "single");
+    });
+  }
 
-      //If managed accounts already loaded, switch to the account belonging to notification 
-      if(this.accounts.managedAccounts){
-        this.accounts.setActiveAccountById(data.user_id);
-      }else{
-        // Schedule callback to load account within notification
-        this.accounts.notificationAccountToLoad = data.user_id;
-      }
+  private _processNotificationData(data, type){
+    //If managed accounts already loaded, switch to the account belonging to notification 
+    if(this.accounts.managedAccounts){
+      this.accounts.setActiveAccountById(data.user_id);
+    }
+    
+    // Schedule callback to load account within notification.
+    this.accounts.notificationAccountToLoad = data.user_id;
 
-      // Navigate to conv detail page for this notification
+    // The below only if "Single" notification
+
+    // Navigate to conv detail page for this notification
       // this.nav.push(ConversationDetailPage, { 
       //     conversation: notificationData,
       // });
-    });
   }
 
   /**
