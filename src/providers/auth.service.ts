@@ -52,6 +52,7 @@ export class AuthService {
       this.isLoggedIn = true;
     }else{
       this.isLoggedIn = false;
+      this._events.publish("user:logout");
     }
   }
 
