@@ -60,16 +60,33 @@ export class MyApp implements OnInit{
   private _setupPushNotifs(){
     // Setup Push Notifications via OneSignal 
     OneSignal.startInit('6ca2c182-dda4-4749-aed6-0b4310188986', '882152609344');
-    OneSignal.inFocusDisplaying(OneSignal.OSInFocusDisplayOption.InAppAlert);
+    OneSignal.inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification);
     OneSignal.setSubscription(true);
     
 
-    OneSignal.handleNotificationReceived().subscribe(() => {
-    // do something when notification is received
-    });
+    // OneSignal.handleNotificationReceived().subscribe(() => {
+    // // do something when notification is received
+    // });
 
-    OneSignal.handleNotificationOpened().subscribe(() => {
-      // do something when a notification is opened
+    OneSignal.handleNotificationOpened().subscribe((data) => {
+      alert(JSON.stringify(data.notification));
+
+      // When a Notification is Opened
+      if(data.notification.groupedNotifications){
+        // Notification Grouped [on Android]
+
+        // TODO: On grouped notification, switch to account. On Single, load conversation.
+        alert("Is a grouped notification");
+        let firstNotificationData = data.notification.groupedNotifications[0].additionalData;
+        alert(JSON.stringify(firstNotificationData));
+
+      }else if(data.payload){
+        // A single notification clicked
+        alert("Is a single notification");
+        alert(JSON.stringify(data.payload));
+        let notificationData = data.payload.additionalData;
+        alert(JSON.stringify(notificationData));
+      }
     });
 
     OneSignal.endInit();
