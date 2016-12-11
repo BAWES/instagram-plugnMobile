@@ -35,8 +35,14 @@ export class NavigationPage {
     // Handle Push Notification Navigation
     this._events.subscribe('notification:grouped', (notificationData) => {
       let data = notificationData[0];
-      // Switch to the account belonging to notification 
-      this.accounts.setActiveAccountById(data.user_id);
+      
+      //If managed accounts already loaded, switch to the account belonging to notification 
+      if(this.accounts.managedAccounts){
+        this.accounts.setActiveAccountById(data.user_id);
+      }else{
+        // Schedule callback to load account within notification
+        this.accounts.notificationAccountToLoad = data.user_id;
+      }
     });
     this._events.subscribe('notification:single', (notificationData) => {
       let data = notificationData[0];
