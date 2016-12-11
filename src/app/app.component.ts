@@ -69,8 +69,6 @@ export class MyApp implements OnInit{
     // });
 
     OneSignal.handleNotificationOpened().subscribe((data) => {
-      alert(JSON.stringify(data.notification));
-
       // When a Notification is Opened
       if(data.notification.groupedNotifications){
         // Notification Grouped [on Android]
@@ -80,11 +78,10 @@ export class MyApp implements OnInit{
         let firstNotificationData = data.notification.groupedNotifications[0].additionalData;
         alert(JSON.stringify(firstNotificationData));
 
-      }else if(data.payload){
+      }else if(data.notification.payload){
         // A single notification clicked
         alert("Is a single notification");
-        alert(JSON.stringify(data.payload));
-        let notificationData = data.payload.additionalData;
+        let notificationData = data.notification.payload.additionalData;
         alert(JSON.stringify(notificationData));
       }
     });
