@@ -1,11 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
-import { MenuController, NavController } from 'ionic-angular';
+import { MenuController, NavController, Events } from 'ionic-angular';
 
 import { AuthService } from '../../providers/auth.service';
 import { AccountService } from '../../providers/logged-in/account.service';
 
 // Page Imports
 import { AccountTabsPage } from '../account/account-tabs/account-tabs';
+import { ConversationDetailPage } from '../account/conversation-detail/conversation-detail';
 import { AddAccountPage } from '../add-account/add-account';
 import { MyActivityPage } from '../my-activity/my-activity';
 
@@ -28,8 +29,31 @@ export class NavigationPage {
   constructor(
     public accounts: AccountService,
     private _auth: AuthService,
-    private _menu: MenuController
+    private _menu: MenuController,
+    private _events: Events
     ) {
+    // Handle Push Notification Navigation
+    this._events.subscribe('notification:grouped', (notificationData) => {
+      let data = notificationData[0];
+      // Switch to the account belonging to notification 
+      this.accounts.setActiveAccountById(data.user_id);
+    });
+    this._events.subscribe('notification:single', (notificationData) => {
+      let data = notificationData[0];
+
+      //If managed accounts already loaded, switch to the account belonging to notification 
+      if(this.accounts.managedAccounts){
+        this.accounts.setActiveAccountById(data.user_id);
+      }else{
+        // Schedule callback to load account within notification
+        this.accounts.notificationAccountToLoad = data.user_id;
+      }
+
+      // Navigate to conv detail page for this notification
+      // this.nav.push(ConversationDetailPage, { 
+      //     conversation: notificationData,
+      // });
+    });
   }
 
   /**

@@ -70,19 +70,14 @@ export class MyApp implements OnInit{
 
     OneSignal.handleNotificationOpened().subscribe((data) => {
       // When a Notification is Opened
-      if(data.notification.groupedNotifications){
+      if(data.notification.groupedNotifications){ 
         // Notification Grouped [on Android]
-
-        // TODO: On grouped notification, switch to account. On Single, load conversation.
-        alert("Is a grouped notification");
         let firstNotificationData = data.notification.groupedNotifications[0].additionalData;
-        alert(JSON.stringify(firstNotificationData));
-
-      }else if(data.notification.payload){
+        this._events.publish("notification:grouped", firstNotificationData);
+      }else if(data.notification.payload){ 
         // A single notification clicked
-        alert("Is a single notification");
         let notificationData = data.notification.payload.additionalData;
-        alert(JSON.stringify(notificationData));
+        this._events.publish("notification:single", notificationData);
       }
     });
 

@@ -31,7 +31,7 @@ export class AccountService {
    * Whether the user is currently using "media" or "conversation" view
    * This will let the system know which data takes priority to load first from server
    */
-  public currentView = "media";
+  public currentView = "conversation";
 
   public isLoading = false;
   public statsLoading = false;
@@ -41,6 +41,9 @@ export class AccountService {
   // Interval Refresh Timer
   private _refreshTimerAccounts;
   private _refreshTimerMedia;
+
+  // Notifications: Account to load when managed accounts populated
+  public notificationAccountToLoad;
 
   constructor(
     private _platform: Platform,
@@ -105,11 +108,32 @@ export class AccountService {
   }
 
   /**
+   * Sets active account based on account id
+   */
+  public setActiveAccountById(accountId: number){
+    // If active account has account id then do nothing
+    if(this.activeAccount.user_id == accountId){
+      return;
+    }
+
+    // Find the account id and switch to it 
+    this.managedAccounts.forEach(account => {
+      if(account.user_id == accountId){
+        this.setActiveAccount(account);
+        return;
+      }
+    });
+  }
+
+  /**
    * Sets the currently active account to the one passed as param
    * then publishes event `account:selected`
    * @param  {any} account
    */
   public setActiveAccount(account){
+    // Do nothing if this account is already loaded
+    if(this.activeAccount == account) return;
+
     // Publish an Event that we're switching accounts
     this._events.publish("account:switching", account);
 
@@ -177,9 +201,15 @@ export class AccountService {
       this.isLoading = false;
       this.managedAccounts = jsonResponse;
 
-      // Sets the currently active account for initial viewing (if exists)
       if(!this.activeAccount && this.managedAccounts[0]){
+        // Sets the currently active account for initial viewing (if exists)
         this.setActiveAccount(this.managedAccounts[0]);
+      }
+
+      // If notification callback available, do that. Otherwise set default
+      if(this.notificationAccountToLoad){
+        this.notificationAccountToLoad = null;
+        this.setActiveAccountById(this.notificationAccountToLoad);
       }
     });
   }
