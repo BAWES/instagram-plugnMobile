@@ -6,7 +6,6 @@ import { AccountService } from '../../providers/logged-in/account.service';
 
 // Page Imports
 import { AccountTabsPage } from '../account/account-tabs/account-tabs';
-import { ConversationDetailPage } from '../account/conversation-detail/conversation-detail';
 import { AddAccountPage } from '../add-account/add-account';
 import { MyActivityPage } from '../my-activity/my-activity';
 
