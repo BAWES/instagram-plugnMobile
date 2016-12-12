@@ -202,6 +202,19 @@ export class AccountService {
       this.isLoading = false;
       this.managedAccounts = jsonResponse;
 
+      if(!showLoading){
+        // On account refresh, update the sidebar data for currently active account 
+        for(let i=0; i < this.managedAccounts.length; i++){
+          if(this.managedAccounts[i].user_id == this.activeAccount.user_id){
+            this.activeAccount.user_follower_count = this.managedAccounts[i].user_follower_count;
+            this.activeAccount.user_following_count = this.managedAccounts[i].user_following_count;
+            this.activeAccount.user_media_count = this.managedAccounts[i].user_media_count;
+            this.activeAccount.lastAgentActivity = this.managedAccounts[i].lastAgentActivity;
+            break;
+          }
+        }
+      }
+
       if(!this.activeAccount && this.managedAccounts[0]){
         // Sets the currently active account for initial viewing (if exists)
         this.setActiveAccount(this.managedAccounts[0]);
