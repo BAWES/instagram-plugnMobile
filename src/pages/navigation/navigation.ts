@@ -48,16 +48,6 @@ export class NavigationPage {
     if(this.accounts.managedAccounts){
       this.accounts.setActiveAccountById(data.user_id);
     }
-    
-    // Schedule callback to load account within notification.
-    this.accounts.notificationAccountToLoad = data.user_id;
-
-    // The below only if "Single" notification
-
-    // Navigate to conv detail page for this notification
-      // this.nav.push(ConversationDetailPage, { 
-      //     conversation: notificationData,
-      // });
   }
 
   /**

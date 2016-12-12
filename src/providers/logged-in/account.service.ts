@@ -42,9 +42,6 @@ export class AccountService {
   private _refreshTimerAccounts;
   private _refreshTimerMedia;
 
-  // Notifications: Account to load when managed accounts populated
-  public notificationAccountToLoad;
-
   constructor(
     private _platform: Platform,
     private _events: Events,
@@ -209,12 +206,7 @@ export class AccountService {
         // Sets the currently active account for initial viewing (if exists)
         this.setActiveAccount(this.managedAccounts[0]);
       }
-
-      // If notification callback available, do that. Otherwise set default
-      if(this.notificationAccountToLoad){
-        this.notificationAccountToLoad = null;
-        this.setActiveAccountById(this.notificationAccountToLoad);
-      }
+      
     });
   }
 
