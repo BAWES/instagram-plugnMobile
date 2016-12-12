@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 
 import { Platform, Events } from 'ionic-angular';
 
@@ -51,6 +51,7 @@ export class AccountService {
     private _authhttp: AuthHttpService,
     private _media: MediaService,
     private _conversation: ConversationService,
+    private _zone: NgZone
     ) {
     _platform.ready().then(() => {
       // Get list of accounts managed by the currently logged in agent 
@@ -117,11 +118,14 @@ export class AccountService {
     }
 
     // Find the account id and switch to it 
-    this.managedAccounts.forEach(account => {
-      if(account.user_id == accountId){
-        this.setActiveAccount(account);
-        return;
-      }
+    this._zone.run(() => {
+      // Running in Zone because iOS doesnt show loading / needs manual change detection trigger
+      this.managedAccounts.forEach(account => {
+        if(account.user_id == accountId){
+          this.setActiveAccount(account);
+          return;
+        }
+      });
     });
   }
 
