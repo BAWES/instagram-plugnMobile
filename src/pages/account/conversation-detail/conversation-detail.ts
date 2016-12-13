@@ -384,11 +384,10 @@ export class ConversationDetailPage {
    * TOAST IS TO BE SHOWN ONCE A DAY ONLY!
    */
   notifyOptions(){
-    let dayOfTheMonth = new Date().getDate();
-    let previouslyNotifiedDay = parseInt(localStorage.getItem("swipeNotificationDate"));
+    let hasShownNotification = localStorage.getItem("shownSwipeNotification");
 
-    // If user hasn't been previously notified, or if he's been notified but on a different day
-    if(!previouslyNotifiedDay || (dayOfTheMonth != previouslyNotifiedDay)){
+    // If user hasn't been previously notified
+    if(hasShownNotification != "true"){
       // Present Toast
       let toast = this._toastCtrl.create({
         message: 'Swipe a comment to the left for additional options',
@@ -398,8 +397,8 @@ export class ConversationDetailPage {
       });
       toast.present();
       
-      // Save today as the previously notified day
-      window.localStorage.setItem('swipeNotificationDate', dayOfTheMonth+"");
+      // Save that previously notified
+      window.localStorage.setItem('shownSwipeNotification', "true");
     }
   }
 
