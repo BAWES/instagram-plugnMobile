@@ -171,6 +171,9 @@ export class ConversationDetailPage {
       .subscribe((jsonResp: {operation: string, message: string}) => {
         // Process response from server
         if(jsonResp.operation == "success"){
+          // Require content reload 
+          this.accounts.contentNeedsRefresh = true;
+
           // Reload comments on success, stop loading on callback
           this._loadComments(() => {
             this.handleLoading = false;

@@ -148,6 +148,9 @@ export class MediaDetailPage {
     this.mediaService
       .markMediaHandled(this.activeMedia.media_id)
       .subscribe((jsonResp: {operation: string, message: string}) => {
+        // Require content reload 
+        this.accounts.contentNeedsRefresh = true;
+        
         // Process response from server
         if(jsonResp.operation == "success"){
           // Reload comments on success, stop loading on callback

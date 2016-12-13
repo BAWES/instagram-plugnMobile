@@ -35,6 +35,9 @@ export class MediaPage {
     this._backBtn.toggleMenuOnBack();
     // Enable Swipe on Right Menu
     this._menuCtrl.swipeEnable(true, "right");
+
+    // Request Refresh Content If Required
+    this.accounts.refreshContentIfRequired();
   }
 
   /**

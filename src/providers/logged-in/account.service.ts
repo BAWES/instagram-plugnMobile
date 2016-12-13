@@ -20,6 +20,8 @@ export class AccountService {
   public activeAccount: InstagramAccount; // The account currently being viewed by agent
   public managedAccounts: InstagramAccount[]; // Array of managed accounts stored here
 
+  public contentNeedsRefresh:boolean = false;
+
   public activeAccountStats:StatsRecord[]; // Stats belonging to the active account
   // Storing arrays for graphing of historical data
   public statsDatesArray = [];
@@ -155,6 +157,16 @@ export class AccountService {
 
     // Enable Media Refresher
     this._initMediaConversationsRefresher();
+  }
+
+  /**
+   * Refreshes content if set as required
+   */
+  public refreshContentIfRequired(){
+    if(this.contentNeedsRefresh){
+      this.contentNeedsRefresh = false;
+      this.loadAccountMediaAndConversations(null, false);
+    }
   }
 
   /**

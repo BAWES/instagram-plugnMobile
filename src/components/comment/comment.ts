@@ -65,6 +65,9 @@ export class CommentComponent {
           this.comment.comment_handled = "1";
           this.comment.handler_name = "you";
 
+          // Require content reload 
+          this.accounts.contentNeedsRefresh = true;
+
           slidingItem.close();
         }else if(jsonResp.operation == "error"){
           // Show Alert with the message
@@ -101,6 +104,9 @@ export class CommentComponent {
       .subscribe((jsonResp: {operation: string, message: string}) => {
         // Hide loading 
         this.deleteLoading = false
+
+        // Require content reload 
+        this.accounts.contentNeedsRefresh = true;
 
         // Process response from server
         if(jsonResp.operation == "success"){
