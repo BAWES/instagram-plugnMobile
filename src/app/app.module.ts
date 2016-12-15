@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from 'ionic-angular';
+import { NgModule, ErrorHandler } from '@angular/core';
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 // Start Pages [Logged Out]
@@ -136,6 +136,7 @@ export const toDeclare = [
     })
   ],
   providers: [
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService, //Handles all Authorization
     KeyboardService, //Handles all Keyboard Activity
     HardwareBackButtonService, //Handles Hardware back button
