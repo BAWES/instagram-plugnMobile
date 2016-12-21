@@ -6,7 +6,7 @@ import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 
 import { Platform, Events } from 'ionic-angular';
-import { InAppBrowser } from 'ionic-native';
+import { InAppBrowser, NativeStorage } from 'ionic-native';
 
 import { ConfigService } from './config.service';
 
@@ -61,10 +61,19 @@ export class AuthService {
    * @param {string} [reason]
    */
   logout(reason?: string){
+    // Remove from LocalStorage
     window.localStorage.removeItem('bearer');
     window.localStorage.removeItem('agentId');
     window.localStorage.removeItem('name');
     window.localStorage.removeItem('email');
+
+    // Remove from NativeStorage if this is iOS or Android
+    if(this._platform.is("ios") || this._platform.is("android")){
+      NativeStorage.remove("loggedInAgent").then(() => {
+        // alert("deleted from nativestorage");
+      });
+    }
+
     this._accessToken = null;
     this._updateLoginStatus();
 
@@ -93,10 +102,25 @@ export class AuthService {
     window.localStorage.setItem('name', name);
     window.localStorage.setItem('email', email);
 
-    // Log User In by Triggering Event that Access Token has been Set 
+    // Save in NativeStorage if iOS and Android
+    if(this._platform.is("ios") || this._platform.is("android")){
+      NativeStorage.setItem('loggedInAgent', {
+        'bearer': token, 
+        'agentId': id+"",
+        'name': name,
+        'email': email
+      }).then(
+        () => {
+          // alert("Saved in nativestorage");
+        },
+        error => console.error('Error storing access token', error)
+      );
+    }
+
+    // Log User In by Triggering Event that Access Token has been Set
     this._events.publish('user:login', 'TokenSet');
   }
-  
+
   /**
    * Get Access Token from Service or LocalStorage
    * @returns {string} token
@@ -110,19 +134,33 @@ export class AuthService {
     // Check Local Storage and Try Again
     if(localStorage.getItem("bearer")){
       this.setAccessToken(
-        localStorage.getItem("bearer"), 
-        +localStorage.getItem("agentId"), 
-        localStorage.getItem("name"), 
+        localStorage.getItem("bearer"),
+        +localStorage.getItem("agentId"),
+        localStorage.getItem("name"),
         localStorage.getItem("email"));
       return this.getAccessToken();
     }
+
+    // Check Native Storage and Try Again
+    // Native storage is implemented because some devices clear LocalStorage regularly to save memory
+    if(this._platform.is("ios") || this._platform.is("android")){
+      NativeStorage.getItem('loggedInAgent')
+      .then(
+        data => {
+          this.setAccessToken(data.bearer, data.agentId, data.name, data.email);
+          return this.getAccessToken();
+        },
+        error => console.error(error)
+      );
+    }
+    
 
     // No Access Token Available
     return false;
   }
 
   /**
-   * Basic auth, exchanges access details for a bearer access token to use in 
+   * Basic auth, exchanges access details for a bearer access token to use in
    * subsequent requests.
    * @param  {string} email
    * @param  {string} password
@@ -133,7 +171,7 @@ export class AuthService {
     authHeader.append("Authorization", "Basic "+ btoa(`${email}:${password}`));
 
     const url = this._config.apiBaseUrl+this._urlBasicAuth;
-    
+
     return this._http.get(url, {
         headers: authHeader
       })
@@ -150,7 +188,7 @@ export class AuthService {
   createAccount(fullname:string, email: string, password: string): Observable<any>{
     const headers = new Headers({'Content-Type': 'application/json'});
     const url = this._config.apiBaseUrl+this._urlCreateAccount;
-    
+
     return this._http.post(url, JSON.stringify({
         'fullname': fullname,
         'email': email,
@@ -233,7 +271,7 @@ export class AuthService {
   /**
    * Parse url input, then do action based on that input
    * This function takes the access token from server response
-   * 
+   *
    * @param {string} url
    */
   private _doActionBasedOnUrl(url: string){

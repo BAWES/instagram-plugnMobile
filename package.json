@@ -30,18 +30,19 @@
     "typescript": "2.0.9"
   },
   "cordovaPlugins": [
-    "cordova-plugin-whitelist",
-    "cordova-plugin-console",
     "cordova-plugin-device",
-    "ionic-plugin-keyboard",
-    "cordova-plugin-inappbrowser",
+    "cordova-plugin-console",
+    "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
+    "ionic-plugin-keyboard",
+    "cordova-plugin-inappbrowser",
     {
       "locator": "https://github.com/VersoSolutions/CordovaClipboard.git",
       "id": "com.verso.cordova.clipboard"
     },
-    "onesignal-cordova-plugin"
+    "onesignal-cordova-plugin",
+    "cordova-plugin-nativestorage"
   ],
   "cordovaPlatforms": [
     "ios",
