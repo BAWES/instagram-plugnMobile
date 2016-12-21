@@ -14,8 +14,6 @@ import { KeyboardService } from '../providers/keyboard.service';
 export class MyApp implements OnInit{
   rootPage: any;
 
-  private _innerNavCtrl; //populated from events on pages within tabs
-
   constructor(
     private _platform: Platform,
     private _auth: AuthService,
@@ -149,11 +147,6 @@ export class MyApp implements OnInit{
     // If on web version (browser)
     if (window.location.protocol !== "file:") {
 
-      // Listen to browser pages
-      this._events.subscribe("navController:current", (navCtrlData) => {
-        this._innerNavCtrl = navCtrlData;
-      });
-
       // Register browser back button action(s)
       window.onpopstate = (evt) => {
 
@@ -178,11 +171,6 @@ export class MyApp implements OnInit{
         if (this._app.getActiveNav().canGoBack()){
           this._app.getActiveNav().pop();
         };
-
-        // Navigate back on subloaded nav if notified
-        if(this._innerNavCtrl && this._innerNavCtrl.canGoBack()){
-          this._innerNavCtrl.pop();
-        }
 
       };
 

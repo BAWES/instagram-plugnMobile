@@ -115,9 +115,6 @@ export class ConversationDetailPage {
     // Disable Swipe on Right Menu
     this._menuCtrl.swipeEnable(false, "right");
 
-    // Announce the current navCtrl for browser back button to function
-    this._events.publish("navController:current", this.navCtrl);
-
     // Subscribe to Pop this page off on account change
     this._events.subscribe("account:switching", this._accountSwitchHandler = (eventData) => {
       this.navCtrl.popToRoot();
