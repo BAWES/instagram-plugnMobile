@@ -34,7 +34,7 @@ export class MediaDetailPage {
 
   public mediaComments: Comment[];
 
-  // Comment Count within Media 
+  // Comment Count within Media
   public commentCount: number;
   public previousCommentCount: number; // Stored to check if there's updates since last refresh
 
@@ -73,7 +73,7 @@ export class MediaDetailPage {
     // Add margin to ion-list of comments when keyboard opens
     // This will help scroll through and read comments while typing
     this._events.subscribe("keyboard:toggle", (keyboardData) => {
-      if(keyboardData[0] == "open"){
+      if(keyboardData == "open"){
         this.addKeyboardMargin = true;
         setTimeout(() => {
          this.content.scrollToBottom(0);
@@ -109,7 +109,7 @@ export class MediaDetailPage {
    * Page is leaving
    */
   ionViewWillLeave(){
-    // Disable Refresh Timer 
+    // Disable Refresh Timer
     clearInterval(this._refreshTimer);
 
     // Unsubscribe
@@ -130,7 +130,7 @@ export class MediaDetailPage {
           setTimeout(() => {
             this.content.scrollToBottom();
           }, 100);
-          // Update comment count 
+          // Update comment count
           this.previousCommentCount = this.commentCount;
         }
       }, "refresh");
@@ -148,15 +148,15 @@ export class MediaDetailPage {
     this.mediaService
       .markMediaHandled(this.activeMedia.media_id)
       .subscribe((jsonResp: {operation: string, message: string}) => {
-        // Require content reload 
+        // Require content reload
         this.accounts.contentNeedsRefresh = true;
-        
+
         // Process response from server
         if(jsonResp.operation == "success"){
           // Reload comments on success, stop loading on callback
           this._loadComments(() => {
             this.handleLoading = false;
-            // Scroll to the comment at the bottom 
+            // Scroll to the comment at the bottom
             setTimeout(() => {
               this.content.scrollToBottom(0);
             }, 100);
@@ -203,7 +203,7 @@ export class MediaDetailPage {
             this.commentInputControl.setValue("");
             // Hide loading indicator
             this.isCommentSubmitting = false;
-            // Scroll to the comment at the bottom 
+            // Scroll to the comment at the bottom
             setTimeout(() => {
               this.content.scrollToBottom(0);
             }, 100);
@@ -236,7 +236,7 @@ export class MediaDetailPage {
     if(!callback){
       this.isLoading = true;
     }
-    
+
     this.mediaService.getMediaDetail(this.activeMedia).subscribe((jsonResponse) => {
       this.isLoading = false;
       this.mediaComments = jsonResponse;
@@ -247,7 +247,7 @@ export class MediaDetailPage {
         return conversation;
       });
 
-      // Store the comment count for this conversation 
+      // Store the comment count for this conversation
       this.commentCount = this.mediaComments.length;
       // Store previous number of comments on refresh or posted comment
       if(!callback || (operation && operation == "postedComment")){
@@ -263,7 +263,7 @@ export class MediaDetailPage {
         // Execute the callback
         callback();
       }
-      
+
     });
   }
 

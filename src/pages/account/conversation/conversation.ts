@@ -21,7 +21,7 @@ export class ConversationPage {
   public searchInput: string = "";
 
   constructor(
-    public navCtrl: NavController, 
+    public navCtrl: NavController,
     public conversations: ConversationService,
     public accounts: AccountService,
     private _backBtn: HardwareBackButtonService,
@@ -55,7 +55,7 @@ export class ConversationPage {
    * @param  {} conversationItem
    */
   loadConversationDetail(conversationItem){
-      this.navCtrl.push(ConversationDetailPage, { 
+      this.navCtrl.push(ConversationDetailPage, {
         conversation: conversationItem
       });
   }

@@ -44,7 +44,7 @@ export class ConversationDetailPage {
 
   public userNotes: Note[]; // Notes made on this user
 
-  // Comment Count within Conversation 
+  // Comment Count within Conversation
   public commentCount: number;
   public previousCommentCount: number; // Stored to check if there's updates since last refresh
 
@@ -88,7 +88,7 @@ export class ConversationDetailPage {
     // Add margin to ion-list of comments when keyboard opens
     // This will help scroll through and read comments while typing
     this._events.subscribe("keyboard:toggle", (keyboardData) => {
-      if(keyboardData[0] == "open"){
+      if(keyboardData == "open"){
         this.addKeyboardMargin = true;
         setTimeout(() => {
          this.content.scrollToBottom(0);
@@ -103,7 +103,7 @@ export class ConversationDetailPage {
   ionViewDidEnter() {
     this._initRefresher();
 
-    // Load Notes on Page Open 
+    // Load Notes on Page Open
     this._loadNotes();
 
     // Setup Back Button Behavior
@@ -127,7 +127,7 @@ export class ConversationDetailPage {
    * Page is leaving
    */
   ionViewWillLeave(){
-    // Disable Refresh Timer 
+    // Disable Refresh Timer
     clearInterval(this._refreshTimer);
 
     // Unsubscribe
@@ -148,7 +148,7 @@ export class ConversationDetailPage {
           setTimeout(() => {
             this.content.scrollToBottom();
           }, 100);
-          // Update comment count 
+          // Update comment count
           this.previousCommentCount = this.commentCount;
         }
       }, "refresh");
@@ -165,19 +165,19 @@ export class ConversationDetailPage {
     // Request from Server
     this.conversations
       .markConversationHandled(
-        this.activeConversation.user_id, 
-        +this.activeConversation.comment_by_id, 
+        this.activeConversation.user_id,
+        +this.activeConversation.comment_by_id,
         this.activeConversation.comment_by_username)
       .subscribe((jsonResp: {operation: string, message: string}) => {
         // Process response from server
         if(jsonResp.operation == "success"){
-          // Require content reload 
+          // Require content reload
           this.accounts.contentNeedsRefresh = true;
 
           // Reload comments on success, stop loading on callback
           this._loadComments(() => {
             this.handleLoading = false;
-            // Scroll to the comment at the bottom 
+            // Scroll to the comment at the bottom
             setTimeout(() => {
               this.content.scrollToBottom(0);
             }, 100);
@@ -225,7 +225,7 @@ export class ConversationDetailPage {
             this.commentInputControl.setValue("");
             // Hide loading indicator
             this.isCommentSubmitting = false;
-            // Scroll to the comment at the bottom 
+            // Scroll to the comment at the bottom
             setTimeout(() => {
               this.content.scrollToBottom(0);
             }, 100);
@@ -265,7 +265,7 @@ export class ConversationDetailPage {
     if(!callback){
       this.isLoading = true;
     }
-    
+
     this.conversations.getConversationDetail(this.activeConversation).subscribe((jsonResponse) => {
       this.isLoading = false;
       this.conversationComments = jsonResponse.conversationComments;
@@ -279,7 +279,7 @@ export class ConversationDetailPage {
       // Store the last comments media id for posting comment response
       this._lastCommentsMediaId = this.conversationComments[this.conversationComments.length - 1].media_id;
 
-      // Store the comment count for this conversation 
+      // Store the comment count for this conversation
       this.commentCount = this.conversationComments.length;
       // Store previous number of comments on refresh or posted comment
       if(!callback || (operation && operation == "postedComment")){
@@ -295,7 +295,7 @@ export class ConversationDetailPage {
         // Execute the callback
         callback();
       }
-      
+
     });
   }
 
@@ -342,7 +342,7 @@ export class ConversationDetailPage {
     // Stop Propagation since delete button is inside the update button
     event.stopPropagation();
 
-    // Confirm if user really wants to delete 
+    // Confirm if user really wants to delete
     let confirm = this._alertCtrl.create({
       title: 'Delete this note?',
       buttons: [
@@ -396,7 +396,7 @@ export class ConversationDetailPage {
         closeButtonText: "Ok"
       });
       toast.present();
-      
+
       // Save that previously notified
       window.localStorage.setItem('shownSwipeNotification', "true");
     }

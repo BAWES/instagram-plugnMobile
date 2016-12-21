@@ -53,7 +53,7 @@ export class AccountService {
     private _zone: NgZone
     ) {
     _platform.ready().then(() => {
-      // Get list of accounts managed by the currently logged in agent 
+      // Get list of accounts managed by the currently logged in agent
       this._populateManagedAccounts();
       this._initAccountsRefresher();
     });
@@ -61,12 +61,12 @@ export class AccountService {
     // Set current view when triggered
     // This is to know which HTTP request takes priority (reduce perceived loading time)
     this._events.subscribe('view:selected', (selectedView) => {
-      this.currentView = selectedView[0];
+      this.currentView = selectedView;
     });
 
-    // Reload Updated Media and Conversations on Refresh Request by User 
+    // Reload Updated Media and Conversations on Refresh Request by User
     this._events.subscribe('refresh:requested', (refresherData) => {
-      let refresher = refresherData[0];
+      let refresher = refresherData;
       this.loadAccountMediaAndConversations(refresher);
     });
 
@@ -116,7 +116,7 @@ export class AccountService {
       return;
     }
 
-    // Find the account id and switch to it 
+    // Find the account id and switch to it
     this._zone.run(() => {
       // Running in Zone because iOS doesnt show loading / needs manual change detection trigger
       this.managedAccounts.forEach(account => {
@@ -172,15 +172,15 @@ export class AccountService {
   /**
    * Attempt to load media and conversations for current active account
    * based on set priority/view.
-   * 
+   *
    * If a Refresher is provided, do not trigger isLoading animation.
-   * 
+   *
    * @param  {} refresher? The ionic refresher to complete if its used
    */
   loadAccountMediaAndConversations(refresher?, showLoading = true){
     if(!this.activeAccount) return;
 
-    // Loading priority is based on the active view 
+    // Loading priority is based on the active view
     if(this.currentView == "media"){
       // Load Media > Follow up by Loading Conversations as Callback
       this._media.loadMediaForAccount(this.activeAccount, () => {
@@ -188,7 +188,7 @@ export class AccountService {
           refresher.complete();
         }
         this._conversation.loadConversationsForAccount(this.activeAccount, false, false, showLoading);
-      }, 
+      },
       refresher? true: false, showLoading);
     }else if(this.currentView == "conversation"){
       // Load Conversations > Follow up by Loading Media as Callback
@@ -197,7 +197,7 @@ export class AccountService {
           refresher.complete();
         }
         this._media.loadMediaForAccount(this.activeAccount, false, false, showLoading);
-      }, 
+      },
       refresher? true: false, showLoading);
     }
   }
@@ -215,7 +215,7 @@ export class AccountService {
       this.managedAccounts = jsonResponse;
 
       if(!showLoading){
-        // On account refresh, update the sidebar data for currently active account 
+        // On account refresh, update the sidebar data for currently active account
         for(let i=0; i < this.managedAccounts.length; i++){
           if(this.managedAccounts[i].user_id == this.activeAccount.user_id){
             this.activeAccount.user_follower_count = this.managedAccounts[i].user_follower_count;
@@ -231,7 +231,7 @@ export class AccountService {
         // Sets the currently active account for initial viewing (if exists)
         this.setActiveAccount(this.managedAccounts[0]);
       }
-      
+
     });
   }
 
@@ -258,7 +258,7 @@ export class AccountService {
     // Refresh Comments every X Seconds
     let numSeconds = 20 * 1000;
     this._refreshTimerMedia = setInterval(() => {
-      // Reload media and conversations 
+      // Reload media and conversations
       this.loadAccountMediaAndConversations(false, false);
     }, numSeconds);
   }

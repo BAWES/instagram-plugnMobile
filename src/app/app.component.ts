@@ -17,14 +17,14 @@ export class MyApp implements OnInit{
   private _innerNavCtrl; //populated from events on pages within tabs
 
   constructor(
-    private _platform: Platform, 
+    private _platform: Platform,
     private _auth: AuthService,
     private _keyboard: KeyboardService,
     private _events: Events,
     private _toastCtrl: ToastController,
     private _app: App, private _ionicApp: IonicApp, private _menu: MenuController,
     private _zone: NgZone
-    ) {    
+    ) {
     /**
      * Run Ionic native functions once the platform is ready
      */
@@ -50,7 +50,7 @@ export class MyApp implements OnInit{
       }else{
         this.rootPage = LoginPage;
       }
-      
+
     });
   }
 
@@ -58,11 +58,11 @@ export class MyApp implements OnInit{
    * Setup push notification service via OneSignal
    */
   private _setupPushNotifs(){
-    // Setup Push Notifications via OneSignal 
+    // Setup Push Notifications via OneSignal
     OneSignal.startInit('6ca2c182-dda4-4749-aed6-0b4310188986', '882152609344');
     OneSignal.inFocusDisplaying(OneSignal.OSInFocusDisplayOption.Notification);
     OneSignal.setSubscription(true);
-    
+
 
     // OneSignal.handleNotificationReceived().subscribe(() => {
     // // do something when notification is received
@@ -70,11 +70,11 @@ export class MyApp implements OnInit{
 
     OneSignal.handleNotificationOpened().subscribe((data) => {
       // When a Notification is Opened
-      if(data.notification.groupedNotifications){ 
+      if(data.notification.groupedNotifications){
         // Notification Grouped [on Android]
         let firstNotificationData = data.notification.groupedNotifications[0].additionalData;
         this._events.publish("notification:grouped", firstNotificationData);
-      }else if(data.notification.payload){ 
+      }else if(data.notification.payload){
         // A single notification clicked
         let notificationData = data.notification.payload.additionalData;
         this._events.publish("notification:single", notificationData);
@@ -88,7 +88,7 @@ export class MyApp implements OnInit{
     // });
   }
 
-  
+
   /**
    * Using Ng2 Lifecycle hooks because view lifecycle events don't trigger for Bootstrapped MyApp Component
    */
@@ -99,7 +99,7 @@ export class MyApp implements OnInit{
         this.rootPage = NavigationPage;
       });
 
-      // Create Tags on OneSignal for this user 
+      // Create Tags on OneSignal for this user
       if (this._platform.is('cordova') && this._platform.is('mobile')) {
         OneSignal.sendTags({
           "agentId": this._auth.agentId,
@@ -107,7 +107,7 @@ export class MyApp implements OnInit{
           "email": this._auth.email
         });
       }
-      
+
     });
 
     // On Logout Event, set root to Login Page
@@ -121,11 +121,11 @@ export class MyApp implements OnInit{
       }
 
       // Show Toast Message explaining logout reason if there's one set
-      let logoutReason = userEventData[0];
+      let logoutReason = userEventData;
       if(logoutReason){
         this._presentToast(logoutReason);
       }
-      
+
     });
 
   }
@@ -151,7 +151,7 @@ export class MyApp implements OnInit{
 
       // Listen to browser pages
       this._events.subscribe("navController:current", (navCtrlData) => {
-        this._innerNavCtrl = navCtrlData[0];
+        this._innerNavCtrl = navCtrlData;
       });
 
       // Register browser back button action(s)
@@ -175,7 +175,7 @@ export class MyApp implements OnInit{
         }
 
         // Navigate back on main active nav if there's a page loaded
-        if (this._app.getActiveNav().canGoBack()){ 
+        if (this._app.getActiveNav().canGoBack()){
           this._app.getActiveNav().pop();
         };
 

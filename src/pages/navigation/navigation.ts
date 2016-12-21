@@ -33,17 +33,17 @@ export class NavigationPage {
     ) {
     // Handle Push Notification Navigation
     this._events.subscribe('notification:grouped', (notificationData) => {
-      let data = notificationData[0];
+      let data = notificationData;
       this._processNotificationData(data, "grouped");
     });
     this._events.subscribe('notification:single', (notificationData) => {
-      let data = notificationData[0];
+      let data = notificationData;
       this._processNotificationData(data, "single");
     });
   }
 
   private _processNotificationData(data, type){
-    //If managed accounts already loaded, switch to the account belonging to notification 
+    //If managed accounts already loaded, switch to the account belonging to notification
     if(this.accounts.managedAccounts){
       this.accounts.setActiveAccountById(data.user_id);
     }
@@ -56,7 +56,7 @@ export class NavigationPage {
     this.rootPage = AccountTabsPage;
     this.accounts.setActiveAccount(account);
   }
-  
+
   /**
    * Load Activity Page showing all activity for the logged in agent
    */
