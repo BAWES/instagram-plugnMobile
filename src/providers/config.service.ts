@@ -16,7 +16,7 @@ export class ConfigService {
   public browserOptions: string;
 
   constructor(public platform: Platform) {
-    // Initiate dev environment on computer while 
+    // Initiate dev environment on computer while
     // running the production on mobile
     platform.ready().then(() => {
       if (platform.is('cordova')) {
@@ -25,9 +25,9 @@ export class ConfigService {
         this.initDevEnvironment();
       }
     });
-    
+
   }
-  
+
   /**
    * Initialize the Dev Environment
    * @param {string} [platform]
@@ -63,7 +63,7 @@ export class ConfigService {
     }
     // Android Specific Configs
     if(this.platform.is("android")){
-      this.browserTarget = "_self";
+      this.browserTarget = "_blank";
       this.browserOptions = "location=yes,zoom=no,clearcache=yes,clearsessioncache=yes";
     }
   }
