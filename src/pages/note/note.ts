@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, Events, NavParams, AlertController } from 'ionic-angular';
+import { NavController, Events, NavParams, AlertController, ViewController } from 'ionic-angular';
 
 import { AccountService } from '../../providers/logged-in/account.service';
 import { NoteService } from '../../providers/logged-in/note.service';
@@ -39,6 +39,7 @@ export class NotePage {
     public noteService: NoteService,
     private _keyboard: KeyboardService,
     private _fb: FormBuilder,
+    private _viewCtrl: ViewController,
     private _events: Events,
     private _alertCtrl: AlertController,
     private _backBtn: HardwareBackButtonService
@@ -106,7 +107,8 @@ export class NotePage {
       // On Success
       if(jsonResponse.operation == "success"){
         // Close the page
-        this.navCtrl.pop();
+        let data = { 'refreshNotes': true };
+        this._viewCtrl.dismiss(data);
       }
 
       // On Failure
@@ -118,6 +120,14 @@ export class NotePage {
         prompt.present();
       }
     });
+  }
+
+  /**
+   * Close the page
+   */
+  close(){
+    let data = { 'refreshNotes': false };
+    this._viewCtrl.dismiss(data);
   }
   
 

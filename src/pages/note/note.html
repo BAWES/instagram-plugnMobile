@@ -1,9 +1,11 @@
 <ion-header>
   <ion-navbar>
 
-    <button ion-button menuToggle="left">
-      <ion-icon name="menu"></ion-icon>
-    </button>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
 
     <ion-buttons right>
       <button ion-button clear color="primary" 

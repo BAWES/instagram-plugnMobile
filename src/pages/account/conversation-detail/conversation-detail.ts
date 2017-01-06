@@ -1,5 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, Events, Content, AlertController, MenuController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, Events, Content, AlertController, ModalController,
+  MenuController, ToastController } from 'ionic-angular';
 
 // Models
 import { Conversation } from '../../../models/conversation';
@@ -67,7 +68,8 @@ export class ConversationDetailPage {
     private _backBtn: HardwareBackButtonService,
     private _alertCtrl: AlertController,
     private _menuCtrl: MenuController,
-    private _toastCtrl: ToastController
+    private _toastCtrl: ToastController,
+    private _modalCtrl: ModalController
     ) {
       this.activeConversation = params.get("conversation");
 
@@ -318,18 +320,36 @@ export class ConversationDetailPage {
     newNote.noteAboutUsername = this.activeConversation.comment_by_username;
     newNote.userId = this.activeConversation.user_id;
 
-    this.navCtrl.push(NotePage, {
+    let modal = this._modalCtrl.create(NotePage, {
       note: newNote
     });
+    // Refresh Note List if new note is saved
+    modal.onDidDismiss(data => {
+      if(data){
+        if(data.refreshNotes){
+          this._loadNotes();
+        }
+      }
+    });
+    modal.present();
   }
 
   /**
    * Load note page for updating
    */
   updateNote(noteToUpdate: Note){
-    this.navCtrl.push(NotePage, {
+    let modal = this._modalCtrl.create(NotePage, {
       note: noteToUpdate
     });
+    // Refresh Note List if new note is saved
+    modal.onDidDismiss(data => {
+      if(data){
+        if(data.refreshNotes){
+          this._loadNotes();
+        }
+      }
+    });
+    modal.present();
   }
 
   /**
