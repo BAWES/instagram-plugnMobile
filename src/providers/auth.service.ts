@@ -103,7 +103,7 @@ export class AuthService {
     window.localStorage.setItem('email', email);
 
     // Save in NativeStorage if iOS and Android
-    if(this._platform.is("ios") || this._platform.is("android")){
+    if(this._platform.is("cordova") && (this._platform.is("ios") || this._platform.is("android"))){
       NativeStorage.setItem('loggedInAgent', {
         'bearer': token, 
         'agentId': id+"",
@@ -143,7 +143,7 @@ export class AuthService {
 
     // Check Native Storage and Try Again
     // Native storage is implemented because some devices clear LocalStorage regularly to save memory
-    if(this._platform.is("ios") || this._platform.is("android")){
+    if(this._platform.is("cordova") && (this._platform.is("ios") || this._platform.is("android"))){
       NativeStorage.getItem('loggedInAgent')
       .then(
         data => {

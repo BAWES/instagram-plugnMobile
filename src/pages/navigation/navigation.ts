@@ -1,7 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { MenuController, NavController, Events } from 'ionic-angular';
+import { InAppBrowser } from 'ionic-native';
 
 import { AuthService } from '../../providers/auth.service';
+import { ConfigService } from '../../providers/config.service';
 import { AccountService } from '../../providers/logged-in/account.service';
 
 // Page Imports
@@ -23,13 +25,16 @@ export class NavigationPage {
 
   rootPage: any = AccountTabsPage;
 
+  private _browser: InAppBrowser;
+
   @ViewChild('loggedInContent') nav: NavController
 
   constructor(
     public accounts: AccountService,
     private _auth: AuthService,
     private _menu: MenuController,
-    private _events: Events
+    private _events: Events,
+    private _config: ConfigService
     ) {
     // Handle Push Notification Navigation
     this._events.subscribe('notification:grouped', (notificationData) => {
@@ -66,12 +71,10 @@ export class NavigationPage {
   }
 
   /**
-   * Load Intercom support
+   * Load Specified Url
    */
-  offerSupport(){
-    //show support page showing link to open email mailto:
-
-    // Also include some youtube videos explaining how the app works
+  loadUrl(url: string){
+    this._browser = new InAppBrowser(url, this._config.browserTarget, this._config.browserOptions);
   }
 
   /**
