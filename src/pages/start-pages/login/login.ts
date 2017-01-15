@@ -1,6 +1,6 @@
 // Core
 import { Component, ApplicationRef } from '@angular/core';
-import { NavController, AlertController, Events } from 'ionic-angular';
+import { NavController, AlertController, ToastController, Events } from 'ionic-angular';
 // Services
 import { AuthService } from '../../../providers/auth.service';
 import { KeyboardService } from '../../../providers/keyboard.service';
@@ -40,6 +40,7 @@ export class LoginPage {
     private _fb: FormBuilder, 
     private _auth: AuthService,
     private _alertCtrl: AlertController,
+    private _toastCtrl: ToastController,
     public keyboard: KeyboardService,
     private _events: Events,
     private _ref:ApplicationRef
@@ -49,6 +50,10 @@ export class LoginPage {
         email: ["", [Validators.required, CustomValidator.emailValidator]],
         password: ["", Validators.required]
       });
+  }
+
+  ionViewDidLoad(){
+    this.showTermsConditionsToast();
   }
 
   ionViewDidEnter() {
@@ -210,6 +215,29 @@ export class LoginPage {
 
   loadSignupPage(){
     this.navCtrl.push(RegisterPage);
+  }
+
+  /**
+   * Present toast asking if user accepts terms and conditions
+   */
+  showTermsConditionsToast(){
+    let hasShownNotification = localStorage.getItem("shownTermsAccept");
+
+    // If user hasn't been previously notified
+    if(hasShownNotification != "true"){
+      // Present Toast
+      let toast = this._toastCtrl.create({
+        message: `By using Plugn, you agree to our 
+        terms of service and privacy policy as shown on our website https://plugn.io`,
+        position: 'middle',
+        showCloseButton: true,
+        closeButtonText: "Agree"
+      });
+      toast.present();
+
+      // Save that previously notified
+      window.localStorage.setItem('shownTermsAccept', "true");
+    }
   }
 
 }
