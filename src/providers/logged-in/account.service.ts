@@ -243,19 +243,26 @@ export class AccountService {
         }
       }
 
-      // What to do if theres no active account yet?
-      if(!this.activeAccount){
-        // Sets the managed account as active account for initial viewing (if exists)
-        if(this.managedAccounts[0]){
-          this.setActiveAccount(this.managedAccounts[0]);
-          this._events.publish("accounts:availability", "available");
-        }else{
-          // Publish an Event that we have no accounts
-          this._events.publish("accounts:availability", "none");
-        }
-      }
+      // Load whatever account available (if any)
+      this._loadAvailableAccount();
 
     });
+  }
+
+
+  // Loads whatever available account by broadcasting availability.
+  private _loadAvailableAccount(){
+    // What to do if theres no active account yet?
+    if(!this.activeAccount){
+      // Sets the managed account as active account for initial viewing (if exists)
+      if(this.managedAccounts[0]){
+        this.setActiveAccount(this.managedAccounts[0]);
+        this._events.publish("accounts:availability", "available");
+      }else{
+        // Publish an Event that we have no accounts
+        this._events.publish("accounts:availability", "none");
+      }
+    }
   }
 
   /**
