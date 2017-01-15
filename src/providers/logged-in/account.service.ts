@@ -230,7 +230,7 @@ export class AccountService {
       this.isLoading = false;
       this.managedAccounts = jsonResponse;
 
-      if(!showLoading){
+      if(!showLoading && this.activeAccount){
         // On account refresh, update the sidebar data for currently active account
         for(let i=0; i < this.managedAccounts.length; i++){
           if(this.managedAccounts[i].user_id == this.activeAccount.user_id){
@@ -243,9 +243,16 @@ export class AccountService {
         }
       }
 
-      if(!this.activeAccount && this.managedAccounts[0]){
-        // Sets the currently active account for initial viewing (if exists)
-        this.setActiveAccount(this.managedAccounts[0]);
+      // What to do if theres no active account yet?
+      if(!this.activeAccount){
+        // Sets the managed account as active account for initial viewing (if exists)
+        if(this.managedAccounts[0]){
+          this.setActiveAccount(this.managedAccounts[0]);
+          this._events.publish("accounts:availability", "available");
+        }else{
+          // Publish an Event that we have no accounts
+          this._events.publish("accounts:availability", "none");
+        }
       }
 
     });

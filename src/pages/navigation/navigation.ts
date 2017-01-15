@@ -45,6 +45,14 @@ export class NavigationPage {
       let data = notificationData;
       this._processNotificationData(data, "single");
     });
+
+    // Navigate if user has no managed accounts 
+    this._events.subscribe("accounts:availability", (availability) => {
+      this.rootPage = AddAccountPage;
+      if(availability == "available"){
+        this.rootPage = AccountTabsPage;
+      }
+    });
   }
 
   private _processNotificationData(data, type){
