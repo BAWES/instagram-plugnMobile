@@ -55,11 +55,7 @@ export class AccountService {
     private _zone: NgZone
     ) {
     _platform.ready().then(() => {
-      if(!this._areTimersActivated){
-        this._populateManagedAccounts();
-        this._initAccountsRefresher();
-        this._areTimersActivated = true;
-      }
+      this._initialize();
     });
 
     // Set current view when triggered
@@ -76,21 +72,41 @@ export class AccountService {
 
     // On Login Event, Get list of accounts managed by the currently logged in agent
     this._events.subscribe('user:login', (userEventData) => {
-       if(!this._areTimersActivated){
-        this._populateManagedAccounts();
-        this._initAccountsRefresher();
-        this._areTimersActivated = true;
-      }
+       this._initialize();
+    });
+
+    // On Account assignment removed, refresh managed and active accounts
+    this._events.subscribe('accountAssignment:removed', (userEventData) => {
+      //this._events.publish("accounts:availability", "none");
+      this._destroy();
+      this._initialize();
     });
 
     // On Logout Event, destroy refresh timers
     this._events.subscribe('user:logout', (userEventData) => {
-      this.destroyAccountsRefresher();
-      this.destroyMediaRefresher();
-      this._areTimersActivated = false;
-      this.activeAccount = null;
-      this.managedAccounts = null;
+      this._destroy();
     });
+  }
+
+  /**
+   * Initialize
+   */
+  private _initialize(){
+    if(!this._areTimersActivated){
+      this._populateManagedAccounts();
+      this._initAccountsRefresher();
+      this._areTimersActivated = true;
+    }
+  }
+  /**
+   * Destroy
+   */
+  private _destroy(){
+    this.destroyAccountsRefresher();
+    this.destroyMediaRefresher();
+    this._areTimersActivated = false;
+    this.activeAccount = null;
+    this.managedAccounts = null;
   }
 
   /**

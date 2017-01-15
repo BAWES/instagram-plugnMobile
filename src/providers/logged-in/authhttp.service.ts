@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
-import { Platform } from 'ionic-angular';
+import { Platform, Events } from 'ionic-angular';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/empty';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/first';
+import 'rxjs/add/operator/take';
 import 'rxjs/add/operator/map';
 
 import { ConfigService } from '../config.service';
@@ -22,7 +22,8 @@ export class AuthHttpService {
     private _http: Http,
     private _auth: AuthService,
     private _config: ConfigService,
-    private _platform: Platform
+    private _platform: Platform,
+    private _events: Events
     ) {}
 
   /**
@@ -35,7 +36,7 @@ export class AuthHttpService {
 
     return this._http.get(url, {headers: this._buildAuthHeaders()})
               .catch((err) => this._handleError(err))
-              .first()
+              .take(1)
               .map((res: Response) => res.json());
   }
 
@@ -50,7 +51,7 @@ export class AuthHttpService {
 
     return this._http.post(url, JSON.stringify(params), {headers: this._buildAuthHeaders()})
               .catch((err) => this._handleError(err))
-              .first()
+              .take(1)
               .map((res: Response) => res.json());
   }
 
@@ -65,7 +66,7 @@ export class AuthHttpService {
 
     return this._http.patch(url, JSON.stringify(params), {headers: this._buildAuthHeaders()})
               .catch((err) => this._handleError(err))
-              .first()
+              .take(1)
               .map((res: Response) => res.json());
   }
 
@@ -80,7 +81,7 @@ export class AuthHttpService {
 
     return this._http.delete(url, {headers: this._buildAuthHeaders()})
               .catch((err) => this._handleError(err))
-              .first()
+              .take(1)
               .map((res: Response) => res.json());
   }
 
@@ -108,6 +109,14 @@ export class AuthHttpService {
   private _handleError(error: any): Observable<any> {
       let errMsg = (error.message) ? error.message :
           error.status ? `${error.status} - ${error.statusText}` : 'Server error';
+
+      // Handle Bad Requests
+      // This error usually appears when agent attempts to handle an 
+      // account that he's been removed from assigning
+      if (error.status === 400) {
+          this._events.publish("accountAssignment:removed");
+          return Observable.empty<Response>();
+      }
 
       // Handle No Internet Connection Error
       if (error.status == 0) {
