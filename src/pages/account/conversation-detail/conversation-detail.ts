@@ -157,7 +157,7 @@ export class ConversationDetailPage {
   /**
    * Marks conversation comments as handled
    */
-  markConversationHandled(){
+  markConversationHandled(ignoreErrors:boolean = false){
     // Initiate Loading
     this.handleLoading = true;
 
@@ -183,12 +183,16 @@ export class ConversationDetailPage {
           }, "handledConversation");
         }else if(jsonResp.operation == "error"){
           this.handleLoading = false
-          // Show Alert with the message
-          let alert = this._alertCtrl.create({
-            subTitle: jsonResp.message,
-            buttons: ['Ok']
-          });
-          alert.present();
+
+          if(!ignoreErrors){
+            // Show Alert with the message
+            let alert = this._alertCtrl.create({
+              subTitle: jsonResp.message,
+              buttons: ['Ok']
+            });
+            alert.present();
+          }
+          
         }else{
           this.handleLoading = false
           // Show alert with error not accounted for
@@ -229,6 +233,9 @@ export class ConversationDetailPage {
               this.content.scrollToBottom(0);
             }, 100);
           }, "postedComment");
+
+          // Mark Conversation as Handled on New Comment 
+          this.markConversationHandled(true);
 
           return;
         }
