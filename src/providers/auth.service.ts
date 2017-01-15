@@ -68,7 +68,7 @@ export class AuthService {
     window.localStorage.removeItem('email');
 
     // Remove from NativeStorage if this is iOS or Android
-    if(this._platform.is("ios") || this._platform.is("android")){
+    if(this._platform.is("cordova") && (this._platform.is("ios") || this._platform.is("android"))){
       NativeStorage.remove("loggedInAgent").then(() => {
         // alert("deleted from nativestorage");
       });

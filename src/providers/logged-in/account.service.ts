@@ -44,6 +44,8 @@ export class AccountService {
   private _refreshTimerAccounts;
   private _refreshTimerMedia;
 
+  private _areTimersActivated = false;
+
   constructor(
     private _platform: Platform,
     private _events: Events,
@@ -53,9 +55,11 @@ export class AccountService {
     private _zone: NgZone
     ) {
     _platform.ready().then(() => {
-      // Get list of accounts managed by the currently logged in agent
-      this._populateManagedAccounts();
-      this._initAccountsRefresher();
+      if(!this._areTimersActivated){
+        this._populateManagedAccounts();
+        this._initAccountsRefresher();
+        this._areTimersActivated = true;
+      }
     });
 
     // Set current view when triggered
@@ -70,10 +74,22 @@ export class AccountService {
       this.loadAccountMediaAndConversations(refresher);
     });
 
+    // On Login Event, Get list of accounts managed by the currently logged in agent
+    this._events.subscribe('user:login', (userEventData) => {
+       if(!this._areTimersActivated){
+        this._populateManagedAccounts();
+        this._initAccountsRefresher();
+        this._areTimersActivated = true;
+      }
+    });
+
     // On Logout Event, destroy refresh timers
     this._events.subscribe('user:logout', (userEventData) => {
       this.destroyAccountsRefresher();
       this.destroyMediaRefresher();
+      this._areTimersActivated = false;
+      this.activeAccount = null;
+      this.managedAccounts = null;
     });
   }
 
