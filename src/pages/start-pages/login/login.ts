@@ -4,6 +4,7 @@ import { NavController, AlertController, Events } from 'ionic-angular';
 // Services
 import { AuthService } from '../../../providers/auth.service';
 import { KeyboardService } from '../../../providers/keyboard.service';
+import { AnalyticsService } from '../../../providers/analytics.service';
 // Pages
 import { RegisterPage } from '../register/register';
 import { ForgotPasswordPage } from '../forgot-password/forgot-password';
@@ -39,6 +40,7 @@ export class LoginPage {
     public navCtrl: NavController, 
     private _fb: FormBuilder, 
     private _auth: AuthService,
+    private _analytics: AnalyticsService,
     private _alertCtrl: AlertController,
     public keyboard: KeyboardService,
     private _events: Events,
@@ -56,6 +58,8 @@ export class LoginPage {
   }
 
   ionViewDidEnter() {
+    this._analytics.trackView("Login Page");
+    
     // Force trigger Angular2 Change Detection when keyboard opens and closes
     this._events.subscribe("keyboard:toggle", this._keyboardToggleHandler = (keyboardData) => {
       this._ref.tick();
