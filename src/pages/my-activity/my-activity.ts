@@ -3,6 +3,7 @@ import { NavController, MenuController } from 'ionic-angular';
 
 import { ActivityService } from '../../providers/logged-in/activity.service';
 import { HardwareBackButtonService } from '../../providers/hardwarebackbtn.service';
+import { AnalyticsService } from '../../providers/analytics.service';
 
 /*
   Class for the my-activity page.
@@ -19,6 +20,7 @@ export class MyActivityPage {
   constructor(
     public navCtrl: NavController,
     public activityService: ActivityService,
+    private _analytics: AnalyticsService,
     private _backBtn: HardwareBackButtonService,
     private _menuCtrl: MenuController
     ) {}
@@ -27,6 +29,8 @@ export class MyActivityPage {
    * On Page Enter
    */
   ionViewDidEnter() {
+    this._analytics.trackView("My Activity");
+
     // Load and populate media detail
     this._loadActivity();
 

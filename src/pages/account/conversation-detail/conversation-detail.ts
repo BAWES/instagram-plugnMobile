@@ -13,6 +13,7 @@ import { CommentService } from '../../../providers/logged-in/comment.service';
 import { AccountService } from '../../../providers/logged-in/account.service';
 import { NoteService } from '../../../providers/logged-in/note.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
+import { AnalyticsService } from '../../../providers/analytics.service';
 
 // Forms
 import { FormControl, Validators } from '@angular/forms';
@@ -62,6 +63,7 @@ export class ConversationDetailPage {
     public navCtrl: NavController,
     public conversations: ConversationService,
     public accounts: AccountService,
+    private _analytics: AnalyticsService,
     private _noteService: NoteService,
     private _commentService: CommentService,
     private _events: Events,
@@ -103,6 +105,8 @@ export class ConversationDetailPage {
    * On Page Enter
    */
   ionViewDidEnter() {
+    this._analytics.trackView("Conversation Detail");
+
     this._initRefresher();
 
     // Load Notes on Page Open

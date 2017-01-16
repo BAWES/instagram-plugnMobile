@@ -5,6 +5,7 @@ import { AccountService } from '../../providers/logged-in/account.service';
 import { NoteService } from '../../providers/logged-in/note.service';
 import { HardwareBackButtonService } from '../../providers/hardwarebackbtn.service';
 import { KeyboardService } from '../../providers/keyboard.service';
+import { AnalyticsService } from '../../providers/analytics.service';
 
 // Forms
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -37,6 +38,7 @@ export class NotePage {
     public navCtrl: NavController,
     public accounts: AccountService,
     public noteService: NoteService,
+    private _analytics: AnalyticsService,
     private _keyboard: KeyboardService,
     private _fb: FormBuilder,
     private _viewCtrl: ViewController,
@@ -58,6 +60,8 @@ export class NotePage {
    * On Page Enter
    */
   ionViewDidEnter() {
+    this._analytics.trackView("Note Modal");
+
     // Setup Back Button Behavior
     this._backBtn.callbackOnBack(() => {
       this._backBtn.clearBackFunctionality();

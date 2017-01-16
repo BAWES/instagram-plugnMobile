@@ -4,6 +4,7 @@ import { NavController, Events, MenuController } from 'ionic-angular';
 import { AccountService } from '../../../providers/logged-in/account.service';
 import { ActivityService } from '../../../providers/logged-in/activity.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
+import { AnalyticsService } from '../../../providers/analytics.service';
 
 /*
   Agent Activity Statistics Page
@@ -24,6 +25,7 @@ export class AgentActivityPage {
     public navCtrl: NavController,
     public accounts: AccountService,
     public activityService: ActivityService,
+    private _analytics: AnalyticsService,
     private _events: Events,
     private _backBtn: HardwareBackButtonService,
     private _menuCtrl: MenuController
@@ -33,6 +35,8 @@ export class AgentActivityPage {
    * On Page Enter
    */
   ionViewDidEnter() {
+    this._analytics.trackView("Stats: Agent Activity");
+
     // Load and populate media detail
     this._loadAgentActivity();
 

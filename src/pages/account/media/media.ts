@@ -4,6 +4,7 @@ import { NavController, Events, MenuController } from 'ionic-angular';
 import { MediaService } from '../../../providers/logged-in/media.service';
 import { AccountService } from '../../../providers/logged-in/account.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
+import { AnalyticsService } from '../../../providers/analytics.service';
 
 // Pages
 import { MediaDetailPage } from '../media-detail/media-detail';
@@ -21,6 +22,7 @@ export class MediaPage {
     public navCtrl: NavController, 
     public media: MediaService,
     public accounts: AccountService,
+    private _analytics: AnalyticsService,
     private _events: Events,
     private _backBtn: HardwareBackButtonService,
     private _menuCtrl: MenuController
@@ -44,6 +46,8 @@ export class MediaPage {
    * Trigger an event notifying that user is opening this page
    */
   ionViewWillEnter(){
+    this._analytics.trackView("Media List");
+
     this._events.publish('view:selected', "media");
   }
 

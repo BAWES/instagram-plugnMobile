@@ -4,6 +4,7 @@ import { NavController, AlertController } from 'ionic-angular';
 // Services
 import { AuthService } from '../../../providers/auth.service';
 import { KeyboardService } from '../../../providers/keyboard.service';
+import { AnalyticsService } from '../../../providers/analytics.service';
 // Forms
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidator } from '../../../validators/custom.validator';
@@ -27,6 +28,7 @@ export class ForgotPasswordPage {
     private _fb: FormBuilder, 
     private _auth: AuthService,
     private _alertCtrl: AlertController,
+    private _analytics: AnalyticsService,
     public keyboard: KeyboardService,
     ){
       // Initialize the Password Reset Form
@@ -36,8 +38,8 @@ export class ForgotPasswordPage {
     }
 
 
-  ionViewDidLoad() {
-    
+  ionViewDidEnter() {
+    this._analytics.trackView("Forgot Password");
   }
 
   /**

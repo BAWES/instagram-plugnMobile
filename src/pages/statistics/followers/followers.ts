@@ -5,6 +5,7 @@ import { NavController, Events, MenuController } from 'ionic-angular';
 
 import { AccountService } from '../../../providers/logged-in/account.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
+import { AnalyticsService } from '../../../providers/analytics.service';
 
 /*
   Followers Page
@@ -25,6 +26,7 @@ export class FollowersPage {
     public accounts: AccountService,
     private _events: Events,
     private _backBtn: HardwareBackButtonService,
+    private _analytics: AnalyticsService,
     private _menuCtrl: MenuController
     ) {}
 
@@ -32,6 +34,8 @@ export class FollowersPage {
    * On Page Enter
    */
   ionViewDidEnter() {
+    this._analytics.trackView("Stats: Followers");
+
     // Load this account stats if not already loaded
     this.accounts.loadAccountStats();
 

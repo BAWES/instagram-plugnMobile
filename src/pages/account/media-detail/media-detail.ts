@@ -10,6 +10,7 @@ import { MediaService } from '../../../providers/logged-in/media.service';
 import { CommentService } from '../../../providers/logged-in/comment.service';
 import { AccountService } from '../../../providers/logged-in/account.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
+import { AnalyticsService } from '../../../providers/analytics.service';
 
 // Forms
 import { FormControl, Validators } from '@angular/forms';
@@ -51,6 +52,7 @@ export class MediaDetailPage {
     public navCtrl: NavController,
     public mediaService: MediaService,
     public accounts: AccountService,
+    private _analytics: AnalyticsService,
     private _commentService: CommentService,
     private _events: Events,
     private _backBtn: HardwareBackButtonService,
@@ -86,6 +88,8 @@ export class MediaDetailPage {
    * On Page Enter
    */
   ionViewDidEnter() {
+    this._analytics.trackView("Media Detail");
+    
     this._initRefresher();
 
     // Setup Back Button Behavior

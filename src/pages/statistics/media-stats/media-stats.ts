@@ -5,6 +5,7 @@ import { NavController, Events, MenuController } from 'ionic-angular';
 
 import { AccountService } from '../../../providers/logged-in/account.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
+import { AnalyticsService } from '../../../providers/analytics.service';
 
 /*
   Media Stats Page
@@ -25,6 +26,7 @@ export class MediaStatsPage {
     public accounts: AccountService,
     private _events: Events,
     private _backBtn: HardwareBackButtonService,
+    private _analytics: AnalyticsService,
     private _menuCtrl: MenuController
     ) {}
 
@@ -34,6 +36,8 @@ export class MediaStatsPage {
    * then this event will not fire again on a subsequent viewing.
    */
   ionViewDidLoad(){
+    this._analytics.trackView("Stats: Media");
+
     // Load this account stats if not already loaded
     this.accounts.loadAccountStats();
 

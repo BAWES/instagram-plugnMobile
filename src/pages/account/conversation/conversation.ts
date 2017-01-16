@@ -5,6 +5,7 @@ import { NavController, Events, MenuController } from 'ionic-angular';
 import { ConversationService } from '../../../providers/logged-in/conversation.service';
 import { AccountService } from '../../../providers/logged-in/account.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
+import { AnalyticsService } from '../../../providers/analytics.service';
 
 // Pages
 import { ConversationDetailPage } from '../conversation-detail/conversation-detail';
@@ -24,6 +25,7 @@ export class ConversationPage {
     public navCtrl: NavController,
     public conversations: ConversationService,
     public accounts: AccountService,
+    private _analytics: AnalyticsService,
     private _backBtn: HardwareBackButtonService,
     private _events: Events,
     private _menuCtrl: MenuController
@@ -34,6 +36,8 @@ export class ConversationPage {
   }
 
   ionViewDidEnter() {
+    this._analytics.trackView("Conversation List");
+
     // Setup Back Button Behavior
     this._backBtn.toggleMenuOnBack();
     // Enable Swipe on Right Menu
