@@ -275,8 +275,16 @@ export class AccountService {
     // What to do if theres no active account yet?
     if(!this.activeAccount){
       // Sets the managed account as active account for initial viewing (if exists)
-      if(this.managedAccounts[0]){
-        this.setActiveAccount(this.managedAccounts[0]);
+      // Based on which has the most unhandled comments.
+      if(this.managedAccounts && this.managedAccounts[0]){
+        let accountNeeded = this.managedAccounts[0];
+        this.managedAccounts.forEach(account => {
+          // Load the account with the most comments unhandled
+          if(account.unhandledCount > accountNeeded.unhandledCount){
+            accountNeeded = account;
+          }
+        });
+        this.setActiveAccount(accountNeeded);
         this._events.publish("accounts:availability", "available");
       }else{
         // Publish an Event that we have no accounts
