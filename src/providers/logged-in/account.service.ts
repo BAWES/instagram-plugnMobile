@@ -77,13 +77,17 @@ export class AccountService {
 
     // On Account assignment removed, refresh managed and active accounts
     this._events.subscribe('accountAssignment:removed', (userEventData) => {
-      //this._events.publish("accounts:availability", "none");
       this._destroy();
       this._initialize();
     });
 
     // On Logout Event, destroy refresh timers
     this._events.subscribe('user:logout', (userEventData) => {
+      this._destroy();
+    });
+
+    // On Offline destroy
+    this._events.subscribe('internet:offline', (userEventData) => {
       this._destroy();
     });
   }

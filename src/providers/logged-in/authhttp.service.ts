@@ -120,7 +120,8 @@ export class AuthHttpService {
 
       // Handle No Internet Connection Error
       if (error.status == 0) {
-          this._auth.logout("Unable to connect to Plugn servers. Please check your internet connection.");
+          this._events.publish("internet:offline");
+          //this._auth.logout("Unable to connect to Plugn servers. Please check your internet connection.");
           return Observable.empty<Response>();
       }
 

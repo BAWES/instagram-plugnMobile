@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { MenuController, NavController, Events } from 'ionic-angular';
+import { MenuController, NavController, ToastController, Events } from 'ionic-angular';
 import { InAppBrowser } from 'ionic-native';
 
 import { AuthService } from '../../providers/auth.service';
@@ -9,6 +9,7 @@ import { AccountService } from '../../providers/logged-in/account.service';
 // Page Imports
 import { AccountTabsPage } from '../account/account-tabs/account-tabs';
 import { AddAccountPage } from '../add-account/add-account';
+import { InternetOfflinePage } from '../internet-offline/internet-offline';
 import { MyActivityPage } from '../my-activity/my-activity';
 
 // Account Stats Pages available on Right Menu
@@ -33,6 +34,7 @@ export class NavigationPage {
     public accounts: AccountService,
     private _auth: AuthService,
     private _menu: MenuController,
+    private _toastCtrl: ToastController,
     private _events: Events,
     private _config: ConfigService
     ) {
@@ -53,6 +55,20 @@ export class NavigationPage {
         this.rootPage = AccountTabsPage;
       }
     });
+
+    // Show Offline Page if no Internet
+    this._events.subscribe("internet:offline", (availability) => {
+      // Switch to offline page 
+      this.rootPage = InternetOfflinePage;
+      // Show toast that unable to connect
+      let toast = this._toastCtrl.create({
+        message: 'Unable to connect to Plugn servers.',
+        duration: 3000,
+        position: 'bottom'
+      });
+      toast.present();
+    });
+
   }
 
   private _processNotificationData(data, type){

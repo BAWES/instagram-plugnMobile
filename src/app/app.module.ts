@@ -10,6 +10,7 @@ import { ForgotPasswordPage } from '../pages/start-pages/forgot-password/forgot-
 // Main Navigation once Logged In
 import { NavigationPage } from '../pages/navigation/navigation';
 import { AddAccountPage } from '../pages/add-account/add-account';
+import { InternetOfflinePage } from '../pages/internet-offline/internet-offline';
 import { NotePage } from '../pages/note/note';
 import { MyActivityPage } from '../pages/my-activity/my-activity';
 
@@ -54,6 +55,7 @@ export const pages = [
   // Main Nav Page [Logged In]
   NavigationPage,
   AddAccountPage,
+  InternetOfflinePage,
   MyActivityPage,
   NotePage,
 
@@ -96,6 +98,7 @@ export const toDeclare = [
   // Main Nav Page [Logged In]
   NavigationPage,
   AddAccountPage,
+  InternetOfflinePage,
   MyActivityPage,
   NotePage,
 
