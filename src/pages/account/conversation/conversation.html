@@ -56,10 +56,9 @@
       </p>
       <p>All you need to do is login with the Instagram account from the agency panel.</p>
 
-      <a ion-button 
-        href="https://agency.plugn.io/instagram/invalid-access-token?accountId={{ accounts.activeAccount.user_id }}">
+      <button ion-button (click)="loadUrl('https://agency.plugn.io/instagram/invalid-access-token?accountId='+accounts.activeAccount.user_id)">
         Fix @{{ accounts.activeAccount.user_name }}
-      </a>
+      </button>
     </div>
 
     <!-- Display Billing Expired Message -->
@@ -70,9 +69,9 @@
         Subscription has expired for the agency managing @{{ accounts.activeAccount.user_name }}.
       </p>
 
-      <a ion-button href="http://agency.plugn.io">
+      <button ion-button (click)="loadUrl('http://agency.plugn.io')">
         Subscribe
-      </a>
+      </button>
     </div>
 
     <!-- Display Message if No Conversations -->

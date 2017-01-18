@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController, Events, MenuController } from 'ionic-angular';
+import { InAppBrowser } from 'ionic-native';
 
 import { MediaService } from '../../../providers/logged-in/media.service';
 import { AccountService } from '../../../providers/logged-in/account.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
 import { AnalyticsService } from '../../../providers/analytics.service';
+import { ConfigService } from '../../../providers/config.service';
 
 // Pages
 import { MediaDetailPage } from '../media-detail/media-detail';
@@ -18,6 +20,8 @@ import { MediaDetailPage } from '../media-detail/media-detail';
 })
 export class MediaPage {
 
+  private _browser: InAppBrowser;
+
   constructor(
     public navCtrl: NavController, 
     public media: MediaService,
@@ -25,7 +29,8 @@ export class MediaPage {
     private _analytics: AnalyticsService,
     private _events: Events,
     private _backBtn: HardwareBackButtonService,
-    private _menuCtrl: MenuController
+    private _menuCtrl: MenuController,
+    private _config: ConfigService
     ) {}
 
   ionViewDidLoad() {
@@ -68,6 +73,13 @@ export class MediaPage {
    */
   doRefresh(refresher) {
     this._events.publish('refresh:requested', refresher);
+  }
+
+  /**
+   * Load Specified Url
+   */
+  loadUrl(url: string){
+    this._browser = new InAppBrowser(url, this._config.browserTarget, this._config.browserOptions);
   }
 
 }

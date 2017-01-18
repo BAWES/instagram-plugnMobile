@@ -21,9 +21,9 @@
     With an Agency account, you may add and remove Instagram accounts and assign agents to them (including yourself).
   </p>
 
-  <a ion-button href="http://agency.plugn.io">
+  <button ion-button (click)="loadUrl('http://agency.plugn.io')">
     Create/Login to Agency Account
-  </a>
+  </button>
 
   <h5>What's my Agent ID to share with agencies?</h5>
   <pre style='font-size:1.5em'>{{ auth.email }}</pre>

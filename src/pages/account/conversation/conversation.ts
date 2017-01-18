@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { NavController, Events, MenuController } from 'ionic-angular';
+import { InAppBrowser } from 'ionic-native';
 
 // Services
 import { ConversationService } from '../../../providers/logged-in/conversation.service';
 import { AccountService } from '../../../providers/logged-in/account.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
 import { AnalyticsService } from '../../../providers/analytics.service';
+import { ConfigService } from '../../../providers/config.service';
 
 // Pages
 import { ConversationDetailPage } from '../conversation-detail/conversation-detail';
@@ -21,6 +23,8 @@ export class ConversationPage {
 
   public searchInput: string = "";
 
+  private _browser: InAppBrowser;
+
   constructor(
     public navCtrl: NavController,
     public conversations: ConversationService,
@@ -28,7 +32,8 @@ export class ConversationPage {
     private _analytics: AnalyticsService,
     private _backBtn: HardwareBackButtonService,
     private _events: Events,
-    private _menuCtrl: MenuController
+    private _menuCtrl: MenuController,
+    private _config: ConfigService
     ) { }
 
   ionViewDidLoad() {
@@ -77,6 +82,13 @@ export class ConversationPage {
    */
   doRefresh(refresher) {
     this._events.publish('refresh:requested', refresher);
+  }
+
+  /**
+   * Load Specified Url
+   */
+  loadUrl(url: string){
+    this._browser = new InAppBrowser(url, this._config.browserTarget, this._config.browserOptions);
   }
 
 }
