@@ -10,11 +10,25 @@
 
   <ion-slides pager="true" (ionSlideWillChange)="onSlideChangeStart($event)">
 
-    <!-- Loop Through Multiple Slides -->
-    <ion-slide *ngFor="let slide of slides">
-      <img [src]="slide.image" class="slide-image"/>
-      <h2 class="slide-title" [innerHTML]="slide.title"></h2>
-      <p [innerHTML]="slide.description"></p>
+    <!-- Slide -->
+    <ion-slide>
+      <img src="assets/img/ica-slidebox-img-1.png" class="slide-image"/>
+      <h2 class="slide-title">Introducing Plugn</h2>
+      <p>Comment and Customer Relationship Management for Instagram</p>
+    </ion-slide>
+
+    <!-- Slide -->
+    <ion-slide>
+      <img src="assets/img/ica-slidebox-img-2.png" class="slide-image"/>
+      <h2 class="slide-title">Introducing Plugn</h2>
+      <p>Comment and Customer Relationship Management for Instagram</p>
+    </ion-slide>
+
+    <!-- Slide -->
+    <ion-slide>
+      <img src="assets/img/ica-slidebox-img-3.png" class="slide-image"/>
+      <h2 class="slide-title">Introducing Plugn</h2>
+      <p>Comment and Customer Relationship Management for Instagram</p>
     </ion-slide>
 
     <!-- The Final Slide -->
@@ -22,7 +36,7 @@
       <img src="assets/img/ica-slidebox-img-4.png" class="slide-image"/>
       <h2 class="slide-title">4th slide title</h2>
       <button ion-button icon-right large clear (click)="gotoLogin()">
-        Continue
+        Get Started
         <ion-icon name="arrow-forward"></ion-icon>
       </button>
     </ion-slide>
