@@ -8,7 +8,7 @@
 
 <ion-content no-bounce>
 
-  <ion-slides [options]="{pager: true}" (ionWillChange)="onSlideChangeStart($event)">
+  <ion-slides pager="true" (ionSlideWillChange)="onSlideChangeStart($event)">
 
     <!-- Loop Through Multiple Slides -->
     <ion-slide *ngFor="let slide of slides">

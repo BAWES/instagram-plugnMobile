@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { MenuController, NavController } from 'ionic-angular';
 
-import { WelcomePage } from '../welcome/welcome';
+import { LoginPage } from '../start-pages/login/login';
 
 
 export interface Slide {
@@ -54,14 +54,14 @@ export class TutorialPage {
   }
 
   gotoLogin() {
-    this.navCtrl.setRoot(WelcomePage, {}, {
+    this.navCtrl.setRoot(LoginPage, {}, {
       animate: true,
       direction: 'forward'
     });
   }
 
   onSlideChangeStart(slider) {
-    this.showSkip = !slider.isEnd;
+    this.showSkip = !slider.isEnd();
   }
   
 

@@ -4,6 +4,7 @@ import { StatusBar, OneSignal } from 'ionic-native';
 
 import { NavigationPage } from '../pages/navigation/navigation';
 import { LoginPage } from '../pages/start-pages/login/login';
+import { TutorialPage } from '../pages/tutorial/tutorial';
 
 import { AuthService } from '../providers/auth.service';
 import { KeyboardService } from '../providers/keyboard.service';
@@ -42,9 +43,16 @@ export class MyApp implements OnInit{
       // Fix back button behavior on browser
       this._setupBrowserBackButtonBehavior();
 
+      let tutorialShown = localStorage.getItem("tutorialShown");
+
       // Figure out which page to load on app start [Based on Auth]
       if(this._auth.isLoggedIn){
         this.rootPage = NavigationPage;
+      }else if(tutorialShown != "true"){
+        // Show Tutorial
+        this.rootPage = TutorialPage;
+        // Save that previously shown tutorial
+        //window.localStorage.setItem('tutorialShown', "true");
       }else{
         this.rootPage = LoginPage;
       }
