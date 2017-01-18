@@ -3,6 +3,7 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 // Start Pages [Logged Out]
+import { TutorialPage } from '../pages/tutorial/tutorial';
 import { LoginPage } from '../pages/start-pages/login/login';
 import { RegisterPage } from '../pages/start-pages/register/register';
 import { ForgotPasswordPage } from '../pages/start-pages/forgot-password/forgot-password';
@@ -73,6 +74,7 @@ export const pages = [
   FollowersPage,
 
   // Start-Pages
+  TutorialPage,
   LoginPage,
   RegisterPage,
   ForgotPasswordPage
@@ -116,6 +118,7 @@ export const toDeclare = [
   FollowersPage,
 
   // Start-Pages
+  TutorialPage,
   LoginPage,
   RegisterPage,
   ForgotPasswordPage
