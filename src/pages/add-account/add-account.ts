@@ -36,7 +36,7 @@ export class AddAccountPage {
    * Load Specified Url
    */
   loadUrl(url: string){
-    this._browser = new InAppBrowser(url, this._config.browserTarget, this._config.browserOptions);
+    this._browser = new InAppBrowser(url, this._config.browserTarget, this._config.browserOptionsWithCache);
   }
 
 }

@@ -14,6 +14,7 @@ export class ConfigService {
   // InAppBrowser Settings
   public browserTarget: string;
   public browserOptions: string;
+  public browserOptionsWithCache: string;
 
   constructor(public platform: Platform) {
     // Initiate dev environment on computer while
@@ -55,16 +56,19 @@ export class ConfigService {
     // Generic Configs
     this.browserTarget = "_blank";
     this.browserOptions = "location=no";
+    this.browserOptionsWithCache = "location=no";
 
     // iOS Specific Configs
     if(this.platform.is("ios")){
       this.browserTarget = "_blank";
       this.browserOptions = "location=no,clearcache=yes,clearsessioncache=yes,closebuttoncaption=cancel";
+      this.browserOptionsWithCache = "location=no,clearcache=no,clearsessioncache=no,closebuttoncaption=cancel";
     }
     // Android Specific Configs
     if(this.platform.is("android")){
       this.browserTarget = "_blank";
       this.browserOptions = "location=yes,zoom=no,clearcache=yes,clearsessioncache=yes";
+      this.browserOptionsWithCache = "location=yes,zoom=no,clearcache=no,clearsessioncache=no";
     }
   }
 
