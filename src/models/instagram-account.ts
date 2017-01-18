@@ -10,6 +10,7 @@ export interface InstagramAccount{
     user_following_count: number;
     user_follower_count: number;
     user_instagram_id: number;
+    user_status: number;
     unhandledCount: number;
     lastAgentActivity: string;
 }
