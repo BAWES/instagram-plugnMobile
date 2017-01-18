@@ -18,9 +18,6 @@
     <img src='assets/brand/loader.gif'>
   </div>
 
-  <!-- If no activity on this account yet -->
-  <h3 *ngIf="!isLoading && !myActivity">You haven't performed any activity.</h3>
-
   <!-- Activity Available and Loaded -->
   <ion-list *ngIf="!isLoading && myActivity">
     <ion-item text-wrap *ngFor="let activity of myActivity">
@@ -32,5 +29,10 @@
       <ion-note>{{ activity.datetime }}</ion-note>
     </ion-item>
   </ion-list>
+
+  <!-- If no activity on this account yet -->
+  <h3 *ngIf="!isLoading && !myActivity.length" style='text-align:center;'>
+    Seems like this is a brand new account. You haven't had any activity on any account.
+  </h3>
 
 </ion-content>

@@ -19,7 +19,10 @@
   </div>
 
   <!-- If no activity on this account yet -->
-  <h3 *ngIf="!isLoading && !accountActivity">No activity on this account yet</h3>
+  <h3 *ngIf="!isLoading && !accountActivity.length" style='text-align:center;'>
+    <ion-icon name="ios-sad-outline" style='font-size:2em'></ion-icon><br/>
+    No activity on this account yet
+  </h3>
 
   <!-- Activity Available and Loaded -->
   <ion-list *ngIf="!isLoading && accountActivity">
