@@ -11,6 +11,8 @@ import { ForgotPasswordPage } from '../pages/start-pages/forgot-password/forgot-
 import { NavigationPage } from '../pages/navigation/navigation';
 import { AddAccountPage } from '../pages/add-account/add-account';
 import { InternetOfflinePage } from '../pages/internet-offline/internet-offline';
+import { BillingExpiredPage } from '../pages/billing-expired/billing-expired';
+import { InvalidTokenPage } from '../pages/invalid-token/invalid-token';
 import { NotePage } from '../pages/note/note';
 import { MyActivityPage } from '../pages/my-activity/my-activity';
 
@@ -56,6 +58,8 @@ export const pages = [
   NavigationPage,
   AddAccountPage,
   InternetOfflinePage,
+  BillingExpiredPage,
+  InvalidTokenPage,
   MyActivityPage,
   NotePage,
 
@@ -99,6 +103,8 @@ export const toDeclare = [
   NavigationPage,
   AddAccountPage,
   InternetOfflinePage,
+  BillingExpiredPage,
+  InvalidTokenPage,
   MyActivityPage,
   NotePage,
 
