@@ -38,14 +38,42 @@
   <!-- When content available -->
   <div *ngIf="!media.isLoading || media.refresherLoading">
 
+    <!-- Display Instagram Access Token Expired Message -->
+    <div padding *ngIf="accounts.activeAccount?.user_status == 30" style='text-align:center;'>
+      <ion-icon style='font-size:3em;' name="build"></ion-icon>
+      <h2 style='margin-top:0;'>Fix Account Access</h2>
+      <p>There's a slight problem connecting to your Instagram account. 
+        Don't worry though, it's very quick to fix.
+      </p>
+      <p>All you need to do is login with the Instagram account from the agency panel.</p>
+
+      <a ion-button 
+        href="https://agency.plugn.io/instagram/invalid-access-token?accountId={{ accounts.activeAccount.user_id }}">
+        Fix @{{ accounts.activeAccount.user_name }}
+      </a>
+    </div>
+
+    <!-- Display Billing Expired Message -->
+    <div *ngIf="accounts.activeAccount?.user_status == 25" style='text-align:center; padding-top:2em;'>
+      <ion-icon style='font-size:3em;' name="ios-card-outline"></ion-icon>
+      <h2 style='margin-top:0;'>Subscription Expired</h2>
+      <p>
+        Subscription has expired for the agency managing @{{ accounts.activeAccount.user_name }}.
+      </p>
+
+      <a ion-button href="http://agency.plugn.io">
+        Subscribe
+      </a>
+    </div>
+
     <!-- Display Message if No Conversations -->
     <h3 padding text-center align-center 
-      *ngIf="media.mediaList && media.mediaList.length == 0">
+      *ngIf="(accounts.activeAccount?.user_status == 10) && media.mediaList && media.mediaList.length == 0">
       There seems to be no media posted on your account
     </h3>
 
     <!-- Unhandled Media -->
-    <ion-list class="unhandled" *ngIf="media.unhandledMedia && media.unhandledMedia.length > 0">
+    <ion-list class="unhandled" *ngIf="(accounts.activeAccount?.user_status == 10) && media.unhandledMedia && media.unhandledMedia.length > 0">
       <ion-list-header>
         Unhandled Media
       </ion-list-header>
@@ -68,7 +96,7 @@
     </ion-list>
 
     <!-- Media -->
-    <ion-list *ngIf="media.handledMedia && media.handledMedia.length > 0">
+    <ion-list *ngIf="(accounts.activeAccount?.user_status == 10) && media.handledMedia && media.handledMedia.length > 0">
       <ion-list-header>
         Media
       </ion-list-header>
