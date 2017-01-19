@@ -228,21 +228,39 @@ export class AuthService {
    * Proceed with Authorizing Google
    */
   authGoogle(){
-    this.processAuthFromUrl("https://agent.plugn.io/authmobile/google");
+    let url = "https://agent.plugn.io/authmobile/google";
+    // If target is Browser/PWA > Switch to normal Auth url 
+    if(this._platform.is("core")){
+      url = "https://agent.plugn.io/auth/google";
+    }
+
+    this.processAuthFromUrl(url);
   }
 
   /**
    * Proceed with Authorizing Windows Live
    */
   authWindowsLive(){
-    this.processAuthFromUrl("https://agent.plugn.io/authmobile/live");
+    let url = "https://agent.plugn.io/authmobile/live";
+    // If target is Browser/PWA > Switch to normal Auth url 
+    if(this._platform.is("core")){
+      url = "https://agent.plugn.io/auth/live";
+    }
+
+    this.processAuthFromUrl(url);
   }
 
   /**
    * Proceed with Authorizing Slack
    */
   authSlack(){
-    this.processAuthFromUrl("https://agent.plugn.io/authmobile/slack");
+    let url = "https://agent.plugn.io/authmobile/slack";
+    // If target is Browser/PWA > Switch to normal Auth url 
+    if(this._platform.is("core")){
+      url = "https://agent.plugn.io/auth/slack";
+    }
+
+    this.processAuthFromUrl(url);
   }
 
   /**
