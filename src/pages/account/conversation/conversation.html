@@ -9,13 +9,13 @@
 
     <ion-buttons right *ngIf="accounts.activeAccount">
       <button ion-button icon-right menuToggle="right">
-        @{{ accounts.activeAccount.user_name }} 
+        @{{ accounts.activeAccount.user_name }}
         <img style='width:25px; height:25px;
         margin-left:5px;
         border-radius: 200px;
         -moz-border-radius: 200px;
-        -webkit-border-radius: 200px' 
-          src="{{ accounts.activeAccount.user_profile_pic }}"/> 
+        -webkit-border-radius: 200px'
+          src="{{ accounts.activeAccount.user_profile_pic }}"/>
       </button>
     </ion-buttons>
 
@@ -51,7 +51,7 @@
     <div padding *ngIf="accounts.activeAccount?.user_status == 30" style='text-align:center;'>
       <ion-icon style='font-size:3em;' name="build"></ion-icon>
       <h2 style='margin-top:0;'>Fix Account Access</h2>
-      <p>There's a slight problem connecting to your Instagram account. 
+      <p>There's a slight problem connecting to your Instagram account.
         Don't worry though, it's very quick to fix.
       </p>
       <p>All you need to do is login with the Instagram account from the agency panel.</p>
@@ -69,13 +69,13 @@
         Subscription has expired for the agency managing @{{ accounts.activeAccount.user_name }}.
       </p>
 
-      <button ion-button (click)="loadUrl('http://agency.plugn.io')">
+      <button ion-button (click)="loadUrl('https://agency.plugn.io')">
         Subscribe
       </button>
     </div>
 
     <!-- Display Message if No Conversations -->
-    <h3 padding text-center align-center 
+    <h3 padding text-center align-center
       *ngIf="(accounts.activeAccount?.user_status == 10) && conversations.conversationList && conversations.conversationList.length == 0">
       There seems to be no active conversations on your account
     </h3>
@@ -86,10 +86,10 @@
         Unhandled Conversations
       </ion-list-header>
 
-      <button ion-item detail-none 
+      <button ion-item detail-none
         *ngFor="let conversationItem of conversations.unhandledConversations;trackBy:conversationItem?.comment_by_username"
         (click)="loadConversationDetail(conversationItem)">
-        
+
         <ion-avatar item-left>
           <img src="{{ conversationItem.comment_by_photo }}" onError="this.src='assets/user.png';">
         </ion-avatar>
@@ -110,7 +110,7 @@
         Conversations
       </ion-list-header>
 
-      <button ion-item detail-none 
+      <button ion-item detail-none
         *ngFor="let conversationItem of conversations.handledConversations;trackBy:conversationItem?.comment_by_username"
         (click)="loadConversationDetail(conversationItem)">
 

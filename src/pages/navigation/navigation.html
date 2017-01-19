@@ -29,7 +29,7 @@
         Add Instagram Account
       </button>
     </ion-list>
-    
+
 
     <ion-list>
       <ion-list-header>Personal</ion-list-header>
@@ -38,11 +38,11 @@
         <ion-icon name="ios-analytics" item-left></ion-icon>
         My Activity
       </button>
-      <button ion-item (click)="loadUrl('http://plugn.io/contact')">
+      <button ion-item (click)="loadUrl('https://plugn.io/contact')">
         <ion-icon name="help-circle" item-left></ion-icon>
         Help and Support
       </button>
-      <button ion-item (click)="loadUrl('http://agency.plugn.io')">
+      <button ion-item (click)="loadUrl('https://agency.plugn.io')">
         <ion-icon name="md-contacts" item-left></ion-icon>
         Agency Portal
       </button>
@@ -63,9 +63,9 @@
       <img margin style='width:100px; height:100px;
         border-radius: 200px;
         -moz-border-radius: 200px;
-        -webkit-border-radius: 200px' 
+        -webkit-border-radius: 200px'
           src="{{ accounts.activeAccount.user_profile_pic }}"
-          onError="this.src='assets/user.png';"> 
+          onError="this.src='assets/user.png';">
     </ion-toolbar>
   </ion-header>
   <ion-content>
@@ -114,6 +114,6 @@
     </ion-footer>
 </ion-menu>
 
-<ion-nav #loggedInContent 
+<ion-nav #loggedInContent
   swipeBackEnabled="true"
   [root]="rootPage"></ion-nav>
