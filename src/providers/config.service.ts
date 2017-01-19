@@ -70,6 +70,14 @@ export class ConfigService {
       this.browserOptions = "location=yes,zoom=no,clearcache=yes,clearsessioncache=yes";
       this.browserOptionsWithCache = "location=yes,zoom=no,clearcache=no,clearsessioncache=no";
     }
+    if(this.platform.is("android")){
+      this.browserTarget = "_blank";
+      this.browserOptions = "location=yes,zoom=no,clearcache=yes,clearsessioncache=yes";
+      this.browserOptionsWithCache = "location=yes,zoom=no,clearcache=no,clearsessioncache=no";
+    }
+    if(this.platform.is("core")){
+      this.browserTarget = "_system";
+    }
   }
 
 }
