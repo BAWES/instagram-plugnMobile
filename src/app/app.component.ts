@@ -51,8 +51,6 @@ export class MyApp implements OnInit{
       }else if(tutorialShown != "true"){
         // Show Tutorial
         this.rootPage = TutorialPage;
-        // Save that previously shown tutorial
-        //window.localStorage.setItem('tutorialShown', "true");
       }else{
         this.rootPage = LoginPage;
       }

@@ -28,6 +28,7 @@ export class TutorialPage {
   }
 
   gotoLogin() {
+    window.localStorage.setItem('tutorialShown', "true");
     this.navCtrl.setRoot(LoginPage, {}, {
       animate: true,
       direction: 'forward'
