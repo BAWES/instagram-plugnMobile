@@ -21,10 +21,14 @@ When asked for Alias it is `plugn_android`
 ### Jarsigner
 `jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore android-release-key.keystore platforms/android/build/outputs/apk/android-release-unsigned.apk plugn_android`
 
-This signs the apk in place. Finally, we need to run the zip align tool to optimize the APK. The zipalign tool can be found in /path/to/Android/sdk/build-tools/VERSION/zipalign. For example, on OS X with Android Studio installed, zipalign is in ~/Library/Android/sdk/build-tools/VERSION/zipalign
+This signs the apk in place.
 
 ### Zipalign
 
-`zipalign -v 4 HelloWorld-release-unsigned.apk HelloWorld.apk`
+Finally, we need to run the zip align tool to optimize the APK. The zipalign tool can be found in ``/path/to/Android/sdk/build-tools/VERSION/zipalign`.
+
+For example, on OS X with Android Studio installed, zipalign is in `~/Library/Android/sdk/build-tools/VERSION/zipalign`
+
+`./zipalign -v 4 /Users/BAWES/Sites/plugnMobile/platforms/android/build/outputs/apk/android-release-unsigned.apk /Users/BAWES/Sites/plugnMobile/platforms/android/build/outputs/apk/android-release.apk`
 
 Now we have our final release binary called HelloWorld.apk and we can release this on the Google Play Store for all the world to enjoy!
