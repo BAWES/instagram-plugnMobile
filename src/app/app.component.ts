@@ -90,20 +90,31 @@ export class MyApp implements OnInit{
                   //console.log('Extracting = ' + p + '%');
               }
           }).then(() => {
-              // List of snapshots applied on this device. Maybe delete if its many?
+            // Get info about the currently active snapshot 
+            this.deploy.info().then((info: {deploy_uuid: string, binary_version: string}) => {
               
-              // this.deploy.getSnapshots().then((snapshots) => {
-              //   // snapshots will be an array of snapshot uuids
-              //   alert(JSON.stringify(snapshots));
-              // });
+              let activeSnapshot = info.deploy_uuid;
 
-              // Reload app to apply the update
-              return this.deploy.load();
+              // List of snapshots applied on this device.
+              this.deploy.getSnapshots().then((snapshots) => {
+                // Loop through Existing snapshots and delete the inactive ones
+                snapshots.forEach(snapshot => {
+                  if(snapshot != activeSnapshot){
+                    this.deploy.deleteSnapshot(snapshot).then(() => {
+                      // Reload app to apply the update
+                      return this.deploy.load();
+                    });
+                  }
+                });
+              });
+            });
           });
         });
       }
     });
   }
+
+
 
   /**
    * Setup push notification service via OneSignal
