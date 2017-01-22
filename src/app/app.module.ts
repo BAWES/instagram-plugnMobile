@@ -54,7 +54,7 @@ import { NoteService } from '../providers/logged-in/note.service';
 
 export const cloudSettings: CloudSettings = {
   'core': {
-    'app_id': 'APP_ID'
+    'app_id': '7e4f1778'
   }
 };
 

@@ -66,12 +66,39 @@ export class MyApp implements OnInit{
    * Check for app updates on the deploy channel
    */
   private _checkForUpdate(){
-    this.deploy.check().then((snapshotAvailable: boolean) => {
-      if (snapshotAvailable) {
-        // When snapshotAvailable is true, you can apply the snapshot
-        this.deploy.download().then(() => {
-          this.deploy.extract().then(function() {
-            return this.deploy.load();
+    this.deploy.channel = 'production';
+    this.deploy.check().then((hasUpdate: boolean) => {
+      if (hasUpdate) {
+        // Show Toast with Download Progress
+        let toast = this._toastCtrl.create({
+                        message: 'Downloading Update .. 0%',
+                        position: 'bottom',
+                        showCloseButton: false,
+                    });
+        toast.present();
+
+        // update is available, download and extract the update
+        this.deploy.download({
+            onProgress: p => {
+                toast.setMessage('Downloading Update .. ' + p + '%');
+                //console.log('Downloading = ' + p + '%');
+            }
+        }).then(() => {
+          this.deploy.extract({
+              onProgress: p => {
+                  toast.setMessage('Extracting .. ' + p + '%');
+                  //console.log('Extracting = ' + p + '%');
+              }
+          }).then(() => {
+              // List of snapshots applied on this device. Maybe delete if its many?
+              
+              // this.deploy.getSnapshots().then((snapshots) => {
+              //   // snapshots will be an array of snapshot uuids
+              //   alert(JSON.stringify(snapshots));
+              // });
+
+              // Reload app to apply the update
+              return this.deploy.load();
           });
         });
       }
