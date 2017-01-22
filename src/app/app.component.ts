@@ -30,9 +30,11 @@ export class MyApp implements OnInit{
      * Run Ionic native functions once the platform is ready
      */
     this._platform.ready().then(() => {
-
       if (this._platform.is('cordova') && this._platform.is('mobile')) {
         StatusBar.styleDefault();
+
+        // Check for App update via Ionic Deploy
+        this._checkForUpdate();
 
         // Push Notification Setup via OneSignal
         this._setupPushNotifs();
@@ -57,6 +59,22 @@ export class MyApp implements OnInit{
         this.rootPage = LoginPage;
       }
 
+    });
+  }
+
+  /**
+   * Check for app updates on the deploy channel
+   */
+  private _checkForUpdate(){
+    this.deploy.check().then((snapshotAvailable: boolean) => {
+      if (snapshotAvailable) {
+        // When snapshotAvailable is true, you can apply the snapshot
+        this.deploy.download().then(() => {
+          this.deploy.extract().then(function() {
+            return this.deploy.load();
+          });
+        });
+      }
     });
   }
 
