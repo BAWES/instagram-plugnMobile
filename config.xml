@@ -99,4 +99,5 @@
     <allow-navigation href="http://192.168.8.100:8100" />
     <allow-navigation href="http://192.168.8.105:8000" />
     <plugin name="cordova-plugin-google-analytics" spec="~1.6.0" />
+    <plugin name="ionic-plugin-deploy" spec="~0.6.5" />
 </widget>

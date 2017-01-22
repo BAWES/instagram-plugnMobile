@@ -1,4 +1,5 @@
 import { Component, OnInit, NgZone } from '@angular/core';
+import { Deploy } from '@ionic/cloud-angular';
 import { Platform, Events, ToastController, IonicApp, App, MenuController } from 'ionic-angular';
 import { StatusBar, OneSignal } from 'ionic-native';
 
@@ -16,6 +17,7 @@ export class MyApp implements OnInit{
   rootPage: any;
 
   constructor(
+    public deploy: Deploy,
     private _platform: Platform,
     private _auth: AuthService,
     private _keyboard: KeyboardService,

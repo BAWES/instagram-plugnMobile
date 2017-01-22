@@ -1,5 +1,7 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+
 import { MyApp } from './app.component';
 
 // Start Pages [Logged Out]
@@ -49,6 +51,12 @@ import { ConversationService } from '../providers/logged-in/conversation.service
 import { CommentService } from '../providers/logged-in/comment.service';
 import { ActivityService } from '../providers/logged-in/activity.service';
 import { NoteService } from '../providers/logged-in/note.service';
+
+export const cloudSettings: CloudSettings = {
+  'core': {
+    'app_id': 'APP_ID'
+  }
+};
 
 export const pages = [
   MyApp,
@@ -140,7 +148,8 @@ export const toDeclare = [
             autoFocusAssist: false  // Valid options appear to be ['instant', 'delay', false]
           }
       }
-    })
+    }),
+    CloudModule.forRoot(cloudSettings)
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
