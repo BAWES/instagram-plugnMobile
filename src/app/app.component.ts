@@ -129,8 +129,12 @@ export class MyApp implements OnInit{
     Deeplinks.routeWithNavController(this.navChild, {
         '/app': rootPageToLoad,
       }).subscribe((match) => {
+        // match.$route - the route we matched, which is the matched entry from the arguments to route()
+        // match.$args - the args passed in the link
+        // match.$link - the full link data
         console.log('Successfully routed', match);
       }, (nomatch) => {
+        // nomatch.$link - the full link data
         console.warn('Unmatched Route', nomatch);
       });
   }
