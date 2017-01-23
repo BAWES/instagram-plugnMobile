@@ -46,7 +46,16 @@
     "onesignal-cordova-plugin",
     "cordova-plugin-nativestorage",
     "cordova-plugin-google-analytics",
-    "ionic-plugin-deploy"
+    "ionic-plugin-deploy",
+    {
+      "id": "ionic-plugin-deeplinks",
+      "locator": "ionic-plugin-deeplinks",
+      "variables": {
+        "URL_SCHEME": "plugn",
+        "DEEPLINK_SCHEME": "https",
+        "DEEPLINK_HOST": "agent.plugn.io"
+      }
+    }
   ],
   "cordovaPlatforms": [
     "ios",

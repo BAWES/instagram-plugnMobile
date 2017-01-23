@@ -1,7 +1,7 @@
-import { Component, OnInit, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
 import { Deploy } from '@ionic/cloud-angular';
-import { Platform, Events, ToastController, IonicApp, App, MenuController } from 'ionic-angular';
-import { StatusBar, OneSignal } from 'ionic-native';
+import { Platform, Events, ToastController, IonicApp, App, MenuController, Nav } from 'ionic-angular';
+import { StatusBar, OneSignal, Deeplinks } from 'ionic-native';
 
 import { NavigationPage } from '../pages/navigation/navigation';
 import { LoginPage } from '../pages/start-pages/login/login';
@@ -15,6 +15,7 @@ import { KeyboardService } from '../providers/keyboard.service';
 })
 export class MyApp implements OnInit{
   rootPage: any;
+  @ViewChild(Nav) navChild:Nav;
 
   constructor(
     public deploy: Deploy,
@@ -58,6 +59,8 @@ export class MyApp implements OnInit{
       }else{
         this.rootPage = LoginPage;
       }
+
+      this._handleDeeplinks();
 
     });
   }
@@ -114,6 +117,23 @@ export class MyApp implements OnInit{
     });
   }
 
+  /**
+   * Handle Deep Linking to the App
+   */
+  private _handleDeeplinks(){
+    let rootPageToLoad:any = LoginPage;
+    if(this._auth.isLoggedIn){
+      rootPageToLoad = NavigationPage;
+    }
+
+    Deeplinks.routeWithNavController(this.navChild, {
+        '/app': rootPageToLoad,
+      }).subscribe((match) => {
+        console.log('Successfully routed', match);
+      }, (nomatch) => {
+        console.warn('Unmatched Route', nomatch);
+      });
+  }
 
 
   /**
