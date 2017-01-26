@@ -121,6 +121,9 @@ export class MyApp implements OnInit{
    * Handle Deep Linking to the App
    */
   private _handleDeeplinks(){
+    // Leave if not cordova
+    if (!this._platform.is('cordova')) return;
+
     let rootPageToLoad:any = LoginPage;
     if(this._auth.isLoggedIn){
       rootPageToLoad = NavigationPage;
