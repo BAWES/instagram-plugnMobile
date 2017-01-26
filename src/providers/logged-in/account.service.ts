@@ -304,7 +304,7 @@ export class AccountService {
     }, numSeconds);
   }
   public destroyAccountsRefresher(){
-    if(this._refreshTimerMedia){
+    if(this._refreshTimerAccounts){
       clearInterval(this._refreshTimerAccounts);
     }
   }
