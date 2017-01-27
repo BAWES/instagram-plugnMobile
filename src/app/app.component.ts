@@ -121,13 +121,16 @@ export class MyApp implements OnInit{
    * Handle Deep Linking to the App
    */
   private _handleDeeplinks(){
+    // Leave if not cordova
+    if (!this._platform.is('cordova')) return;
+
     let rootPageToLoad:any = LoginPage;
     if(this._auth.isLoggedIn){
       rootPageToLoad = NavigationPage;
     }
 
     Deeplinks.routeWithNavController(this.navChild, {
-        '/app': rootPageToLoad,
+        //'/app': rootPageToLoad, //Not loading the app deeplink to not trigger back behavior
       }).subscribe((match) => {
         // match.$route - the route we matched, which is the matched entry from the arguments to route()
         // match.$args - the args passed in the link
