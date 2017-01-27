@@ -258,6 +258,7 @@ export class AccountService {
             this.activeAccount.user_following_count = this.managedAccounts[i].user_following_count;
             this.activeAccount.user_media_count = this.managedAccounts[i].user_media_count;
             this.activeAccount.lastAgentActivity = this.managedAccounts[i].lastAgentActivity;
+            this.activeAccount.assignments = this.managedAccounts[i].assignments;
             break;
           }
         }

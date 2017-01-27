@@ -35,7 +35,7 @@
 
   <!-- Add Agent Form -->
   <form *ngIf="isAdmin"
-    [formGroup]="agentForm" (ngSubmit)="onSubmit()" novalidate padding>
+    [formGroup]="agentForm" (ngSubmit)="onSubmitAgentForm()" novalidate padding>
     <h2 text-center>Invite Additional Agents</h2>
     <ion-input type="email" #emailInput
             formControlName="email"

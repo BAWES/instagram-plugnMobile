@@ -93,6 +93,22 @@ export class AgentsPage {
     }
   }
 
+  /**
+   * Attempt to add the agent to account
+   */
+  onSubmitAgentForm(){
+    this.isLoading = true;
+    const email = this.agentForm.value.email;
+
+    this.assignmentService
+        .assignAgentToAccount(email, this.accounts.activeAccount)
+        .subscribe(jsonResponse => {
+          this.isLoading = false;
+          // Check response for errors?
+
+          // Clear input field on success
+        });
+  }
 
   /**
    * Remove the assignment as requested
