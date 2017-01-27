@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, Events, MenuController } from 'ionic-angular';
 
+// Models
+import { Assignment } from '../../../models/assignment';
+
+// Services
 import { AccountService } from '../../../providers/logged-in/account.service';
 import { ActivityService } from '../../../providers/logged-in/activity.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
@@ -14,9 +18,6 @@ import { AnalyticsService } from '../../../providers/analytics.service';
   templateUrl: 'agents.html'
 })
 export class AgentsPage {
-
-  public isLoading = true;
-  public accountActivity; // Loaded activity data
 
   // Variable storing event handlers to unsubscribe from before page leaves
   private _accountSwitchHandler;
@@ -36,9 +37,6 @@ export class AgentsPage {
    */
   ionViewDidEnter() {
     this._analytics.trackView("Agent Management");
-
-    // Load and populate media detail
-    this._loadAgentActivity();
 
     // Disable Swipe on Right Menu
     this._menuCtrl.swipeEnable(false, "right");
@@ -63,20 +61,6 @@ export class AgentsPage {
     this._events.unsubscribe("account:switching", this._accountSwitchHandler);
     // Enable Swipe on Right Menu
     this._menuCtrl.swipeEnable(true, "right");
-  }
-
-
-  /**
-   * Load Agent Activity for the currently active account
-   */
-  private _loadAgentActivity(){
-    this.isLoading = true;
-    this.activityService
-        .getActivityOnAccount(this.accounts.activeAccount.user_id)
-        .subscribe(jsonResponse => {
-          this.isLoading = false;
-          this.accountActivity = jsonResponse;
-        });
   }
   
 
