@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, Events, MenuController } from 'ionic-angular';
+import { NavController, Events, MenuController, AlertController } from 'ionic-angular';
 
 // Models
 import { Assignment } from '../../../models/assignment';
 
 // Services
 import { AccountService } from '../../../providers/logged-in/account.service';
+import { AuthService } from '../../../providers/auth.service';
 import { ActivityService } from '../../../providers/logged-in/activity.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
 import { AnalyticsService } from '../../../providers/analytics.service';
@@ -25,11 +26,12 @@ export class AgentsPage {
   constructor(
     public navCtrl: NavController,
     public accounts: AccountService,
-    public activityService: ActivityService,
+    public auth: AuthService,
     private _analytics: AnalyticsService,
     private _events: Events,
     private _backBtn: HardwareBackButtonService,
-    private _menuCtrl: MenuController
+    private _menuCtrl: MenuController,
+    private _alertCtrl: AlertController
     ) {}
 
   /**
@@ -61,6 +63,30 @@ export class AgentsPage {
     this._events.unsubscribe("account:switching", this._accountSwitchHandler);
     // Enable Swipe on Right Menu
     this._menuCtrl.swipeEnable(true, "right");
+  }
+
+
+  /**
+   * Remove the assignment as requested
+   */
+  removeAssignment(assignment: Assignment){
+    // Show confirm dialog before proceeding with removal
+    let confirm = this._alertCtrl.create({
+      title: 'Remove '+assignment.email+'?',
+      message: 'Once removed they will lose access to @'+this.accounts.activeAccount.user_name,
+      buttons: [
+        {
+          text: 'Cancel',
+        },
+        {
+          text: 'Remove',
+          handler: () => {
+            console.log('remove clicked');
+          }
+        }
+      ]
+    });
+    confirm.present();
   }
   
 

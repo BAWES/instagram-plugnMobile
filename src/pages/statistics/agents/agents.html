@@ -20,11 +20,13 @@
     </ion-list-header>
 
     <ion-item text-wrap *ngFor="let assignment of accounts.activeAccount.assignments">
-      <h3 class='elipse'>{{ assignment.email }}</h3>
+      <h2 class='elipse'>{{ assignment.email }}</h2>
       <ion-note>Assigned on {{ assignment.dateAssigned }}</ion-note>
-      <button ion-button item-right clear color="danger"
+      <button ion-button item-right clear 
+        [color]="assignment.email == auth.email? 'secondary':'danger'"
+        [disabled]="assignment.email == auth.email"
         (click)="removeAssignment(assignment)">
-        Remove
+        {{ assignment.email == auth.email? "Admin" : "Remove" }}
       </button>
     </ion-item>
   </ion-list>
