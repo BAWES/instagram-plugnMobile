@@ -34,17 +34,21 @@
     <ion-list>
       <ion-list-header>Personal</ion-list-header>
 
+      <button ion-item (click)="loadAddAccountPage()">
+        <ion-icon name="ios-key" item-left></ion-icon>
+        Manage Owned Accounts
+      </button>
       <button ion-item (click)="loadMyActivityPage()">
         <ion-icon name="ios-analytics" item-left></ion-icon>
         My Activity
       </button>
+      <button ion-item (click)="loadUrl('https://agent.plugn.io/billing')">
+        <ion-icon name="ios-card" item-left></ion-icon>
+        Billing
+      </button>
       <button ion-item (click)="loadUrl('https://plugn.io/contact')">
         <ion-icon name="help-circle" item-left></ion-icon>
         Help and Support
-      </button>
-      <button ion-item (click)="loadUrl('https://agency.plugn.io')">
-        <ion-icon name="md-contacts" item-left></ion-icon>
-        Agency Portal
       </button>
       <button ion-item (click)="logout()">
         <ion-icon name="ios-log-out" item-left></ion-icon>
