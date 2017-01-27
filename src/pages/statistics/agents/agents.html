@@ -31,4 +31,23 @@
     </ion-item>
   </ion-list>
 
+  <!-- Add Agent Form -->
+  <form [formGroup]="agentForm" (ngSubmit)="onSubmit()" novalidate padding>
+    <h2 text-center>Invite Additional Agents</h2>
+    <ion-input type="email" #emailInput
+            formControlName="email"
+            placeholder="Agent's email address"></ion-input>
+
+    <button ion-button block outline color="dark" type="submit" 
+      [disabled]="!agentForm.valid || isLoading"
+      [style.background-color]="!agentForm.valid || isLoading ? 'white':'black'"
+      [style.color]="!agentForm.valid || isLoading ?'black':'white'">
+      
+      <ion-spinner *ngIf="isLoading"></ion-spinner>
+      <span *ngIf="!isLoading">Send Invite</span>
+
+    </button>
+  </form>
+
+
 </ion-content>

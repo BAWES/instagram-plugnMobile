@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, Events, MenuController, AlertController } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CustomValidator } from '../../../validators/custom.validator';
 
 // Models
 import { Assignment } from '../../../models/assignment';
@@ -19,6 +21,9 @@ import { AnalyticsService } from '../../../providers/analytics.service';
   templateUrl: 'agents.html'
 })
 export class AgentsPage {
+  public agentForm: FormGroup;
+  // Disable submit button if is loading response from server
+  public isLoading = false;
 
   // Variable storing event handlers to unsubscribe from before page leaves
   private _accountSwitchHandler;
@@ -27,12 +32,18 @@ export class AgentsPage {
     public navCtrl: NavController,
     public accounts: AccountService,
     public auth: AuthService,
+    private _fb: FormBuilder, 
     private _analytics: AnalyticsService,
     private _events: Events,
     private _backBtn: HardwareBackButtonService,
     private _menuCtrl: MenuController,
     private _alertCtrl: AlertController
-    ) {}
+    ) {
+      // Initialize the Agent Form
+      this.agentForm = this._fb.group({
+        email: ["", [Validators.required, CustomValidator.emailValidator]],
+      });
+    }
 
   /**
    * On Page Enter
