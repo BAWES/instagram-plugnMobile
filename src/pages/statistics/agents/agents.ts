@@ -103,10 +103,31 @@ export class AgentsPage {
     this.assignmentService
         .assignAgentToAccount(email, this.accounts.activeAccount)
         .subscribe(jsonResponse => {
-          this.isLoading = false;
-          // Check response for errors?
+          // Reload agent list on success
+          if(jsonResponse.operation == "success"){
+            this.isLoading = false;
+            this.agentForm.reset();
+            this.accounts.refreshManagedAccounts(false);
+          }else if(jsonResponse.operation == "error"){
+            this.isLoading = false
 
-          // Clear input field on success
+            // Show Alert with the message
+            let alert = this._alertCtrl.create({
+              subTitle: jsonResponse.message,
+              buttons: ['Ok']
+            });
+            alert.present();
+            
+          }else{
+            this.isLoading = false
+            // Show alert with error not accounted for
+            let alert = this._alertCtrl.create({
+              title: "Unable to assign agent",
+              message: "Please contact us for assistance",
+              buttons: ['Ok']
+            });
+            alert.present();
+          }
         });
   }
 

@@ -97,7 +97,7 @@ export class AccountService {
    */
   private _initialize(){
     if(!this._areTimersActivated){
-      this._populateManagedAccounts();
+      this.refreshManagedAccounts();
       this._initAccountsRefresher();
       this._areTimersActivated = true;
     }
@@ -241,7 +241,7 @@ export class AccountService {
   /**
    * Get updated list of accounts managed by agent and store in variable
    */
-  private _populateManagedAccounts(showLoading = true){
+  public refreshManagedAccounts(showLoading = true){
     if(showLoading){
       this.isLoading = true;
     }
@@ -301,7 +301,7 @@ export class AccountService {
     // Refresh Comments every X Seconds
     let numSeconds = 20 * 1000;
     this._refreshTimerAccounts = setInterval(() => {
-      this._populateManagedAccounts(false);
+      this.refreshManagedAccounts(false);
     }, numSeconds);
   }
   public destroyAccountsRefresher(){
