@@ -9,7 +9,7 @@ import { Assignment } from '../../../models/assignment';
 // Services
 import { AccountService } from '../../../providers/logged-in/account.service';
 import { AuthService } from '../../../providers/auth.service';
-import { ActivityService } from '../../../providers/logged-in/activity.service';
+import { AssignmentService } from '../../../providers/logged-in/assignment.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
 import { AnalyticsService } from '../../../providers/analytics.service';
 
@@ -35,6 +35,7 @@ export class AgentsPage {
     public navCtrl: NavController,
     public accounts: AccountService,
     public auth: AuthService,
+    public assignmentService: AssignmentService,
     private _fb: FormBuilder, 
     private _analytics: AnalyticsService,
     private _events: Events,
