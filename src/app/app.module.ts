@@ -24,8 +24,9 @@ import { ConversationDetailPage } from '../pages/account/conversation-detail/con
 import { MediaPage } from '../pages/account/media/media';
 import { MediaDetailPage } from '../pages/account/media-detail/media-detail';
 
-// Account Stats Pages available on Right Menu
+// Account Stats Pages and options available on Right Menu
 import { AgentActivityPage } from '../pages/statistics/agent-activity/agent-activity';
+import { AgentsPage } from '../pages/statistics/agents/agents';
 import { MediaStatsPage } from '../pages/statistics/media-stats/media-stats';
 import { FollowingPage } from '../pages/statistics/following/following';
 import { FollowersPage } from '../pages/statistics/followers/followers';
@@ -77,6 +78,7 @@ export const pages = [
 
   // Statistics Pages
   AgentActivityPage,
+  AgentsPage,
   MediaStatsPage,
   FollowingPage,
   FollowersPage,
@@ -121,6 +123,7 @@ export const toDeclare = [
 
   // Statistics Pages
   AgentActivityPage,
+  AgentsPage,
   MediaStatsPage,
   FollowingPage,
   FollowersPage,

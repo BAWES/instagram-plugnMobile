@@ -34,10 +34,6 @@
     <ion-list>
       <ion-list-header>Personal</ion-list-header>
 
-      <button ion-item (click)="loadAddAccountPage()">
-        <ion-icon name="ios-key" item-left></ion-icon>
-        Manage Owned Accounts
-      </button>
       <button ion-item (click)="loadMyActivityPage()">
         <ion-icon name="ios-analytics" item-left></ion-icon>
         My Activity
@@ -74,6 +70,24 @@
   </ion-header>
   <ion-content>
 
+    <ion-card class="statCount" (click)="openStatisticsPage('agents')">
+      <div class="number">{{ accounts.activeAccount.assignments.length }} {{ accounts.activeAccount.assignments.length>1?"agents":"agent" }}</div>
+      <ion-icon class='main' name="ios-body"></ion-icon>
+      <div class='card-title'>
+        Managing this account
+      </div>
+      <ion-icon class='forward' name="ios-arrow-forward"></ion-icon>
+    </ion-card>
+
+    <ion-card class="statCount" (click)="openStatisticsPage('agent-activity')">
+      <div class="number">{{ accounts.activeAccount.lastAgentActivity?accounts.activeAccount.lastAgentActivity:"None yet" }}</div>
+      <ion-icon class='main' name="pulse"></ion-icon>
+      <div class='card-title'>
+        Last Agent Activity
+      </div>
+      <ion-icon class='forward' name="ios-arrow-forward"></ion-icon>
+    </ion-card>
+
     <ion-card class="statCount" (click)="openStatisticsPage('followers')">
       <div class="number">{{ accounts.activeAccount.user_follower_count }}</div>
       <ion-icon class='main' name="people"></ion-icon>
@@ -101,19 +115,10 @@
       <ion-icon class='forward' name="ios-arrow-forward"></ion-icon>
     </ion-card>
 
-    <ion-card class="statCount" (click)="openStatisticsPage('agent-activity')">
-      <div class="number">{{ accounts.activeAccount.lastAgentActivity }}</div>
-      <ion-icon class='main' name="pulse"></ion-icon>
-      <div class='card-title'>
-        Last Agent Activity
-      </div>
-      <ion-icon class='forward' name="ios-arrow-forward"></ion-icon>
-    </ion-card>
-
   </ion-content>
   <ion-footer padding>
-      <button ion-button block outline (click)="menuRight.close();menuLeft.open();" color="dark">
-        Switch Account
+      <button ion-button block outline (click)="menuRight.close();menuLeft.open();" color="danger">
+        Remove Account
       </button>
     </ion-footer>
 </ion-menu>

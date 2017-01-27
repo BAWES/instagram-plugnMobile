@@ -14,6 +14,7 @@ import { MyActivityPage } from '../my-activity/my-activity';
 
 // Account Stats Pages available on Right Menu
 import { AgentActivityPage } from '../statistics/agent-activity/agent-activity';
+import { AgentsPage } from '../statistics/agents/agents';
 import { MediaStatsPage } from '../statistics/media-stats/media-stats';
 import { FollowingPage } from '../statistics/following/following';
 import { FollowersPage } from '../statistics/followers/followers';
@@ -108,6 +109,9 @@ export class NavigationPage {
     switch(pageName){
       case "agent-activity":
         this.nav.push(AgentActivityPage);
+        break;
+      case "agents":
+        this.nav.push(AgentsPage);
         break;
       case "media-stats":
         this.nav.push(MediaStatsPage);

@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-navbar>
+
+    <button ion-button menuToggle="left">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <img menuToggle="left" left style='width:25px; height:25px; float:left;' src="assets/brand/icon.png" />
+
+    <ion-title>Agents</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- When content isn't available, Show Loading -->
+  <div class="page-loading" *ngIf="isLoading">
+    <img src='assets/brand/loader.gif'>
+  </div>
+
+  <!-- If no activity on this account yet -->
+  <h3 *ngIf="!isLoading && !accountActivity.length" style='text-align:center;'>
+    <ion-icon name="ios-sad-outline" style='font-size:2em'></ion-icon><br/>
+    No activity on this account yet
+  </h3>
+
+  <!-- Activity Available and Loaded -->
+  <ion-list *ngIf="!isLoading && accountActivity">
+    <ion-item text-wrap *ngFor="let activity of accountActivity">
+      <h3 class='elipse'>{{ activity.agent }}</h3>
+      <p>{{ activity.action }}</p>
+
+      <ion-note>{{ activity.datetime }}</ion-note>
+    </ion-item>
+  </ion-list>
+
+</ion-content>
