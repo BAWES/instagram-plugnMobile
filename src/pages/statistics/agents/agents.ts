@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, Events, MenuController, AlertController } from 'ionic-angular';
+import { NavController, Events, MenuController, AlertController, LoadingController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidator } from '../../../validators/custom.validator';
 
@@ -41,7 +41,8 @@ export class AgentsPage {
     private _events: Events,
     private _backBtn: HardwareBackButtonService,
     private _menuCtrl: MenuController,
-    private _alertCtrl: AlertController
+    private _alertCtrl: AlertController,
+    private _loadingCtrl: LoadingController
     ) {
       this.updateAdminStatus();
 
@@ -103,23 +104,20 @@ export class AgentsPage {
     this.assignmentService
         .assignAgentToAccount(email, this.accounts.activeAccount)
         .subscribe(jsonResponse => {
+          this.isLoading = false;
+
           // Reload agent list on success
           if(jsonResponse.operation == "success"){
-            this.isLoading = false;
             this.agentForm.reset();
             this.accounts.refreshManagedAccounts(false);
           }else if(jsonResponse.operation == "error"){
-            this.isLoading = false
-
             // Show Alert with the message
             let alert = this._alertCtrl.create({
               subTitle: jsonResponse.message,
               buttons: ['Ok']
             });
             alert.present();
-            
           }else{
-            this.isLoading = false
             // Show alert with error not accounted for
             let alert = this._alertCtrl.create({
               title: "Unable to assign agent",
@@ -146,7 +144,39 @@ export class AgentsPage {
         {
           text: 'Remove',
           handler: () => {
-            console.log('remove clicked');
+            // Show Loading 
+            let loading = this._loadingCtrl.create({
+              spinner: 'crescent',
+              content: 'Removing agent from account'
+            });
+            loading.present();
+
+            // Request Agent Removal
+            this.assignmentService.removeAssignment(assignment).subscribe(jsonResponse => {
+
+              // Dismiss Loading
+              loading.dismiss();
+
+              // Reload agent list on success
+              if(jsonResponse.operation == "success"){
+                this.accounts.refreshManagedAccounts(false);
+              }else if(jsonResponse.operation == "error"){
+                // Show Alert with the message
+                let alert = this._alertCtrl.create({
+                  subTitle: jsonResponse.message,
+                  buttons: ['Ok']
+                });
+                alert.present();
+              }else{
+                // Show alert with error not accounted for
+                let alert = this._alertCtrl.create({
+                  title: "Unable to remove agent",
+                  message: "Please contact us for assistance",
+                  buttons: ['Ok']
+                });
+                alert.present();
+              }
+            });
           }
         }
       ]
