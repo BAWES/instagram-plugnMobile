@@ -116,17 +116,6 @@ export class AgentsPage {
     confirm.present();
   }
 
-  /**
-   * <!-- Agent Message -->
-  <p padding style='padding-top:0;padding-bottom:0;' *ngIf="accounts.activeAccount.agent_id != auth.agentId">
-    
-  <p>
-  <!-- Admin Message -->
-  <p padding style='padding-top:0;padding-bottom:0;' *ngIf="accounts.activeAccount.agent_id == auth.agentId">
-    
-  </p>
-   */
-
   showAgentTutorial(){
     let alert = this._alertCtrl.create({
       title: 'How to invite/remove agents?',
