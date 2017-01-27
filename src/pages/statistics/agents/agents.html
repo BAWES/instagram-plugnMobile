@@ -22,7 +22,9 @@
     <ion-item text-wrap *ngFor="let assignment of accounts.activeAccount.assignments">
       <h2 class='elipse'>{{ assignment.email }}</h2>
       <ion-note>Assigned on {{ assignment.dateAssigned }}</ion-note>
+      <!-- Button to show admins -->
       <button ion-button item-right clear 
+        *ngIf="isAdmin"
         [color]="assignment.email == auth.email? 'secondary':'danger'"
         [disabled]="assignment.email == auth.email"
         (click)="removeAssignment(assignment)">
@@ -32,7 +34,8 @@
   </ion-list>
 
   <!-- Add Agent Form -->
-  <form [formGroup]="agentForm" (ngSubmit)="onSubmit()" novalidate padding>
+  <form *ngIf="isAdmin"
+    [formGroup]="agentForm" (ngSubmit)="onSubmit()" novalidate padding>
     <h2 text-center>Invite Additional Agents</h2>
     <ion-input type="email" #emailInput
             formControlName="email"
@@ -48,6 +51,20 @@
 
     </button>
   </form>
+
+  <!-- Agent Button -->
+  <button ion-button block clear 
+    *ngIf="!isAdmin"
+    (click)="showAgentTutorial()">
+    How to invite/remove agents?
+  </button>
+
+  <!-- Admin Button -->
+  <button ion-button block clear 
+    *ngIf="isAdmin"
+    (click)="showAdminTutorial()">
+    How do I make someone else the Admin?
+  </button>
 
 
 </ion-content>

@@ -25,6 +25,9 @@ export class AgentsPage {
   // Disable submit button if is loading response from server
   public isLoading = false;
 
+  // Is the current user an admin of this account?
+  public isAdmin = false;
+
   // Variable storing event handlers to unsubscribe from before page leaves
   private _accountSwitchHandler;
 
@@ -39,6 +42,8 @@ export class AgentsPage {
     private _menuCtrl: MenuController,
     private _alertCtrl: AlertController
     ) {
+      this.updateAdminStatus();
+
       // Initialize the Agent Form
       this.agentForm = this._fb.group({
         email: ["", [Validators.required, CustomValidator.emailValidator]],
@@ -50,6 +55,8 @@ export class AgentsPage {
    */
   ionViewDidEnter() {
     this._analytics.trackView("Agent Management");
+
+    this.updateAdminStatus();
 
     // Disable Swipe on Right Menu
     this._menuCtrl.swipeEnable(false, "right");
@@ -76,6 +83,15 @@ export class AgentsPage {
     this._menuCtrl.swipeEnable(true, "right");
   }
 
+  /**
+   * Update whether this user is an admin or not 
+   */
+  updateAdminStatus(){
+    if(this.accounts.activeAccount.agent_id == this.auth.agentId){
+      this.isAdmin = true;
+    }
+  }
+
 
   /**
    * Remove the assignment as requested
@@ -98,6 +114,40 @@ export class AgentsPage {
       ]
     });
     confirm.present();
+  }
+
+  /**
+   * <!-- Agent Message -->
+  <p padding style='padding-top:0;padding-bottom:0;' *ngIf="accounts.activeAccount.agent_id != auth.agentId">
+    
+  <p>
+  <!-- Admin Message -->
+  <p padding style='padding-top:0;padding-bottom:0;' *ngIf="accounts.activeAccount.agent_id == auth.agentId">
+    
+  </p>
+   */
+
+  showAgentTutorial(){
+    let alert = this._alertCtrl.create({
+      title: 'How to invite/remove agents?',
+      subTitle: `
+        Only one admin may manage agent assignments for this account. To become the admin, 
+        click on the "Add Account" button available on the main menu then login with Instagram.
+        `,
+      buttons: ['Ok']
+    });
+    alert.present();
+  }
+
+  showAdminTutorial(){
+    let alert = this._alertCtrl.create({
+      title: 'How do I make someone else the Admin?',
+      subTitle: `Only one admin may manage agent assignments for this account. You may pass on your 
+      admin rights to someone else by having them click on "Add Account" on the main navigation menu 
+      and authenticating with Instagram.`,
+      buttons: ['Ok']
+    });
+    alert.present();
   }
   
 
