@@ -38,7 +38,7 @@
     <!-- Billing Setup, but account limit reached -->
     <section class='limitReached' 
       *ngIf="!profile.billing.isActive && (profile.numberOfOwnedAccounts >= profile.ownedAccountLimit)">
-      <ion-icon class='largeIcon' name="ios-card-outline"></ion-icon>
+      <ion-icon class='largeIcon' name="md-trending-up"></ion-icon>
       <h1>Account Limit Reached</h1>
       <p class='content'>
         Your current subscription enables Admin priveleges for up to {{ profile.ownedAccountLimit }}
