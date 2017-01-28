@@ -51,6 +51,7 @@ import { MediaService } from '../providers/logged-in/media.service';
 import { ConversationService } from '../providers/logged-in/conversation.service';
 import { CommentService } from '../providers/logged-in/comment.service';
 import { ActivityService } from '../providers/logged-in/activity.service';
+import { AgentService } from '../providers/logged-in/agent.service';
 import { AssignmentService } from '../providers/logged-in/assignment.service';
 import { NoteService } from '../providers/logged-in/note.service';
 
@@ -169,6 +170,7 @@ export const toDeclare = [
     ConversationService, // Manages Conversations for accounts
     CommentService, // Handle Comment Posting and Deletion
     ActivityService, // Agent Activity on Accounts
+    AgentService, // Agent Profile and Actions on it
     AssignmentService, // Manage Agent Assignments to Accounts
     NoteService // Note on users / CRM
   ],

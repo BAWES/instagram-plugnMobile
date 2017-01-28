@@ -5,6 +5,7 @@ import { InAppBrowser } from 'ionic-native';
 import { AuthService } from '../../providers/auth.service';
 import { ConfigService } from '../../providers/config.service';
 import { AccountService } from '../../providers/logged-in/account.service';
+import { AgentService } from '../../providers/logged-in/agent.service';
 
 // Page Imports
 import { AccountTabsPage } from '../account/account-tabs/account-tabs';
@@ -34,6 +35,7 @@ export class NavigationPage {
   constructor(
     public accounts: AccountService,
     private _auth: AuthService,
+    private _agentService: AgentService,
     private _menu: MenuController,
     private _alertCtrl: AlertController,
     private _loadingCtrl: LoadingController,
@@ -232,7 +234,7 @@ export class NavigationPage {
               loading.present();
 
               // Request Removal of this accounts ownership
-              this.accounts.removeAccountOwnership(accountId).subscribe(jsonResponse => {
+              this._agentService.removeAssignment(accountId).subscribe(jsonResponse => {
                 
                 // Dismiss Loading
                 loading.dismiss();
