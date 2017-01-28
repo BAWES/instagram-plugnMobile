@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { MenuController, NavController, ToastController, Events } from 'ionic-angular';
+import { MenuController, NavController, ToastController, Events, AlertController, LoadingController } from 'ionic-angular';
 import { InAppBrowser } from 'ionic-native';
 
 import { AuthService } from '../../providers/auth.service';
@@ -35,6 +35,8 @@ export class NavigationPage {
     public accounts: AccountService,
     private _auth: AuthService,
     private _menu: MenuController,
+    private _alertCtrl: AlertController,
+    private _loadingCtrl: LoadingController,
     private _toastCtrl: ToastController,
     private _events: Events,
     private _config: ConfigService
@@ -139,6 +141,75 @@ export class NavigationPage {
    */
   logout(){
     this._auth.logout();
+  }
+
+  /**
+   * Attempts to remove the currently active account.
+   * Once an account is removed, it should redirect to the next available 
+   * managed account or the add account page.
+   */
+  removeAccount(){
+    const accountId = this.accounts.activeAccount.user_id;
+    const accountName = this.accounts.activeAccount.user_name;
+    const ownerAgentId = this.accounts.activeAccount.agent_id;
+
+    // If the user is the account admin
+    if(this._auth.agentId == ownerAgentId){
+      // show warning message that removing ownership of the account will disable 
+      // the account for him and the other agents. 
+      let confirm = this._alertCtrl.create({
+        title: 'Remove account? You are the admin of @'+accountName,
+        message: 'Once removed, all Plugn features will stop functioning on this account.',
+        buttons: [
+          {
+            text: 'Cancel',
+          },
+          {
+            text: 'Remove Account',
+            handler: () => {
+              // Show Loading 
+              let loading = this._loadingCtrl.create({
+                spinner: 'crescent',
+                content: 'Removing @'+accountName+' from your account..'
+              });
+              loading.present();
+
+              // Dismiss Loading
+              //loading.dismiss();
+            }
+          }
+        ]
+      });
+      confirm.present();
+
+    }else{
+      // warn that he will no longer be able to manage the account as an agent until he is reinvited
+      // Show confirm dialog before proceeding with removal
+      let confirm = this._alertCtrl.create({
+        title: 'Remove @'+accountName+'?',
+        message: `Once removed you will lose access to the account. You may later regain access by receiving an invite from the account's admin.`,
+        buttons: [
+          {
+            text: 'Cancel',
+          },
+          {
+            text: 'Remove Account',
+            handler: () => {
+              // Show Loading 
+              let loading = this._loadingCtrl.create({
+                spinner: 'crescent',
+                content: 'Removing @'+accountName+' from your account..'
+              });
+              loading.present();
+
+              // Dismiss Loading
+              //loading.dismiss();
+            }
+          }
+        ]
+      });
+      confirm.present();
+    }
   }
 
 }
