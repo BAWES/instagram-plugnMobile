@@ -23,21 +23,33 @@
 
     <!-- No Billing or Trial Active, Request he setup billing -->
     <section class='setupBilling' *ngIf="!profile.billing.isActive && !profile.trial.isActive">
-
-      <h1>Billing Expired</h1>
+      <ion-icon class='largeIcon' name="ios-card-outline"></ion-icon>
+      <h1>Subscription Expired</h1>
       <p class='content'>
-        Blabla fix billing plx + button
+        Unable to add account. Please set up billing to re-activate your admin priveleges.
       </p>
-
+      <button ion-button block 
+        style='margin-top: 1.35em;'
+        (click)="loadUrl('https://agency.plugn.io')">
+        Subscribe
+      </button>
     </section>
 
     <!-- Billing Setup, but account limit reached -->
     <section class='limitReached' 
       *ngIf="!profile.billing.isActive && (profile.numberOfOwnedAccounts >= profile.ownedAccountLimit)">
+      <ion-icon class='largeIcon' name="ios-card-outline"></ion-icon>
       <h1>Account Limit Reached</h1>
       <p class='content'>
+        Your current subscription enables Admin priveleges for up to {{ profile.ownedAccountLimit }}
+        {{ profile.ownedAccountLimit == 1? "account" : "accounts" }}.
         Please upgrade your billing plan for additional Instagram accounts.
       </p>
+      <button ion-button block 
+        style='margin-top: 1.35em;'
+        (click)="loadUrl('https://agency.plugn.io')">
+        Upgrade
+      </button>
     </section>
 
     <!-- Add Account Section -->
@@ -48,7 +60,7 @@
 
       <!-- If Trial -->
       <h6 ion-text color="danger" *ngIf="profile.trial.isActive">
-        Free Trial: {{ profile.trial.daysLeft }} days left with admin privileges
+        Free Trial: {{ profile.trial.daysLeft }} {{ profile.trial.daysLeft==1? "day" : "days" }} left with admin privileges
       </h6>
 
       <p class='content'>
