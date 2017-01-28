@@ -13,20 +13,30 @@
 
 <ion-content padding text-center>
 
-  <div>
-  <img src="assets/insta-logo.png" class="instagramLogo">
+  <!-- When content isn't available, Show Loading -->
+  <div class="page-loading" *ngIf="profileLoading">
+    <img src='assets/brand/loader.gif'>
   </div>
-  <h1>Add Instagram Account</h1>
-  <p>
-    With an Agency account, you may add and remove Instagram accounts and assign agents to them (including yourself).
-  </p>
 
-  <button ion-button (click)="loadUrl('https://agency.plugn.io')">
-    Create/Login to Agency Account
-  </button>
+  <!-- When content available -->
+  <div *ngIf="!profileLoading && profile">
+    <div>
+    <img src="assets/insta-logo.png" class="instagramLogo">
+    </div>
+    
+    <h1>Add Instagram Account</h1>
+    <h6 color="danger">Free Trial: 5 days left with admin privileges</h6>
 
-  <h5>What's my Agent ID to share with agencies?</h5>
-  <pre style='font-size:1.5em'>{{ auth.email }}</pre>
-  <p>Agencies need to know your email to send you an invite to manage their accounts.</p>
+    <p class='content'>
+      Linking an Instagram account with Plugn makes you the <b>Admin</b> of that account.
+      This means you will be responsible for that account's assigned agents, billing, and overall activity.
+    </p>
+    
+    <button ion-button block 
+       style='margin-top: 1.35em;'
+      (click)="loadUrl('https://agency.plugn.io')">
+      Add Instagram Account
+    </button>
+  </div>
 
 </ion-content>
