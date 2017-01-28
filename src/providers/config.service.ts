@@ -10,6 +10,7 @@ export class ConfigService {
 
   // Endpoint Urls
   public apiBaseUrl: string;
+  public agentBaseUrl: string;
 
   // InAppBrowser Settings
   public browserTarget: string;
@@ -35,6 +36,7 @@ export class ConfigService {
    */
   initDevEnvironment(platform?: string){
     this.apiBaseUrl = "http://localhost/~BAWES/plugn/api/web/v1";
+    this.agentBaseUrl = "http://localhost/~BAWES/plugn/agent/web/key";
 
     this.setupDeviceSpecificConfigs();
   }
@@ -45,6 +47,7 @@ export class ConfigService {
    */
   initProdEnvironment(platform?: string){
     this.apiBaseUrl = "https://api.plugn.io/v1";
+    this.agentBaseUrl = "https://agent.plugn.io/key";
 
     this.setupDeviceSpecificConfigs();
   }

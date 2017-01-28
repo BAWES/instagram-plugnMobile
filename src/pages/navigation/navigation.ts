@@ -146,6 +146,51 @@ export class NavigationPage {
   }
 
   /**
+   * Opens the provided agent page in the browser using the auth key
+   */
+  getAuthKeyThenLoadPage(page: string = "billing"){
+    // Show Loading 
+    let loading = this._loadingCtrl.create({
+      spinner: 'crescent',
+      content: 'Loading..'
+    });
+    loading.present();
+
+    // Get an Auth key
+    this._agentService.generateAuthKey().subscribe(authKey => {
+      loading.dismiss();
+      
+      if(page == "billing"){
+        this._loadBillingPortal(authKey);
+      }else if(page == "instagram"){
+        // Check if user is allowed to load the Instagram portal 
+        // [Billing expired / Max. # Account Admin Limit]
+        // If user isn't allowed, urge him to set up billing via same authkey
+        this._loadInstagramPortal(authKey);
+      }
+    });
+  }
+
+  /**
+   * Loads the billing portal in browser with the auth key provided
+   */
+  private _loadBillingPortal(authKey: string){
+    // Load in app browser to billing portal with Authkey
+    let billingUrl = `${this._config.agentBaseUrl}/billing/${authKey}`;
+    this.loadUrl(billingUrl);
+  }
+
+  /**
+   * Loads the Instagram portal in browser with the auth key provided
+   * The portal enables user to add a new IG account
+   */
+  private _loadInstagramPortal(authKey: string){
+    // Load in app browser to Instagram portal with Authkey
+    let instagramPortalUrl = `${this._config.agentBaseUrl}/instagram/${authKey}`;
+    this.loadUrl(instagramPortalUrl);
+  }
+
+  /**
    * Attempts to remove the currently active account.
    * Once an account is removed, it should redirect to the next available 
    * managed account or the add account page.

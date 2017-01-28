@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-// Models
-import { InstagramAccount } from '../../models/instagram-account';
 // Services
 import { AuthHttpService } from './authhttp.service';
 
