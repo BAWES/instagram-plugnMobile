@@ -20,12 +20,14 @@
 
   <!-- When content available -->
   <div *ngIf="!profileLoading && profile">
-    <div>
     <img src="assets/insta-logo.png" class="instagramLogo">
-    </div>
     
     <h1>Add Instagram Account</h1>
-    <h6 color="danger">Free Trial: 5 days left with admin privileges</h6>
+
+    <!-- If Trial -->
+    <h6 ion-text color="danger" *ngIf="profile.trial.isActive">
+      Free Trial: {{ profile.trial.daysLeft }} days left with admin privileges
+    </h6>
 
     <p class='content'>
       Linking an Instagram account with Plugn makes you the <b>Admin</b> of that account.
