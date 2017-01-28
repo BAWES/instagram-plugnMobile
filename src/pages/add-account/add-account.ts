@@ -55,31 +55,26 @@ export class AddAccountPage {
 
   /**
    * Tests if logged in agent is allowed to add more Instagram accounts (as admin)
-   * If not, display message with button to load billing portal or cancel.
    */
   public isUserAllowedToAddAccount(): boolean{
-    // If Trial is active. Allow them to add Instagram account
+    // If Trial is active
     if(this.profile.trial.isActive){
-      // this._loadInstagramPortal(authKey);
       return true;
     }
 
     // If Billing is Active and he hit the account limit
-    if(this.profile.billing.isActive && (this.profile.numberOfOwnedAccounts >= this.profile.ownedAccountLimit)){
-      // Tell that they've hit the account limit. Need to upgrade plan!
-      // Button to load Billing Portal
+    if(this.profile.billing.isActive && 
+      (this.profile.numberOfOwnedAccounts >= this.profile.ownedAccountLimit)){
       return false;
     }
 
     // No Billing + No Trial
     if(!this.profile.billing.isActive){
-      // Tell to set up billing to add accounts 
-      // Button to load Billing Portal
       return false;
     }
 
     // If Billing is Active and didn't face any issues from above checks, allow to add account
-    if(this.profile.trial.isActive){
+    if(this.profile.billing.isActive){
       return true;
     }
 

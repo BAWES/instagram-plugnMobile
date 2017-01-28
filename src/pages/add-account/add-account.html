@@ -20,25 +20,48 @@
 
   <!-- When content available -->
   <div *ngIf="!profileLoading && profile">
-    <img src="assets/insta-logo.png" class="instagramLogo">
-    
-    <h1>Add Instagram Account</h1>
 
-    <!-- If Trial -->
-    <h6 ion-text color="danger" *ngIf="profile.trial.isActive">
-      Free Trial: {{ profile.trial.daysLeft }} days left with admin privileges
-    </h6>
+    <!-- No Billing or Trial Active, Request he setup billing -->
+    <section class='setupBilling' *ngIf="!profile.billing.isActive && !profile.trial.isActive">
 
-    <p class='content'>
-      Linking an Instagram account with Plugn makes you the <b>Admin</b> of that account.
-      This means you will be responsible for that account's assigned agents, billing, and overall activity.
-    </p>
-    
-    <button ion-button block 
-       style='margin-top: 1.35em;'
-      (click)="loadUrl('https://agency.plugn.io')">
-      Add Instagram Account
-    </button>
+      <h1>Billing Expired</h1>
+      <p class='content'>
+        Blabla fix billing plx + button
+      </p>
+
+    </section>
+
+    <!-- Billing Setup, but account limit reached -->
+    <section class='limitReached' 
+      *ngIf="!profile.billing.isActive && (profile.numberOfOwnedAccounts >= profile.ownedAccountLimit)">
+      <h1>Account Limit Reached</h1>
+      <p class='content'>
+        Please upgrade your billing plan for additional Instagram accounts.
+      </p>
+    </section>
+
+    <!-- Add Account Section -->
+    <section class='addAccount' *ngIf="isUserAllowedToAddAccount()">
+      <img src="assets/insta-logo.png" class="instagramLogo">
+      
+      <h1>Add Instagram Account</h1>
+
+      <!-- If Trial -->
+      <h6 ion-text color="danger" *ngIf="profile.trial.isActive">
+        Free Trial: {{ profile.trial.daysLeft }} days left with admin privileges
+      </h6>
+
+      <p class='content'>
+        Linking an Instagram account with Plugn makes you the <b>Admin</b> of that account.
+        This means you will be responsible for that account's assigned agents, billing, and overall activity.
+      </p>
+      
+      <button ion-button block 
+        style='margin-top: 1.35em;'
+        (click)="loadUrl('https://agency.plugn.io')">
+        Add Instagram Account
+      </button>
+    </section>
   </div>
 
 </ion-content>
