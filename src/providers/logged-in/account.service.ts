@@ -1,7 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
-
 import { Platform, Events } from 'ionic-angular';
-
+import { Observable } from 'rxjs/Observable';
 // Models
 import { InstagramAccount } from '../../models/instagram-account';
 import { StatsRecord } from '../../models/stats-record';
@@ -39,6 +38,7 @@ export class AccountService {
   public statsLoading = false;
 
   private _accountEndpoint: string = "/accounts";
+  private _ownedAccountEndpoint: string = "/owned-accounts";
 
   // Interval Refresh Timer
   private _refreshTimerAccounts;
@@ -325,6 +325,17 @@ export class AccountService {
     if(this._refreshTimerMedia){
       clearInterval(this._refreshTimerMedia);
     }
+  }
+
+
+  /**
+   * Removes the currently logged in agent from being the admin
+   * of the passed Instagram account
+   */
+  public removeAccountOwnership(accountId: number): Observable<any>{
+    let url = `${this._ownedAccountEndpoint}?accountId=${accountId}`;
+    
+    return this._authhttp.delete(url);
   }
 
 

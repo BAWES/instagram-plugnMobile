@@ -167,6 +167,8 @@ export class NavigationPage {
           {
             text: 'Remove Account',
             handler: () => {
+              // Close the menu 
+              this._menu.close();
               // Show Loading 
               let loading = this._loadingCtrl.create({
                 spinner: 'crescent',
@@ -174,8 +176,33 @@ export class NavigationPage {
               });
               loading.present();
 
-              // Dismiss Loading
-              //loading.dismiss();
+              // Request Removal of this accounts ownership
+              this.accounts.removeAccountOwnership(accountId).subscribe(jsonResponse => {
+                
+                // Dismiss Loading
+                loading.dismiss();
+
+                // Reload account list on success
+                if(jsonResponse.operation == "success"){
+                  this.accounts.activeAccount = null;
+                  this.accounts.refreshManagedAccounts(false);
+                }else if(jsonResponse.operation == "error"){
+                  // Show Alert with the message
+                  let alert = this._alertCtrl.create({
+                    subTitle: jsonResponse.message,
+                    buttons: ['Ok']
+                  });
+                  alert.present();
+                }else{
+                  // Show alert with error not accounted for
+                  let alert = this._alertCtrl.create({
+                    title: "Unable to remove account",
+                    message: "Please contact us for assistance",
+                    buttons: ['Ok']
+                  });
+                  alert.present();
+                }
+              });
             }
           }
         ]
@@ -195,6 +222,8 @@ export class NavigationPage {
           {
             text: 'Remove Account',
             handler: () => {
+              // Close the menu 
+              this._menu.close();
               // Show Loading 
               let loading = this._loadingCtrl.create({
                 spinner: 'crescent',
@@ -202,8 +231,34 @@ export class NavigationPage {
               });
               loading.present();
 
-              // Dismiss Loading
-              //loading.dismiss();
+              // Request Removal of this accounts ownership
+              this.accounts.removeAccountOwnership(accountId).subscribe(jsonResponse => {
+                
+                // Dismiss Loading
+                loading.dismiss();
+
+                // Reload account list on success
+                if(jsonResponse.operation == "success"){
+                  this.accounts.activeAccount = null;
+                  this.accounts.refreshManagedAccounts(false);
+                }else if(jsonResponse.operation == "error"){
+                  // Show Alert with the message
+                  let alert = this._alertCtrl.create({
+                    subTitle: jsonResponse.message,
+                    buttons: ['Ok']
+                  });
+                  alert.present();
+                }else{
+                  // Show alert with error not accounted for
+                  let alert = this._alertCtrl.create({
+                    title: "Unable to remove account",
+                    message: "Please contact us for assistance",
+                    buttons: ['Ok']
+                  });
+                  alert.present();
+                }
+              });
+
             }
           }
         ]
