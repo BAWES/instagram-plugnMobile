@@ -163,21 +163,9 @@ export class NavigationPage {
       if(page == "billing"){
         this._loadBillingPortal(authKey);
       }else if(page == "instagram"){
-        // Check if user is allowed to load the Instagram portal 
-        // [Billing expired / Max. # Account Admin Limit]
-        // If user isn't allowed, urge him to set up billing via same authkey
         this._loadInstagramPortal(authKey);
       }
     });
-  }
-
-  /**
-   * Loads the billing portal in browser with the auth key provided
-   */
-  private _loadBillingPortal(authKey: string){
-    // Load in app browser to billing portal with Authkey
-    let billingUrl = `${this._config.agentBaseUrl}/billing/${authKey}`;
-    this.loadUrl(billingUrl);
   }
 
   /**
@@ -188,6 +176,15 @@ export class NavigationPage {
     // Load in app browser to Instagram portal with Authkey
     let instagramPortalUrl = `${this._config.agentBaseUrl}/instagram/${authKey}`;
     this.loadUrl(instagramPortalUrl);
+  }
+
+  /**
+   * Loads the billing portal in browser with the auth key provided
+   */
+  private _loadBillingPortal(authKey: string){
+    // Load in app browser to billing portal with Authkey
+    let billingUrl = `${this._config.agentBaseUrl}/billing/${authKey}`;
+    this.loadUrl(billingUrl);
   }
 
   /**
