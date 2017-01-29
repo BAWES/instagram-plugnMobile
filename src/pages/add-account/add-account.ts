@@ -19,6 +19,8 @@ export class AddAccountPage {
   public profile: any;
   public profileLoading: boolean = false;
 
+  private _onAccountAddedFn;
+
   constructor(
     public navCtrl: NavController, 
     public auth: AuthService,
@@ -26,13 +28,23 @@ export class AddAccountPage {
     private _agentService: AgentService,
     private _analytics: AnalyticsService,
     private _config: ConfigService
-    ) {}
+    ) {
+      this._onAccountAddedFn = () => {
+        this.navCtrl.pop();
+      }
+    }
 
   ionViewDidEnter() {
     this._analytics.trackView("Add Account Page");
+
+    // Leave page when account is added
+    this._events.subscribe("accountAdded", this._onAccountAddedFn);
     
     // Load the profile which helps us decide what content to show user.
     this._loadProfile();
+  }
+  ionViewWillLeave(){
+    this._events.unsubscribe("accountAdded", this._onAccountAddedFn);
   }
 
   /**

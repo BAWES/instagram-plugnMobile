@@ -142,7 +142,7 @@ export class MyApp implements OnInit{
         // Handle Deeplinks to Verify Email 
         let url = match.$link.url;
         let path = match.$link.path;
-        let queryString = match.$link.queryString;
+        //let queryString = match.$link.queryString;
 
         // Is user attempting to verify email?
         if(path == '/deeplink/email-verify'){

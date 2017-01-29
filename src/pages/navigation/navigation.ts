@@ -225,6 +225,7 @@ export class NavigationPage {
     // If Instagram Account Added Succesfully, Close the Browser Window
     if(url.indexOf("?responseType=success") !== -1){
       this._browser.close();
+      this._events.publish("accountAdded");
       // Show Alert with success message
       let alert = this._alertCtrl.create({
         subTitle: 'Your Instagram account is now linked to Plugn',
