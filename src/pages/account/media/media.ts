@@ -68,8 +68,12 @@ export class MediaPage {
   /**
    * Load Specified Url
    */
-  loadUrl(url: string){
-    //this._browser = new InAppBrowser(url, this._config.browserTarget, this._config.browserOptionsWithCache);
+  loadUrl(page: string){
+    if(page == "instagram"){
+      this._events.publish("admin:loadPortal", 'instagram');
+    }else if(page == 'billing'){
+      this._events.publish("admin:loadPortal", 'billing');
+    }
   }
 
 }
