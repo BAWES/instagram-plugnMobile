@@ -29,6 +29,8 @@ export class NavigationPage {
   rootPage: any = AccountTabsPage;
 
   private _browser: InAppBrowser;
+  private _browserLoadEvents;
+  private _browserCloseEvents;
 
   @ViewChild('loggedInContent') nav: NavController
 
@@ -109,13 +111,6 @@ export class NavigationPage {
   }
 
   /**
-   * Load Specified Url
-   */
-  loadUrl(url: string){
-    this._browser = new InAppBrowser(url, this._config.browserTarget, this._config.browserOptionsWithCache);
-  }
-
-  /**
    * Stats Pages on right nav menu
    */
   openStatisticsPage(pageName: string){
@@ -184,7 +179,7 @@ export class NavigationPage {
   private _loadInstagramPortal(authKey: string){
     // Load in app browser to Instagram portal with Authkey
     let instagramPortalUrl = `${this._config.agentBaseUrl}/instagram/${authKey}`;
-    this.loadUrl(instagramPortalUrl);
+    this.loadUrl(instagramPortalUrl, true);
   }
 
   /**
@@ -194,6 +189,49 @@ export class NavigationPage {
     // Load in app browser to billing portal with Authkey
     let billingUrl = `${this._config.agentBaseUrl}/billing/${authKey}`;
     this.loadUrl(billingUrl);
+  }
+
+  /**
+   * Load Specified Url
+   */
+  loadUrl(url: string, trackActionsOnUrl:boolean = false){
+    this._browser = new InAppBrowser(url, this._config.browserTarget, this._config.browserOptionsWithCache);
+
+    // Close browser on Instagram account successfully added.
+    if(trackActionsOnUrl){
+      // Keep track of urls loaded
+      this._browserLoadEvents = this._browser.on("loadstop");
+      this._browserLoadEvents = this._browserLoadEvents.map(res => res.url).subscribe(url => {
+        this._doActionBasedOnUrl(url);
+      });
+
+      // Keep track of browser if closed
+      this._browserCloseEvents = this._browser.on("exit").first().subscribe(resp => {
+        // Browser closed, unsubscribe from previous observables
+        this._browserLoadEvents.unsubscribe();
+        this._browserCloseEvents.unsubscribe();
+      });
+    }
+  }
+
+  /**
+   * Parse url input, then do action based on that input
+   * This function takes the access token from server response
+   *
+   * @param {string} url
+   */
+  private _doActionBasedOnUrl(url: string){
+
+    // If Instagram Account Added Succesfully, Close the Browser Window
+    if(url.indexOf("?responseType=success") !== -1){
+      this._browser.close();
+      // Show Alert with success message
+      let alert = this._alertCtrl.create({
+        subTitle: 'Your Instagram account is now linked to Plugn',
+        buttons: ['Great!']
+      });
+      alert.present();
+    }
   }
 
   /**
