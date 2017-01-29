@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, Events, MenuController } from 'ionic-angular';
-import { InAppBrowser } from 'ionic-native';
 
 import { MediaService } from '../../../providers/logged-in/media.service';
 import { AccountService } from '../../../providers/logged-in/account.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
 import { AnalyticsService } from '../../../providers/analytics.service';
-import { ConfigService } from '../../../providers/config.service';
 
 // Pages
 import { MediaDetailPage } from '../media-detail/media-detail';
@@ -19,7 +17,6 @@ import { MediaDetailPage } from '../media-detail/media-detail';
   templateUrl: 'media.html'
 })
 export class MediaPage {
-  private _browser: InAppBrowser;
 
   constructor(
     public navCtrl: NavController, 
@@ -29,7 +26,6 @@ export class MediaPage {
     private _events: Events,
     private _backBtn: HardwareBackButtonService,
     private _menuCtrl: MenuController,
-    private _config: ConfigService
     ) {}
 
   ionViewDidEnter() {
@@ -73,7 +69,7 @@ export class MediaPage {
    * Load Specified Url
    */
   loadUrl(url: string){
-    this._browser = new InAppBrowser(url, this._config.browserTarget, this._config.browserOptionsWithCache);
+    //this._browser = new InAppBrowser(url, this._config.browserTarget, this._config.browserOptionsWithCache);
   }
 
 }

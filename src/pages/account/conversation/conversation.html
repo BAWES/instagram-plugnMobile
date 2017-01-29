@@ -67,7 +67,7 @@
       <h2 style='margin-top:0;'>Subscription Expired</h2>
       <p *ngIf="!accounts.isActiveAccountAdmin">
         Subscription has expired for the admin of @{{ accounts.activeAccount.user_name }}.
-        You'll regain access once the admin subscribes.
+        You'll regain access once its admin subscribes.
       </p>
       <p *ngIf="accounts.isActiveAccountAdmin">
         Your subscription as an admin has expired.
