@@ -1,10 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { MenuController, NavController, ToastController, Events } from 'ionic-angular';
+import { MenuController, NavController, ToastController, Events, AlertController, LoadingController } from 'ionic-angular';
 import { InAppBrowser } from 'ionic-native';
 
 import { AuthService } from '../../providers/auth.service';
 import { ConfigService } from '../../providers/config.service';
 import { AccountService } from '../../providers/logged-in/account.service';
+import { AgentService } from '../../providers/logged-in/agent.service';
 
 // Page Imports
 import { AccountTabsPage } from '../account/account-tabs/account-tabs';
@@ -14,6 +15,7 @@ import { MyActivityPage } from '../my-activity/my-activity';
 
 // Account Stats Pages available on Right Menu
 import { AgentActivityPage } from '../statistics/agent-activity/agent-activity';
+import { AgentsPage } from '../statistics/agents/agents';
 import { MediaStatsPage } from '../statistics/media-stats/media-stats';
 import { FollowingPage } from '../statistics/following/following';
 import { FollowersPage } from '../statistics/followers/followers';
@@ -33,7 +35,10 @@ export class NavigationPage {
   constructor(
     public accounts: AccountService,
     private _auth: AuthService,
+    private _agentService: AgentService,
     private _menu: MenuController,
+    private _alertCtrl: AlertController,
+    private _loadingCtrl: LoadingController,
     private _toastCtrl: ToastController,
     private _events: Events,
     private _config: ConfigService
@@ -53,6 +58,15 @@ export class NavigationPage {
       this.rootPage = AddAccountPage;
       if(availability == "available"){
         this.rootPage = AccountTabsPage;
+      }
+    });
+
+    // Load Billing or IG page as requested
+    this._events.subscribe("admin:loadPortal", (portal) => {
+      if(portal == "billing"){
+        this.getAuthKeyThenLoadPage('billing');
+      }else if(portal == 'instagram'){
+        this.getAuthKeyThenLoadPage('instagram');
       }
     });
 
@@ -109,6 +123,9 @@ export class NavigationPage {
       case "agent-activity":
         this.nav.push(AgentActivityPage);
         break;
+      case "agents":
+        this.nav.push(AgentsPage);
+        break;
       case "media-stats":
         this.nav.push(MediaStatsPage);
         break;
@@ -135,6 +152,172 @@ export class NavigationPage {
    */
   logout(){
     this._auth.logout();
+  }
+
+  /**
+   * Opens the provided agent page in the browser using the auth key
+   */
+  getAuthKeyThenLoadPage(page: string = "billing"){
+    // Show Loading 
+    let loading = this._loadingCtrl.create({
+      spinner: 'crescent',
+      content: 'Loading..'
+    });
+    loading.present();
+
+    // Get an Auth key
+    this._agentService.generateAuthKey().subscribe(authKey => {
+      loading.dismiss();
+      
+      if(page == "billing"){
+        this._loadBillingPortal(authKey);
+      }else if(page == "instagram"){
+        this._loadInstagramPortal(authKey);
+      }
+    });
+  }
+
+  /**
+   * Loads the Instagram portal in browser with the auth key provided
+   * The portal enables user to add a new IG account
+   */
+  private _loadInstagramPortal(authKey: string){
+    // Load in app browser to Instagram portal with Authkey
+    let instagramPortalUrl = `${this._config.agentBaseUrl}/instagram/${authKey}`;
+    this.loadUrl(instagramPortalUrl);
+  }
+
+  /**
+   * Loads the billing portal in browser with the auth key provided
+   */
+  private _loadBillingPortal(authKey: string){
+    // Load in app browser to billing portal with Authkey
+    let billingUrl = `${this._config.agentBaseUrl}/billing/${authKey}`;
+    this.loadUrl(billingUrl);
+  }
+
+  /**
+   * Attempts to remove the currently active account.
+   * Once an account is removed, it should redirect to the next available 
+   * managed account or the add account page.
+   */
+  removeAccount(){
+    const accountId = this.accounts.activeAccount.user_id;
+    const accountName = this.accounts.activeAccount.user_name;
+    const ownerAgentId = this.accounts.activeAccount.agent_id;
+
+    // If the user is the account admin
+    if(this._auth.agentId == ownerAgentId){
+      // show warning message that removing ownership of the account will disable 
+      // the account for him and the other agents. 
+      let confirm = this._alertCtrl.create({
+        title: 'Remove account? You are the admin of @'+accountName,
+        message: 'Once removed, all Plugn features will stop functioning on this account.',
+        buttons: [
+          {
+            text: 'Cancel',
+          },
+          {
+            text: 'Remove Account',
+            handler: () => {
+              // Close the menu 
+              this._menu.close();
+              // Show Loading 
+              let loading = this._loadingCtrl.create({
+                spinner: 'crescent',
+                content: 'Removing @'+accountName+' from your account..'
+              });
+              loading.present();
+
+              // Request Removal of this accounts ownership
+              this.accounts.removeAccountOwnership(accountId).subscribe(jsonResponse => {
+                
+                // Dismiss Loading
+                loading.dismiss();
+
+                // Reload account list on success
+                if(jsonResponse.operation == "success"){
+                  this.accounts.activeAccount = null;
+                  this.accounts.refreshManagedAccounts(false);
+                }else if(jsonResponse.operation == "error"){
+                  // Show Alert with the message
+                  let alert = this._alertCtrl.create({
+                    subTitle: jsonResponse.message,
+                    buttons: ['Ok']
+                  });
+                  alert.present();
+                }else{
+                  // Show alert with error not accounted for
+                  let alert = this._alertCtrl.create({
+                    title: "Unable to remove account",
+                    message: "Please contact us for assistance",
+                    buttons: ['Ok']
+                  });
+                  alert.present();
+                }
+              });
+            }
+          }
+        ]
+      });
+      confirm.present();
+
+    }else{
+      // warn that he will no longer be able to manage the account as an agent until he is reinvited
+      // Show confirm dialog before proceeding with removal
+      let confirm = this._alertCtrl.create({
+        title: 'Remove @'+accountName+'?',
+        message: `Once removed you will lose access to the account. You may later regain access by receiving an invite from the account's admin.`,
+        buttons: [
+          {
+            text: 'Cancel',
+          },
+          {
+            text: 'Remove Account',
+            handler: () => {
+              // Close the menu 
+              this._menu.close();
+              // Show Loading 
+              let loading = this._loadingCtrl.create({
+                spinner: 'crescent',
+                content: 'Removing @'+accountName+' from your account..'
+              });
+              loading.present();
+
+              // Request Removal of this accounts ownership
+              this._agentService.removeAssignment(accountId).subscribe(jsonResponse => {
+                
+                // Dismiss Loading
+                loading.dismiss();
+
+                // Reload account list on success
+                if(jsonResponse.operation == "success"){
+                  this.accounts.activeAccount = null;
+                  this.accounts.refreshManagedAccounts(false);
+                }else if(jsonResponse.operation == "error"){
+                  // Show Alert with the message
+                  let alert = this._alertCtrl.create({
+                    subTitle: jsonResponse.message,
+                    buttons: ['Ok']
+                  });
+                  alert.present();
+                }else{
+                  // Show alert with error not accounted for
+                  let alert = this._alertCtrl.create({
+                    title: "Unable to remove account",
+                    message: "Please contact us for assistance",
+                    buttons: ['Ok']
+                  });
+                  alert.present();
+                }
+              });
+
+            }
+          }
+        ]
+      });
+      confirm.present();
+    }
   }
 
 }

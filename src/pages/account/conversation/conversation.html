@@ -54,10 +54,16 @@
       <p>There's a slight problem connecting to your Instagram account.
         Don't worry though, it's very quick to fix.
       </p>
-      <p>All you need to do is login with the Instagram account from the agency panel.</p>
+      <p *ngIf="!accounts.isActiveAccountAdmin">
+        All you need to do is ask the Admin of @{{ accounts.activeAccount.user_name }} to reconnect 
+        their Instagram account.
+      </p>
+      <p *ngIf="accounts.isActiveAccountAdmin">
+        All you need to do is reconnect your Instagram account.
+      </p>
 
-      <button ion-button (click)="loadUrl('https://agency.plugn.io/instagram/invalid-access-token?accountId='+accounts.activeAccount.user_id)">
-        Fix @{{ accounts.activeAccount.user_name }}
+      <button ion-button *ngIf="accounts.isActiveAccountAdmin" (click)="loadUrl('instagram')">
+        Reconnect @{{ accounts.activeAccount.user_name }}
       </button>
     </div>
 
@@ -65,11 +71,16 @@
     <div *ngIf="accounts.activeAccount?.user_status == 25" style='text-align:center; padding-top:2em;'>
       <ion-icon style='font-size:3em;' name="ios-card-outline"></ion-icon>
       <h2 style='margin-top:0;'>Subscription Expired</h2>
-      <p>
-        Subscription has expired for the agency managing @{{ accounts.activeAccount.user_name }}.
+      <p *ngIf="!accounts.isActiveAccountAdmin">
+        Subscription has expired for the admin of @{{ accounts.activeAccount.user_name }}.
+        You'll regain access once its admin subscribes.
       </p>
-
-      <button ion-button (click)="loadUrl('https://agency.plugn.io')">
+      <p *ngIf="accounts.isActiveAccountAdmin">
+        Your subscription as an admin has expired.
+        Subscribe now to keep using Plugn on @{{ accounts.activeAccount.user_name }}.
+      </p>
+      <button ion-button *ngIf="accounts.isActiveAccountAdmin"
+        (click)="loadUrl('billing')">
         Subscribe
       </button>
     </div>

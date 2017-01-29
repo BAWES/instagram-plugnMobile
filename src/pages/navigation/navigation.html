@@ -38,13 +38,13 @@
         <ion-icon name="ios-analytics" item-left></ion-icon>
         My Activity
       </button>
+      <button ion-item (click)="getAuthKeyThenLoadPage('billing')">
+        <ion-icon name="ios-card" item-left></ion-icon>
+        Billing
+      </button>
       <button ion-item (click)="loadUrl('https://plugn.io/contact')">
         <ion-icon name="help-circle" item-left></ion-icon>
         Help and Support
-      </button>
-      <button ion-item (click)="loadUrl('https://agency.plugn.io')">
-        <ion-icon name="md-contacts" item-left></ion-icon>
-        Agency Portal
       </button>
       <button ion-item (click)="logout()">
         <ion-icon name="ios-log-out" item-left></ion-icon>
@@ -69,6 +69,24 @@
     </ion-toolbar>
   </ion-header>
   <ion-content>
+
+    <ion-card class="statCount" (click)="openStatisticsPage('agents')">
+      <div class="number">{{ accounts.activeAccount.assignments.length }} {{ accounts.activeAccount.assignments.length>1?"agents":"agent" }}</div>
+      <ion-icon class='main' name="ios-body"></ion-icon>
+      <div class='card-title'>
+        Managing this account
+      </div>
+      <ion-icon class='forward' name="ios-arrow-forward"></ion-icon>
+    </ion-card>
+
+    <ion-card class="statCount" (click)="openStatisticsPage('agent-activity')">
+      <div class="number">{{ accounts.activeAccount.lastAgentActivity?accounts.activeAccount.lastAgentActivity:"None yet" }}</div>
+      <ion-icon class='main' name="pulse"></ion-icon>
+      <div class='card-title'>
+        Last Agent Activity
+      </div>
+      <ion-icon class='forward' name="ios-arrow-forward"></ion-icon>
+    </ion-card>
 
     <ion-card class="statCount" (click)="openStatisticsPage('followers')">
       <div class="number">{{ accounts.activeAccount.user_follower_count }}</div>
@@ -97,21 +115,12 @@
       <ion-icon class='forward' name="ios-arrow-forward"></ion-icon>
     </ion-card>
 
-    <ion-card class="statCount" (click)="openStatisticsPage('agent-activity')">
-      <div class="number">{{ accounts.activeAccount.lastAgentActivity }}</div>
-      <ion-icon class='main' name="pulse"></ion-icon>
-      <div class='card-title'>
-        Last Agent Activity
-      </div>
-      <ion-icon class='forward' name="ios-arrow-forward"></ion-icon>
-    </ion-card>
-
   </ion-content>
-  <ion-footer padding>
-      <button ion-button block outline (click)="menuRight.close();menuLeft.open();" color="dark">
-        Switch Account
-      </button>
-    </ion-footer>
+  <ion-footer text-center>
+    <button ion-button clear (click)="removeAccount()" color="danger">
+      Remove Account
+    </button>
+  </ion-footer>
 </ion-menu>
 
 <ion-nav #loggedInContent

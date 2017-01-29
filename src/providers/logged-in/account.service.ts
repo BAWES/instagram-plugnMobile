@@ -1,12 +1,12 @@
 import { Injectable, NgZone } from '@angular/core';
-
 import { Platform, Events } from 'ionic-angular';
-
+import { Observable } from 'rxjs/Observable';
 // Models
 import { InstagramAccount } from '../../models/instagram-account';
 import { StatsRecord } from '../../models/stats-record';
 
 // Services
+import { AuthService } from '../auth.service';
 import { AuthHttpService } from './authhttp.service';
 import { MediaService } from './media.service';
 import { ConversationService } from './conversation.service';
@@ -18,6 +18,7 @@ import { ConversationService } from './conversation.service';
 export class AccountService {
 
   public activeAccount: InstagramAccount; // The account currently being viewed by agent
+  public isActiveAccountAdmin: boolean = false; // Whether the logged in agent is admin of activeAccount
   public managedAccounts: InstagramAccount[]; // Array of managed accounts stored here
 
   public contentNeedsRefresh:boolean = false;
@@ -39,6 +40,7 @@ export class AccountService {
   public statsLoading = false;
 
   private _accountEndpoint: string = "/accounts";
+  private _ownedAccountEndpoint: string = "/owned-accounts";
 
   // Interval Refresh Timer
   private _refreshTimerAccounts;
@@ -49,6 +51,7 @@ export class AccountService {
   constructor(
     private _platform: Platform,
     private _events: Events,
+    private _auth: AuthService,
     private _authhttp: AuthHttpService,
     private _media: MediaService,
     private _conversation: ConversationService,
@@ -97,7 +100,7 @@ export class AccountService {
    */
   private _initialize(){
     if(!this._areTimersActivated){
-      this._populateManagedAccounts();
+      this.refreshManagedAccounts();
       this._initAccountsRefresher();
       this._areTimersActivated = true;
     }
@@ -111,6 +114,16 @@ export class AccountService {
     this._areTimersActivated = false;
     this.activeAccount = null;
     this.managedAccounts = null;
+  }
+
+  /**
+   * Update whether this user is an admin or not 
+   */
+  private _updateAdminStatus(){
+    if(this._auth.agentId && this.activeAccount && 
+      (this.activeAccount.agent_id == this._auth.agentId)){
+      this.isActiveAccountAdmin = true;
+    }else this.isActiveAccountAdmin = false;
   }
 
   /**
@@ -178,6 +191,8 @@ export class AccountService {
 
     // Proceed with switching accounts
     this.activeAccount = account;
+    // Update Admin Status
+    this._updateAdminStatus();
     // reset stats
     this.activeAccountStats = null;
     this.statsDatesArray = [];
@@ -241,7 +256,7 @@ export class AccountService {
   /**
    * Get updated list of accounts managed by agent and store in variable
    */
-  private _populateManagedAccounts(showLoading = true){
+  public refreshManagedAccounts(showLoading = true){
     if(showLoading){
       this.isLoading = true;
     }
@@ -254,10 +269,7 @@ export class AccountService {
         // On account refresh, update the sidebar data for currently active account
         for(let i=0; i < this.managedAccounts.length; i++){
           if(this.managedAccounts[i].user_id == this.activeAccount.user_id){
-            this.activeAccount.user_follower_count = this.managedAccounts[i].user_follower_count;
-            this.activeAccount.user_following_count = this.managedAccounts[i].user_following_count;
-            this.activeAccount.user_media_count = this.managedAccounts[i].user_media_count;
-            this.activeAccount.lastAgentActivity = this.managedAccounts[i].lastAgentActivity;
+            this.activeAccount = this.managedAccounts[i];
             break;
           }
         }
@@ -300,7 +312,7 @@ export class AccountService {
     // Refresh Comments every X Seconds
     let numSeconds = 20 * 1000;
     this._refreshTimerAccounts = setInterval(() => {
-      this._populateManagedAccounts(false);
+      this.refreshManagedAccounts(false);
     }, numSeconds);
   }
   public destroyAccountsRefresher(){
@@ -324,6 +336,17 @@ export class AccountService {
     if(this._refreshTimerMedia){
       clearInterval(this._refreshTimerMedia);
     }
+  }
+
+
+  /**
+   * Removes the currently logged in agent from being the admin
+   * of the passed Instagram account
+   */
+  public removeAccountOwnership(accountId: number): Observable<any>{
+    let url = `${this._ownedAccountEndpoint}?accountId=${accountId}`;
+    
+    return this._authhttp.delete(url);
   }
 
 

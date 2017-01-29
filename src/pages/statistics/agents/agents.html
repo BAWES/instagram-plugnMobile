@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-navbar>
+
+    <button ion-button menuToggle="left">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <img menuToggle="left" left style='width:25px; height:25px; float:left;' src="assets/brand/icon.png" />
+
+    <ion-title>Assigned Agents</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <!-- Agent Assignments Available and Loaded -->
+  <ion-list>
+    <ion-list-header>
+      Agents managing @{{ accounts.activeAccount.user_name }}
+    </ion-list-header>
+
+    <ion-item text-wrap *ngFor="let assignment of accounts.activeAccount.assignments">
+      <h2 class='elipse'>{{ assignment.email }}</h2>
+      <ion-note>Assigned on {{ assignment.dateAssigned }}</ion-note>
+      <!-- Button to show admins -->
+      <button ion-button item-right clear 
+        *ngIf="accounts.isActiveAccountAdmin"
+        [color]="assignment.email == auth.email? 'secondary':'danger'"
+        [disabled]="assignment.email == auth.email"
+        (click)="removeAssignment(assignment)">
+        {{ assignment.email == auth.email? "Admin" : "Remove" }}
+      </button>
+    </ion-item>
+  </ion-list>
+
+  <!-- Add Agent Form -->
+  <form *ngIf="accounts.isActiveAccountAdmin"
+    [formGroup]="agentForm" (ngSubmit)="onSubmitAgentForm()" novalidate padding>
+    <h2 text-center>Invite Additional Agents</h2>
+    <ion-input type="email" #emailInput
+            formControlName="email"
+            placeholder="Agent's email address"></ion-input>
+
+    <button ion-button block outline color="dark" type="submit" 
+      [disabled]="!agentForm.valid || isLoading"
+      [style.background-color]="!agentForm.valid || isLoading ? 'white':'black'"
+      [style.color]="!agentForm.valid || isLoading ?'black':'white'">
+      
+      <ion-spinner *ngIf="isLoading"></ion-spinner>
+      <span *ngIf="!isLoading">Send Invite</span>
+
+    </button>
+  </form>
+
+  <!-- Agent Button -->
+  <button ion-button block clear 
+    *ngIf="!accounts.isActiveAccountAdmin"
+    (click)="showAgentTutorial()">
+    How to invite/remove agents?
+  </button>
+
+  <!-- Admin Button -->
+  <button ion-button block clear 
+    *ngIf="accounts.isActiveAccountAdmin"
+    (click)="showAdminTutorial()">
+    How do I make someone else the Admin?
+  </button>
+
+
+</ion-content>

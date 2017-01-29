@@ -13,20 +13,67 @@
 
 <ion-content padding text-center>
 
-  <div>
-  <img src="assets/insta-logo.png" class="instagramLogo">
+  <!-- When content isn't available, Show Loading -->
+  <div class="page-loading" *ngIf="profileLoading">
+    <img src='assets/brand/loader.gif'>
   </div>
-  <h1>Add Instagram Account</h1>
-  <p>
-    With an Agency account, you may add and remove Instagram accounts and assign agents to them (including yourself).
-  </p>
 
-  <button ion-button (click)="loadUrl('https://agency.plugn.io')">
-    Create/Login to Agency Account
-  </button>
+  <!-- When content available -->
+  <div *ngIf="!profileLoading && profile">
 
-  <h5>What's my Agent ID to share with agencies?</h5>
-  <pre style='font-size:1.5em'>{{ auth.email }}</pre>
-  <p>Agencies need to know your email to send you an invite to manage their accounts.</p>
+    <!-- No Billing or Trial Active, Request he setup billing -->
+    <section class='setupBilling' *ngIf="!profile.billing.isActive && !profile.trial.isActive">
+      <ion-icon class='largeIcon' name="ios-card-outline"></ion-icon>
+      <h1>Subscription Expired</h1>
+      <p class='content'>
+        Unable to add account. Please set up billing to re-activate your admin priveleges.
+      </p>
+      <button ion-button block 
+        style='margin-top: 1.35em;'
+        (click)="requestBillingPortal()">
+        Subscribe
+      </button>
+    </section>
+
+    <!-- Billing Setup, but account limit reached -->
+    <section class='limitReached' 
+      *ngIf="profile.billing.isActive && (profile.numberOfOwnedAccounts >= profile.ownedAccountLimit)">
+      <ion-icon class='largeIcon' name="md-trending-up"></ion-icon>
+      <h1>Account Limit Reached</h1>
+      <p class='content'>
+        Your current subscription enables Admin priveleges for up to {{ profile.ownedAccountLimit }}
+        {{ profile.ownedAccountLimit == 1? "account" : "accounts" }}.
+        Please upgrade your billing plan for additional Instagram accounts.
+      </p>
+      <button ion-button block 
+        style='margin-top: 1.35em;'
+        (click)="requestBillingPortal()">
+        Upgrade
+      </button>
+    </section>
+
+    <!-- Add Account Section -->
+    <section class='addAccount' *ngIf="isUserAllowedToAddAccount()">
+      <img src="assets/insta-logo.png" class="instagramLogo">
+      
+      <h1>Add Instagram Account</h1>
+
+      <!-- If Trial -->
+      <h6 ion-text color="danger" *ngIf="profile.trial.isActive">
+        Free Trial: {{ profile.trial.daysLeft }} {{ profile.trial.daysLeft==1? "day" : "days" }} left with admin privileges
+      </h6>
+
+      <p class='content'>
+        Linking an Instagram account with Plugn makes you the <b>Admin</b> of that account.
+        This means you will be responsible for that account's assigned agents, billing, and overall activity.
+      </p>
+      
+      <button ion-button block 
+        style='margin-top: 1.35em;'
+        (click)="requestInstagramPortal()">
+        Add Instagram Account
+      </button>
+    </section>
+  </div>
 
 </ion-content>

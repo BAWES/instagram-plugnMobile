@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
 import { NavController, Events, MenuController } from 'ionic-angular';
-import { InAppBrowser } from 'ionic-native';
 
 import { MediaService } from '../../../providers/logged-in/media.service';
 import { AccountService } from '../../../providers/logged-in/account.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
 import { AnalyticsService } from '../../../providers/analytics.service';
-import { ConfigService } from '../../../providers/config.service';
 
 // Pages
 import { MediaDetailPage } from '../media-detail/media-detail';
@@ -20,8 +18,6 @@ import { MediaDetailPage } from '../media-detail/media-detail';
 })
 export class MediaPage {
 
-  private _browser: InAppBrowser;
-
   constructor(
     public navCtrl: NavController, 
     public media: MediaService,
@@ -30,14 +26,11 @@ export class MediaPage {
     private _events: Events,
     private _backBtn: HardwareBackButtonService,
     private _menuCtrl: MenuController,
-    private _config: ConfigService
     ) {}
 
-  ionViewDidLoad() {
-    // Initialize Class Here If Needed
-  }
-
   ionViewDidEnter() {
+    this._analytics.trackView("Media List");
+
     // Setup Back Button Behavior
     this._backBtn.toggleMenuOnBack();
     // Enable Swipe on Right Menu
@@ -51,8 +44,6 @@ export class MediaPage {
    * Trigger an event notifying that user is opening this page
    */
   ionViewWillEnter(){
-    this._analytics.trackView("Media List");
-
     this._events.publish('view:selected', "media");
   }
 
@@ -65,7 +56,6 @@ export class MediaPage {
         media: mediaItem
       });
   }
-
   
   /**
    * Refresh the view once dragged via ion-refresher
@@ -78,8 +68,12 @@ export class MediaPage {
   /**
    * Load Specified Url
    */
-  loadUrl(url: string){
-    this._browser = new InAppBrowser(url, this._config.browserTarget, this._config.browserOptionsWithCache);
+  loadUrl(page: string){
+    if(page == "instagram"){
+      this._events.publish("admin:loadPortal", 'instagram');
+    }else if(page == 'billing'){
+      this._events.publish("admin:loadPortal", 'billing');
+    }
   }
 
 }
