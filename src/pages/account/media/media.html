@@ -45,10 +45,16 @@
       <p>There's a slight problem connecting to your Instagram account.
         Don't worry though, it's very quick to fix.
       </p>
-      <p>All you need to do is login with the Instagram account from the agency panel.</p>
+      <p *ngIf="!accounts.isActiveAccountAdmin">
+        All you need to do is ask the Admin of @{{ accounts.activeAccount.user_name }} to reconnect 
+        their Instagram account.
+      </p>
+      <p *ngIf="accounts.isActiveAccountAdmin">
+        All you need to do is reconnect your Instagram account.
+      </p>
 
-      <button ion-button (click)="loadUrl('instagram')">
-        Fix @{{ accounts.activeAccount.user_name }}
+      <button ion-button *ngIf="accounts.isActiveAccountAdmin" (click)="loadUrl('instagram')">
+        Reconnect @{{ accounts.activeAccount.user_name }}
       </button>
     </div>
 
