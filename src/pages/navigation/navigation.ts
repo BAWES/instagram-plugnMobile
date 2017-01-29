@@ -195,7 +195,7 @@ export class NavigationPage {
    * Load Specified Url
    */
   loadUrl(url: string, trackActionsOnUrl:boolean = false){
-    this._browser = new InAppBrowser(url, this._config.browserTarget, this._config.browserOptionsWithCache);
+    this._browser = new InAppBrowser(url, this._config.browserTarget, this._config.browserOptions);
 
     // Close browser on Instagram account successfully added.
     if(trackActionsOnUrl){
