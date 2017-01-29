@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { InAppBrowser } from 'ionic-native';
+import { NavController, Events } from 'ionic-angular';
 
 import { AuthService } from '../../providers/auth.service';
 import { ConfigService } from '../../providers/config.service';
@@ -20,11 +19,10 @@ export class AddAccountPage {
   public profile: any;
   public profileLoading: boolean = false;
 
-  private _browser: InAppBrowser;
-
   constructor(
     public navCtrl: NavController, 
     public auth: AuthService,
+    private _events: Events,
     private _agentService: AgentService,
     private _analytics: AnalyticsService,
     private _config: ConfigService
@@ -47,10 +45,17 @@ export class AddAccountPage {
   }
 
   /**
-   * Load Specified Url
+   * Request to load of the billing portal
    */
-  loadUrl(url: string){
-    this._browser = new InAppBrowser(url, this._config.browserTarget, this._config.browserOptionsWithCache);
+  public requestBillingPortal(){
+    this._events.publish("admin:loadPortal", 'billing');
+  }
+
+  /**
+   * Request to load of the Instagram portal
+   */
+  public requestInstagramPortal(){
+    this._events.publish("admin:loadPortal", 'instagram');
   }
 
   /**

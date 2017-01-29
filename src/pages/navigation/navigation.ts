@@ -61,6 +61,15 @@ export class NavigationPage {
       }
     });
 
+    // Load Billing or IG page as requested
+    this._events.subscribe("admin:loadPortal", (portal) => {
+      if(portal == "billing"){
+        this.getAuthKeyThenLoadPage('billing');
+      }else if(portal == 'instagram'){
+        this.getAuthKeyThenLoadPage('instagram');
+      }
+    });
+
     // Show Offline Page if no Internet
     this._events.subscribe("internet:offline", (availability) => {
       // Switch to offline page 
