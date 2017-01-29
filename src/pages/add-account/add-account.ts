@@ -39,7 +39,9 @@ export class AddAccountPage {
    * Load the agents profile
    */
   private _loadProfile(){
+    this.profileLoading = true;
     this._agentService.getProfile().subscribe(profileData => {
+      this.profileLoading = false;
       this.profile = profileData;
     });
   }

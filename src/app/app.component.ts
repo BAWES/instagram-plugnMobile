@@ -94,6 +94,12 @@ export class MyApp implements OnInit{
                   //console.log('Extracting = ' + p + '%');
               }
           }).then(() => {
+            // Reload App after 3 seconds
+            toast.setMessage('Restart app to apply update');
+            setTimeout(() => {
+              this.deploy.load();
+            }, 3000);
+
             // Get info about the currently active snapshot 
             this.deploy.info().then((info: {deploy_uuid: string, binary_version: string}) => {
               
