@@ -24,7 +24,7 @@
       <ion-note>Assigned on {{ assignment.dateAssigned }}</ion-note>
       <!-- Button to show admins -->
       <button ion-button item-right clear 
-        *ngIf="isAdmin"
+        *ngIf="accounts.isActiveAccountAdmin"
         [color]="assignment.email == auth.email? 'secondary':'danger'"
         [disabled]="assignment.email == auth.email"
         (click)="removeAssignment(assignment)">
@@ -34,7 +34,7 @@
   </ion-list>
 
   <!-- Add Agent Form -->
-  <form *ngIf="isAdmin"
+  <form *ngIf="accounts.isActiveAccountAdmin"
     [formGroup]="agentForm" (ngSubmit)="onSubmitAgentForm()" novalidate padding>
     <h2 text-center>Invite Additional Agents</h2>
     <ion-input type="email" #emailInput
@@ -54,14 +54,14 @@
 
   <!-- Agent Button -->
   <button ion-button block clear 
-    *ngIf="!isAdmin"
+    *ngIf="!accounts.isActiveAccountAdmin"
     (click)="showAgentTutorial()">
     How to invite/remove agents?
   </button>
 
   <!-- Admin Button -->
   <button ion-button block clear 
-    *ngIf="isAdmin"
+    *ngIf="accounts.isActiveAccountAdmin"
     (click)="showAdminTutorial()">
     How do I make someone else the Admin?
   </button>

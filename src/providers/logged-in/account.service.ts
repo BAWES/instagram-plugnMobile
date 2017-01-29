@@ -6,6 +6,7 @@ import { InstagramAccount } from '../../models/instagram-account';
 import { StatsRecord } from '../../models/stats-record';
 
 // Services
+import { AuthService } from '../auth.service';
 import { AuthHttpService } from './authhttp.service';
 import { MediaService } from './media.service';
 import { ConversationService } from './conversation.service';
@@ -17,6 +18,7 @@ import { ConversationService } from './conversation.service';
 export class AccountService {
 
   public activeAccount: InstagramAccount; // The account currently being viewed by agent
+  public isActiveAccountAdmin: boolean = false; // Whether the logged in agent is admin of activeAccount
   public managedAccounts: InstagramAccount[]; // Array of managed accounts stored here
 
   public contentNeedsRefresh:boolean = false;
@@ -49,6 +51,7 @@ export class AccountService {
   constructor(
     private _platform: Platform,
     private _events: Events,
+    private _auth: AuthService,
     private _authhttp: AuthHttpService,
     private _media: MediaService,
     private _conversation: ConversationService,
@@ -111,6 +114,16 @@ export class AccountService {
     this._areTimersActivated = false;
     this.activeAccount = null;
     this.managedAccounts = null;
+  }
+
+  /**
+   * Update whether this user is an admin or not 
+   */
+  private _updateAdminStatus(){
+    if(this._auth.agentId && this.activeAccount && 
+      (this.activeAccount.agent_id == this._auth.agentId)){
+      this.isActiveAccountAdmin = true;
+    }else this.isActiveAccountAdmin = false;
   }
 
   /**
@@ -178,6 +191,8 @@ export class AccountService {
 
     // Proceed with switching accounts
     this.activeAccount = account;
+    // Update Admin Status
+    this._updateAdminStatus();
     // reset stats
     this.activeAccountStats = null;
     this.statsDatesArray = [];

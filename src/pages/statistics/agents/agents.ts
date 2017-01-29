@@ -44,8 +44,6 @@ export class AgentsPage {
     private _alertCtrl: AlertController,
     private _loadingCtrl: LoadingController
     ) {
-      this.updateAdminStatus();
-
       // Initialize the Agent Form
       this.agentForm = this._fb.group({
         email: ["", [Validators.required, CustomValidator.emailValidator]],
@@ -57,8 +55,6 @@ export class AgentsPage {
    */
   ionViewDidEnter() {
     this._analytics.trackView("Agent Management");
-
-    this.updateAdminStatus();
 
     // Disable Swipe on Right Menu
     this._menuCtrl.swipeEnable(false, "right");
@@ -83,15 +79,6 @@ export class AgentsPage {
     this._events.unsubscribe("account:switching", this._accountSwitchHandler);
     // Enable Swipe on Right Menu
     this._menuCtrl.swipeEnable(true, "right");
-  }
-
-  /**
-   * Update whether this user is an admin or not 
-   */
-  updateAdminStatus(){
-    if(this.accounts.activeAccount.agent_id == this.auth.agentId){
-      this.isAdmin = true;
-    }
   }
 
   /**

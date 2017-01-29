@@ -7,7 +7,6 @@ import { ConversationService } from '../../../providers/logged-in/conversation.s
 import { AccountService } from '../../../providers/logged-in/account.service';
 import { HardwareBackButtonService } from '../../../providers/hardwarebackbtn.service';
 import { AnalyticsService } from '../../../providers/analytics.service';
-import { AuthService } from '../../../providers/auth.service';
 import { ConfigService } from '../../../providers/config.service';
 
 // Pages
@@ -21,7 +20,6 @@ import { ConversationDetailPage } from '../conversation-detail/conversation-deta
   templateUrl: 'conversation.html'
 })
 export class ConversationPage {
-  public isAdmin: boolean = false;
   public searchInput: string = "";
 
   private _browser: InAppBrowser;
@@ -30,19 +28,15 @@ export class ConversationPage {
     public navCtrl: NavController,
     public conversations: ConversationService,
     public accounts: AccountService,
-    public auth: AuthService,
     private _analytics: AnalyticsService,
     private _backBtn: HardwareBackButtonService,
     private _events: Events,
     private _menuCtrl: MenuController,
     private _config: ConfigService
-    ) { 
-      this.updateAdminStatus();
-    }
+    ) {}
 
   ionViewDidEnter() {
     this._analytics.trackView("Conversation List");
-    this.updateAdminStatus();
 
     // Setup Back Button Behavior
     this._backBtn.toggleMenuOnBack();
@@ -68,16 +62,6 @@ export class ConversationPage {
       this.navCtrl.push(ConversationDetailPage, {
         conversation: conversationItem
       });
-  }
-
-  /**
-   * Update whether this user is an admin or not 
-   */
-  updateAdminStatus(){
-    if(this.auth.agentId && this.accounts.activeAccount && 
-      (this.accounts.activeAccount.agent_id == this.auth.agentId)){
-      this.isAdmin = true;
-    }
   }
 
   /**
