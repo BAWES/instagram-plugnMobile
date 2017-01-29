@@ -269,11 +269,7 @@ export class AccountService {
         // On account refresh, update the sidebar data for currently active account
         for(let i=0; i < this.managedAccounts.length; i++){
           if(this.managedAccounts[i].user_id == this.activeAccount.user_id){
-            this.activeAccount.user_follower_count = this.managedAccounts[i].user_follower_count;
-            this.activeAccount.user_following_count = this.managedAccounts[i].user_following_count;
-            this.activeAccount.user_media_count = this.managedAccounts[i].user_media_count;
-            this.activeAccount.lastAgentActivity = this.managedAccounts[i].lastAgentActivity;
-            this.activeAccount.assignments = this.managedAccounts[i].assignments;
+            this.activeAccount = this.managedAccounts[i];
             break;
           }
         }
