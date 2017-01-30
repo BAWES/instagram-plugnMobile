@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
 import { Deploy } from '@ionic/cloud-angular';
-import { Platform, Events, ToastController, AlertController, IonicApp, App, MenuController, Nav } from 'ionic-angular';
+import { Platform, Events, ToastController, AlertController, IonicApp, App, MenuController, Nav, LoadingController } from 'ionic-angular';
 import { StatusBar, OneSignal, Deeplinks } from 'ionic-native';
 
 import { NavigationPage } from '../pages/navigation/navigation';
@@ -25,6 +25,7 @@ export class MyApp implements OnInit{
     private _events: Events,
     private _alertCtrl: AlertController,
     private _toastCtrl: ToastController,
+    private _loadingCtrl: LoadingController,
     private _app: App, private _ionicApp: IonicApp, private _menu: MenuController,
     private _zone: NgZone
     ) {
@@ -151,6 +152,12 @@ export class MyApp implements OnInit{
           this._attemptVerifyEmail(code,verify);
         }
 
+        // Is user attempting to reset password?
+        if(path == '/deeplink/reset-password'){
+          const token = this._getParameterByName('token', url);
+          this._attemptResetPassword(token);
+        }
+
       }, (nomatch) => {
         // nomatch.$link - the full link data
         //console.warn('Unmatched Route', nomatch);
@@ -170,12 +177,62 @@ export class MyApp implements OnInit{
   }
 
   /**
+   * Attempt to Reset password using the passed token.
+   * Show Alert with input for new password.
+   */
+  private _attemptResetPassword(token: string){
+    // Show Prompt for user to input new password 
+    let alert = this._alertCtrl.create({
+      title: 'Your new password',
+      inputs: [
+        {
+          name: 'password',
+          placeholder: 'Password',
+          type: 'password'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Save',
+          handler: data => {
+            let newPassword = data.password;
+            // Show Loading 
+            let loading = this._loadingCtrl.create({
+              spinner: 'crescent',
+              content: 'Loading..'
+            });
+            loading.present();
+
+            this._auth.resetPasswordViaToken(token, newPassword).subscribe(response => {
+              // Hide Loading 
+              loading.dismiss();
+
+              // Show Output if Error
+              let alert = this._alertCtrl.create({
+                subTitle: response.message,
+                buttons: ['Ok']
+              });
+              alert.present();
+            });
+
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  /**
    * Attempt to Verify Email with supplied code and verify id.
    */
   private _attemptVerifyEmail(code: string, verify: number){
-    console.log("attempting to verify");
+    //console.log("attempting to verify");
     this._auth.verifyEmail(code, verify).subscribe(response => {
-      console.log("response", response.message);
+      //console.log("response", response.message);
       let alert = this._alertCtrl.create({
         title: 'Email Verification',
         subTitle: response.message,

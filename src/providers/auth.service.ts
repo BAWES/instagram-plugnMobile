@@ -33,6 +33,7 @@ export class AuthService {
   private _urlRequestResetPassword: string = "/auth/request-reset-password";
   private _urlResendVerificationEmail: string = "/auth/resend-verification-email";
   private _urlVerifyEmail: string = "/auth/verify";
+  private _urlResetPassword: string = "/auth/update-password";
 
   constructor(
     private _http: Http,
@@ -222,6 +223,20 @@ export class AuthService {
     const url = this._config.apiBaseUrl+this._urlVerifyEmail;
 
     return this._http.patch(url, JSON.stringify({'code': code, 'verify': verify}), {headers: headers})
+              .first()
+              .map((res: Response) => res.json());
+  }
+
+  /**
+   * Resets password based on provided Token and New Password
+   * @param  {string} token
+   * @param  {string} newPassword
+   */
+  resetPasswordViaToken(token: string, newPassword: string): Observable<any>{
+    const headers = new Headers({'Content-Type': 'application/json'});
+    const url = this._config.apiBaseUrl+this._urlResetPassword;
+
+    return this._http.patch(url, JSON.stringify({'token': token, 'newPassword': newPassword}), {headers: headers})
               .first()
               .map((res: Response) => res.json());
   }
