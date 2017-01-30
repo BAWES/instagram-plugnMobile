@@ -18,4 +18,5 @@ export interface Conversation{
     comment_notification_email_sent: string;
     comment_datetime: string;
     unhandledCount: string;
+    isLoading: boolean;
 }
