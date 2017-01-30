@@ -91,7 +91,7 @@ export class ConversationPage {
    * Conversation to handle
    */
   handleConversation(convToHandle: Conversation){
-    // Initiate Loading
+    // Initiate Loading. Make sure to not set it as false to indicate progress.
     convToHandle.isLoading = true;
 
     // Request from Server to handle conv
@@ -101,9 +101,6 @@ export class ConversationPage {
         +convToHandle.comment_by_id,
         convToHandle.comment_by_username)
       .subscribe((jsonResp: {operation: string, message: string}) => {
-        // Stop Loading
-        convToHandle.isLoading = false;
-
         // Process response from server
         if(jsonResp.operation == "success"){
           // Require content reload
