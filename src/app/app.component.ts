@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone, ViewChild } from '@angular/core';
 import { Deploy } from '@ionic/cloud-angular';
-import { Platform, Events, ToastController, IonicApp, App, MenuController, Nav } from 'ionic-angular';
+import { Platform, Events, ToastController, AlertController, IonicApp, App, MenuController, Nav } from 'ionic-angular';
 import { StatusBar, OneSignal, Deeplinks } from 'ionic-native';
 
 import { NavigationPage } from '../pages/navigation/navigation';
@@ -23,6 +23,7 @@ export class MyApp implements OnInit{
     private _auth: AuthService,
     private _keyboard: KeyboardService,
     private _events: Events,
+    private _alertCtrl: AlertController,
     private _toastCtrl: ToastController,
     private _app: App, private _ionicApp: IonicApp, private _menu: MenuController,
     private _zone: NgZone
@@ -93,6 +94,12 @@ export class MyApp implements OnInit{
                   //console.log('Extracting = ' + p + '%');
               }
           }).then(() => {
+            // Reload App after 3 seconds
+            toast.setMessage('Restart app to apply update');
+            setTimeout(() => {
+              this.deploy.load();
+            }, 3000);
+
             // Get info about the currently active snapshot 
             this.deploy.info().then((info: {deploy_uuid: string, binary_version: string}) => {
               
@@ -132,14 +139,50 @@ export class MyApp implements OnInit{
     Deeplinks.routeWithNavController(this.navChild, {
         //'/app': rootPageToLoad, //Not loading the app deeplink to not trigger back behavior
       }).subscribe((match) => {
-        // match.$route - the route we matched, which is the matched entry from the arguments to route()
-        // match.$args - the args passed in the link
-        // match.$link - the full link data
-        console.log('Successfully routed', match);
+        // Handle Deeplinks to Verify Email 
+        let url = match.$link.url;
+        let path = match.$link.path;
+        //let queryString = match.$link.queryString;
+
+        // Is user attempting to verify email?
+        if(path == '/deeplink/email-verify'){
+          const code = this._getParameterByName('code', url);
+          const verify = +this._getParameterByName('verify', url);
+          this._attemptVerifyEmail(code,verify);
+        }
+
       }, (nomatch) => {
         // nomatch.$link - the full link data
-        console.warn('Unmatched Route', nomatch);
+        //console.warn('Unmatched Route', nomatch);
       });
+  }
+
+  /**
+   * Parse URL for given variable name
+   */
+  private _getParameterByName(name: string, url: string) {
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+          results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
+
+  /**
+   * Attempt to Verify Email with supplied code and verify id.
+   */
+  private _attemptVerifyEmail(code: string, verify: number){
+    console.log("attempting to verify");
+    this._auth.verifyEmail(code, verify).subscribe(response => {
+      console.log("response", response.message);
+      let alert = this._alertCtrl.create({
+        title: 'Email Verification',
+        subTitle: response.message,
+        buttons: ['Ok']
+      });
+      alert.present();
+    });
   }
 
 

@@ -32,6 +32,7 @@ export class AuthService {
   private _urlCreateAccount: string = "/auth/create-account";
   private _urlRequestResetPassword: string = "/auth/request-reset-password";
   private _urlResendVerificationEmail: string = "/auth/resend-verification-email";
+  private _urlVerifyEmail: string = "/auth/verify";
 
   constructor(
     private _http: Http,
@@ -207,6 +208,20 @@ export class AuthService {
     const url = this._config.apiBaseUrl+this._urlResendVerificationEmail;
 
     return this._http.post(url, JSON.stringify({'email': emailInput}), {headers: headers})
+              .first()
+              .map((res: Response) => res.json());
+  }
+
+  /**
+   * Verify Email
+   * @param  {string} code
+   * @param  {number} verify
+   */
+  verifyEmail(code: string, verify: number): Observable<any>{
+    const headers = new Headers({'Content-Type': 'application/json'});
+    const url = this._config.apiBaseUrl+this._urlVerifyEmail;
+
+    return this._http.patch(url, JSON.stringify({'code': code, 'verify': verify}), {headers: headers})
               .first()
               .map((res: Response) => res.json());
   }
