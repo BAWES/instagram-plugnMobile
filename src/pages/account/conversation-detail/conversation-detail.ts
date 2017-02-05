@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavController, NavParams, Events, Content, AlertController, ModalController,
-  MenuController, ToastController } from 'ionic-angular';
+  MenuController } from 'ionic-angular';
 
 // Models
 import { Conversation } from '../../../models/conversation';
@@ -19,6 +19,7 @@ import { AnalyticsService } from '../../../providers/analytics.service';
 import { FormControl, Validators } from '@angular/forms';
 
 // Pages
+import { TutorialInnerPage } from '../../tutorial-inner/tutorial-inner';
 import { NotePage } from '../../note/note';
 
 /*
@@ -70,7 +71,6 @@ export class ConversationDetailPage {
     private _backBtn: HardwareBackButtonService,
     private _alertCtrl: AlertController,
     private _menuCtrl: MenuController,
-    private _toastCtrl: ToastController,
     private _modalCtrl: ModalController
     ) {
       this.activeConversation = params.get("conversation");
@@ -87,7 +87,7 @@ export class ConversationDetailPage {
     this._loadComments();
 
     // Present Sliding Tutorial
-    this.notifyOptions();
+    this.showTutorial();
 
     // Add margin to ion-list of comments when keyboard opens
     // This will help scroll through and read comments while typing
@@ -408,25 +408,20 @@ export class ConversationDetailPage {
   }
 
   /**
-   * Present toast showing available options when dealing with this item
-   * TOAST IS TO BE SHOWN ONCE A DAY ONLY!
+   * Show Inner Tutorial (only show once per lifetime)
    */
-  notifyOptions(){
-    let hasShownNotification = localStorage.getItem("shownSwipeNotification");
+  showTutorial(){
+    let innerTutorialShown = localStorage.getItem("innerTutorialShown3");
 
-    // If user hasn't been previously notified
-    if(hasShownNotification != "true"){
-      // Present Toast
-      let toast = this._toastCtrl.create({
-        message: 'Swipe a comment to the left for additional options',
-        position: 'bottom',
-        showCloseButton: true,
-        closeButtonText: "Ok"
+    // If user hasn't been previously shown
+    if(innerTutorialShown != "true"){
+      // Load it as a "Modal" which can be exited
+      let modal = this._modalCtrl.create(TutorialInnerPage, {});
+      modal.onDidDismiss(data => {
+        // Save that previously shown
+        window.localStorage.setItem('innerTutorialShown3', "true");
       });
-      toast.present();
-
-      // Save that previously notified
-      window.localStorage.setItem('shownSwipeNotification', "true");
+      modal.present();
     }
   }
 

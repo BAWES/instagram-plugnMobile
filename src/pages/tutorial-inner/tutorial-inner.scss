@@ -1,0 +1,45 @@
+page-tutorial-inner {
+  .toolbar-background {
+    background: transparent !important;
+    border-color: transparent;
+  }
+
+  .slide-zoom {
+    height: 100%;
+  }
+
+  .slide-title {
+    margin-top: 1rem;
+  }
+
+  .slide-image {
+    max-height: 40%;
+    max-width: 68%;
+    margin: 36px 0;
+    margin-top:80px;
+    margin-bottom: 10px;
+  }
+
+  .tap-icon{
+    margin: 36px 0;
+    margin-top:115px;
+    margin-bottom:10px;
+    font-size:2.5em;
+  }
+
+  b {
+    font-weight: 500;
+  }
+
+  p {
+    padding: 0 40px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #60646B;
+
+    b {
+      color: #000000;
+    }
+  }
+
+}

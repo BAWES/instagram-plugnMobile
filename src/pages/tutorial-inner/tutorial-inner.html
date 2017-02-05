@@ -1,0 +1,31 @@
+<ion-header no-border>
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="close()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content no-bounce>
+
+  <ion-slides pager="true" (ionSlideWillChange)="onSlideChangeStart($event)">
+
+    <!-- Slide -->
+    <ion-slide>
+      <img src="assets/img/swipe-for-more.gif" class="slide-image"/>
+      <h2 class="slide-title">Swipe!</h2>
+      <p>Swiping a comment reveals additional actions you can perform</p>
+    </ion-slide>
+
+    <!-- The Final Slide -->
+    <ion-slide>
+      <ion-icon name="ios-finger-print" class="tap-icon"></ion-icon>
+      <h2 class="slide-title">Tap!</h2>
+      <p>Tap a comment to know more about its origins!</p>
+    </ion-slide>
+
+  </ion-slides>
+
+</ion-content>
