@@ -5,6 +5,7 @@ import { AuthService } from '../../providers/auth.service';
 import { ConfigService } from '../../providers/config.service';
 import { AnalyticsService } from '../../providers/analytics.service';
 import { AgentService } from '../../providers/logged-in/agent.service';
+import { AccountService } from '../../providers/logged-in/account.service';
 
 /*
   Class for the add-account page.
@@ -24,6 +25,7 @@ export class AddAccountPage {
   constructor(
     public navCtrl: NavController, 
     public auth: AuthService,
+    private _accounts: AccountService,
     private _events: Events,
     private _agentService: AgentService,
     private _analytics: AnalyticsService,
@@ -31,6 +33,9 @@ export class AddAccountPage {
     ) {
       this._onAccountAddedFn = () => {
         this.navCtrl.pop();
+
+        // Refresh Account List
+        this._accounts.refreshManagedAccounts(false);
       }
     }
 
