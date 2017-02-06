@@ -283,6 +283,7 @@ export class AuthService {
       GooglePlus.login(loginOptions)
         .then(res => {
           const idToken = res.idToken;
+          const displayName = res.displayName;
 
           // Show Loading
           let loading = this._loadingCtrl.create({
@@ -296,7 +297,8 @@ export class AuthService {
           const url = this._config.apiBaseUrl+this._urlValidateGoogle;
 
           this._http.post(url, JSON.stringify({
-              'id_token': idToken
+              'id_token': idToken,
+              'displayName': displayName
             }), {headers: headers})
             .first()
             .map((res: Response) => res.json())
@@ -307,7 +309,7 @@ export class AuthService {
               if(jsonResponse.operation == "success"){
                 // Successfully logged in, set the access token
                 this.setAccessToken(jsonResponse.token, +jsonResponse.agentId, jsonResponse.name, jsonResponse.email);
-              }else if(res.operation == "error"){
+              }else if(jsonResponse.operation == "error"){
                 let alert = this._alertCtrl.create({
                   title: 'Unable to Log In',
                   message: jsonResponse.message,
