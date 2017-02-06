@@ -6,7 +6,7 @@ import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 
 import { Platform, Events } from 'ionic-angular';
-import { InAppBrowser, NativeStorage } from 'ionic-native';
+import { InAppBrowser, NativeStorage, GooglePlus } from 'ionic-native';
 
 import { ConfigService } from './config.service';
 
@@ -258,13 +258,31 @@ export class AuthService {
    * Proceed with Authorizing Google
    */
   authGoogle(){
-    let url = "https://agent.plugn.io/authmobile/google";
+    const loginOptions = {
+      //'scopes': 'profile email',
+      'webClientId': '882152609344-ahm24v4mttplse2ahf35ffe4g0r6noso.apps.googleusercontent.com',
+      'offline': true, 
+    };
+
+    // If iOS or Android, attempt native Google Auth
+    if(this._platform.is("mobile")){
+      GooglePlus.login(loginOptions)
+        .then(res => {
+          // Possible Successful Login?
+          console.log(JSON.stringify(res));
+        })
+        .catch(err => {
+          // Unsuccessful login
+          console.log(JSON.stringify(err));
+        });
+    }
+    
     // If target is Browser/PWA > Switch to normal Auth url 
     if(this._platform.is("core")){
-      url = "https://agent.plugn.io/auth/google";
+      let url = "https://agent.plugn.io/auth/google";
+      this.processAuthFromUrl(url);
     }
-
-    this.processAuthFromUrl(url);
+    
   }
 
   /**
