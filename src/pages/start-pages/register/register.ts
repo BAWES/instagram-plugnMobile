@@ -70,7 +70,7 @@ export class RegisterPage {
 
     this._auth.createAccount(fullname, email, password).subscribe(res => {
       this.isLoading = false;
-      console.log(JSON.stringify(res));
+      //console.log(JSON.stringify(res));
 
       if(res.operation == "success"){
         let alert = this._alertCtrl.create({
