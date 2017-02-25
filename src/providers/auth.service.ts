@@ -5,8 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 
-import { Platform, Events } from 'ionic-angular';
-import { InAppBrowser, NativeStorage } from 'ionic-native';
+import { Platform, Events, LoadingController, AlertController } from 'ionic-angular';
+import { InAppBrowser, NativeStorage, GooglePlus } from 'ionic-native';
 
 import { ConfigService } from './config.service';
 
@@ -29,6 +29,7 @@ export class AuthService {
   private _browserCloseEvents;
 
   private _urlBasicAuth: string = "/auth/login";
+  private _urlValidateGoogle: string = "/auth/validate";
   private _urlCreateAccount: string = "/auth/create-account";
   private _urlRequestResetPassword: string = "/auth/request-reset-password";
   private _urlResendVerificationEmail: string = "/auth/resend-verification-email";
@@ -39,7 +40,9 @@ export class AuthService {
     private _http: Http,
     private _platform: Platform,
     private _config: ConfigService,
-    private _events: Events
+    private _events: Events,
+    private _alertCtrl: AlertController,
+    private _loadingCtrl: LoadingController
     ) {
       _platform.ready().then(() => {
         this._updateLoginStatus();
@@ -74,6 +77,8 @@ export class AuthService {
       NativeStorage.remove("loggedInAgent").then(() => {
         // alert("deleted from nativestorage");
       });
+      // Delete Access Token for Google Auth
+      GooglePlus.logout();
     }
 
     this._accessToken = null;
@@ -258,13 +263,73 @@ export class AuthService {
    * Proceed with Authorizing Google
    */
   authGoogle(){
-    let url = "https://agent.plugn.io/authmobile/google";
     // If target is Browser/PWA > Switch to normal Auth url 
     if(this._platform.is("core")){
-      url = "https://agent.plugn.io/auth/google";
+      let url = "https://agent.plugn.io/auth/google";
+      this.processAuthFromUrl(url);
+      return;
     }
 
-    this.processAuthFromUrl(url);
+    // If iOS or Android, attempt native Google Auth
+    if(this._platform.is("mobile"))
+    {
+      // Native Google Login Options
+      const loginOptions = {
+        'webClientId': '882152609344-ahm24v4mttplse2ahf35ffe4g0r6noso.apps.googleusercontent.com',
+        //'scopes': 'profile email',
+        //'offline': true, 
+      };
+
+      GooglePlus.login(loginOptions)
+        .then(res => {
+          const idToken = res.idToken;
+          const displayName = res.displayName;
+
+          // Show Loading
+          let loading = this._loadingCtrl.create({
+            spinner: 'crescent',
+            content: 'Logging in..'
+          });
+          loading.present();
+          
+          // Validate and login on server using the id token
+          const headers = new Headers({'Content-Type': 'application/json'});
+          const url = this._config.apiBaseUrl+this._urlValidateGoogle;
+
+          this._http.post(url, JSON.stringify({
+              'id_token': idToken,
+              'displayName': displayName
+            }), {headers: headers})
+            .first()
+            .map((res: Response) => res.json())
+            .subscribe(jsonResponse => {
+              // Dismiss Loading 
+              loading.dismiss();
+
+              if(jsonResponse.operation == "success"){
+                // Successfully logged in, set the access token
+                this.setAccessToken(jsonResponse.token, +jsonResponse.agentId, jsonResponse.name, jsonResponse.email);
+              }else if(jsonResponse.operation == "error"){
+                let alert = this._alertCtrl.create({
+                  title: 'Unable to Log In',
+                  message: jsonResponse.message,
+                  buttons: ['Ok'],
+                });
+                alert.present();
+              }
+              
+            });
+            
+            return;
+        })
+        .catch(err => {
+          // Unsuccessful login
+          //alert(JSON.stringify(err));
+          // This method is also called in the case where user clicks login button then changes mind
+          
+        });
+    }
+    
   }
 
   /**

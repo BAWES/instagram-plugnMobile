@@ -96,7 +96,7 @@ export class MyApp implements OnInit{
               }
           }).then(() => {
             // Reload App after 3 seconds
-            toast.setMessage('Restart app to apply update');
+            toast.setMessage('Restarting app to apply update..');
             setTimeout(() => {
               this.deploy.load();
             }, 3000);
