@@ -59,6 +59,9 @@ export class ConversationDetailPage {
   // Interval Refresh Timer
   private _refreshTimer;
 
+  // Whether this account has a Team or being handled by Individual
+  public userType;
+
   constructor(
     params: NavParams,
     public navCtrl: NavController,
@@ -109,6 +112,9 @@ export class ConversationDetailPage {
 
     this._initRefresher();
 
+    // Team vs Individual Management?
+    this._setDefaultBehaviors();
+
     // Load Notes on Page Open
     this._loadNotes();
 
@@ -132,6 +138,12 @@ export class ConversationDetailPage {
   ionViewWillLeave(){
     // Disable Refresh Timer
     clearInterval(this._refreshTimer);
+
+    // If User Type is Individual and has unhandled, mark this conversation as handled
+    const unhandledCount = this.activeConversation.unhandledCount;
+    if(unhandledCount && (this.userType == "individual")){
+      this.markConversationHandled(true, false);
+    }
 
     // Unsubscribe
     this._events.unsubscribe("account:switching", this._accountSwitchHandler);
@@ -159,9 +171,20 @@ export class ConversationDetailPage {
   }
 
   /**
+   * Default Behaviors based on Team vs Individual Managing this Account
+   */
+  private _setDefaultBehaviors(){
+    // Check whether Team or Individual opened page 
+    const numberOfAgents = this.accounts.activeAccount.assignments.length;
+    if(numberOfAgents > 1){
+      this.userType = "team";
+    }else this.userType = "individual";
+  }
+
+  /**
    * Marks conversation comments as handled
    */
-  markConversationHandled(ignoreErrors:boolean = false){
+  markConversationHandled(ignoreErrors:boolean = false, scrollOnComplete:boolean = true){
     // Initiate Loading
     this.handleLoading = true;
 
@@ -181,9 +204,11 @@ export class ConversationDetailPage {
           this._loadComments(() => {
             this.handleLoading = false;
             // Scroll to the comment at the bottom
-            setTimeout(() => {
-              this.content.scrollToBottom(0);
-            }, 100);
+            if(scrollOnComplete){
+              setTimeout(() => {
+                this.content.scrollToBottom(0);
+              }, 100);
+            }
           }, "handledConversation");
         }else if(jsonResp.operation == "error"){
           this.handleLoading = false
