@@ -110,10 +110,18 @@ export class ConversationDetailPage {
   ionViewDidEnter() {
     this._analytics.trackView("Conversation Detail");
 
-    this._initRefresher();
+    // Conversation Comment Refresh Content.
+    // Uncomment to Enable
+    //this._initRefresher();
 
     // Team vs Individual Management?
     this._setDefaultBehaviors();
+
+    // If User Type is Individual and has unhandled, mark this conversation as handled
+    const unhandledCount = this.activeConversation.unhandledCount;
+    if(unhandledCount && (this.userType == "individual")){
+      this.markConversationHandled(true, false, false);
+    }
 
     // Load Notes on Page Open
     this._loadNotes();
@@ -138,12 +146,6 @@ export class ConversationDetailPage {
   ionViewWillLeave(){
     // Disable Refresh Timer
     clearInterval(this._refreshTimer);
-
-    // If User Type is Individual and has unhandled, mark this conversation as handled
-    const unhandledCount = this.activeConversation.unhandledCount;
-    if(unhandledCount && (this.userType == "individual")){
-      this.markConversationHandled(true, false);
-    }
 
     // Unsubscribe
     this._events.unsubscribe("account:switching", this._accountSwitchHandler);
@@ -184,7 +186,7 @@ export class ConversationDetailPage {
   /**
    * Marks conversation comments as handled
    */
-  markConversationHandled(ignoreErrors:boolean = false, scrollOnComplete:boolean = true){
+  markConversationHandled(ignoreErrors:boolean = false, scrollOnComplete:boolean = true, doRefresh:boolean = true){
     // Initiate Loading
     this.handleLoading = true;
 
@@ -197,19 +199,23 @@ export class ConversationDetailPage {
       .subscribe((jsonResp: {operation: string, message: string}) => {
         // Process response from server
         if(jsonResp.operation == "success"){
-          // Require content reload
+          
+          // Require content reload on main conv page
           this.accounts.contentNeedsRefresh = true;
+          if(doRefresh){
+            // Reload comments on success, stop loading on callback
+            this._loadComments(() => {
+              this.handleLoading = false;
+              // Scroll to the comment at the bottom
+              if(scrollOnComplete){
+                setTimeout(() => {
+                  this.content.scrollToBottom(0);
+                }, 100);
+              }
+            }, "handledConversation");
+          }
 
-          // Reload comments on success, stop loading on callback
-          this._loadComments(() => {
-            this.handleLoading = false;
-            // Scroll to the comment at the bottom
-            if(scrollOnComplete){
-              setTimeout(() => {
-                this.content.scrollToBottom(0);
-              }, 100);
-            }
-          }, "handledConversation");
+          
         }else if(jsonResp.operation == "error"){
           this.handleLoading = false
 
