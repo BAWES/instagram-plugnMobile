@@ -263,15 +263,8 @@ export class AuthService {
    * Proceed with Authorizing Google
    */
   authGoogle(){
-    // If target is Browser/PWA > Switch to normal Auth url 
-    if(this._platform.is("core")){
-      let url = "https://agent.plugn.io/auth/google";
-      this.processAuthFromUrl(url);
-      return;
-    }
-
     // If iOS or Android, attempt native Google Auth
-    if(this._platform.is("mobile"))
+    if(this._platform.is("mobile")) 
     {
       // Native Google Login Options
       const loginOptions = {
@@ -336,26 +329,14 @@ export class AuthService {
    * Proceed with Authorizing Windows Live
    */
   authWindowsLive(){
-    let url = "https://agent.plugn.io/authmobile/live";
-    // If target is Browser/PWA > Switch to normal Auth url 
-    if(this._platform.is("core")){
-      url = "https://agent.plugn.io/auth/live";
-    }
-
-    this.processAuthFromUrl(url);
+    this.processAuthFromUrl("https://agent.plugn.io/authmobile/live");
   }
 
   /**
    * Proceed with Authorizing Slack
    */
   authSlack(){
-    let url = "https://agent.plugn.io/authmobile/slack";
-    // If target is Browser/PWA > Switch to normal Auth url 
-    if(this._platform.is("core")){
-      url = "https://agent.plugn.io/auth/slack";
-    }
-
-    this.processAuthFromUrl(url);
+    this.processAuthFromUrl("https://agent.plugn.io/authmobile/slack");
   }
 
   /**
@@ -373,7 +354,7 @@ export class AuthService {
         });
 
         // Keep track of browser if closed
-        this._browserCloseEvents = this._browser.on("exit").first().subscribe(resp => {
+        this._browserCloseEvents = this._browser.on("exit").subscribe(resp => {
           // Browser closed, unsubscribe from previous observables
           this._browserLoadEvents.unsubscribe();
           this._browserCloseEvents.unsubscribe();

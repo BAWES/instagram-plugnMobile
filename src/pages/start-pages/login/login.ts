@@ -1,6 +1,6 @@
 // Core
 import { Component, ApplicationRef } from '@angular/core';
-import { NavController, AlertController, Events } from 'ionic-angular';
+import { NavController, AlertController, Events, Platform } from 'ionic-angular';
 // Services
 import { AuthService } from '../../../providers/auth.service';
 import { KeyboardService } from '../../../providers/keyboard.service';
@@ -25,6 +25,9 @@ export class LoginPage {
 
   // Disable submit button if loading response
   public isLoading = false;
+  
+  // If PWA / Browser App
+  public isPWA = false;
 
   // Store old email and password to make sure user won't make same mistake twice
   public oldEmailInput = "";
@@ -44,13 +47,21 @@ export class LoginPage {
     private _alertCtrl: AlertController,
     public keyboard: KeyboardService,
     private _events: Events,
-    private _ref:ApplicationRef
+    private _ref:ApplicationRef,
+    private _platform: Platform
     ){
       // Initialize the Login Form
       this.loginForm = this._fb.group({
         email: ["", [Validators.required, CustomValidator.emailValidator]],
         password: ["", Validators.required]
       });
+
+      
+    // If target is Browser/PWA > Switch to normal Auth url 
+    if(this._platform.is("core") || this._platform.is("mobileweb")){
+      this.isPWA = true;
+    }
+
   }
 
   ionViewDidLoad(){

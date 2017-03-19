@@ -7,7 +7,8 @@
   <ion-card class='loginCard'>
 
     <ion-card-content class='authArea'>
-      <div *ngIf="!keyboard.isKeyboardOpen">
+      <!-- Mobile (Native) -->
+      <div *ngIf="!keyboard.isKeyboardOpen && !isPWA">
         <button (click)="authorizeVia('Google')"
         class='addspace' ion-button icon-left block color="google">
           <ion-icon name="logo-googleplus"></ion-icon>
@@ -25,6 +26,30 @@
           <i class="fa fa-slack" aria-hidden="true"></i>
           <span style='margin-left:5px;'>Log in with Slack</span>
         </button>
+
+        <span class="or-wrapper">
+          <span class="or-text">or</span>
+        </span>
+      </div>
+      <!-- Mobile (Desktop/Core) -->
+      <div *ngIf="!keyboard.isKeyboardOpen && isPWA">
+        <a href="https://agent.plugn.io/auth/google"
+          class='addspace' ion-button icon-left block color="google">
+          <ion-icon name="logo-googleplus"></ion-icon>
+          Log in with Google
+        </a>
+
+        <a href="https://agent.plugn.io/auth/live"
+          ion-button icon-left block>
+          <ion-icon name="logo-windows"></ion-icon>
+          Log in with Live
+        </a>
+
+        <a href="https://agent.plugn.io/auth/slack"
+          ion-button block color="dark">
+          <i class="fa fa-slack" aria-hidden="true"></i>
+          <span style='margin-left:5px;'>Log in with Slack</span>
+        </a>
 
         <span class="or-wrapper">
           <span class="or-text">or</span>
