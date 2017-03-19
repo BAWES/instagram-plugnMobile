@@ -20,6 +20,8 @@ import { MediaStatsPage } from '../statistics/media-stats/media-stats';
 import { FollowingPage } from '../statistics/following/following';
 import { FollowersPage } from '../statistics/followers/followers';
 
+import 'rxjs/add/operator/first';
+
 @Component({
   selector: 'page-navigation',
   templateUrl: 'navigation.html'
@@ -206,7 +208,7 @@ export class NavigationPage {
       });
 
       // Keep track of browser if closed
-      this._browserCloseEvents = this._browser.on("exit").first().subscribe(resp => {
+      this._browserCloseEvents = this._browser.on("exit").subscribe(resp => {
         // Browser closed, unsubscribe from previous observables
         this._browserLoadEvents.unsubscribe();
         this._browserCloseEvents.unsubscribe();

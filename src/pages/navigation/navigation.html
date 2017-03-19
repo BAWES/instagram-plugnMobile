@@ -1,60 +1,3 @@
-<!-- Menu Left -->
-<ion-menu #menuLeft side="left" type="overlay" [content]="loggedInContent">
-  <ion-header>
-    <ion-toolbar text-center style="height:auto;">
-      <img margin style='height:45px;' src="assets/brand/logo-dark.png" />
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-
-    <ion-list>
-      <ion-list-header>Managed Accounts</ion-list-header>
-
-      <div *ngIf="accounts.managedAccounts">
-        <button ion-item *ngFor="let account of accounts.managedAccounts" (click)="loadInstagramAccount(account); menuLeft.close();">
-          <ion-avatar item-left>
-            <img src="{{ account.user_profile_pic }}" onError="this.src='assets/user.png';">
-          </ion-avatar>
-          @{{ account.user_name }}
-          <ion-badge item-right color="danger" *ngIf="account.unhandledCount > 0">
-            {{ account.unhandledCount }}
-          </ion-badge>
-        </button>
-      </div>
-
-      <button ion-item (click)="loadAddAccountPage()">
-        <ion-avatar item-left>
-          <img src="assets/insta-logo.png">
-        </ion-avatar>
-        Add Instagram Account
-      </button>
-    </ion-list>
-
-
-    <ion-list>
-      <ion-list-header>Personal</ion-list-header>
-
-      <button ion-item (click)="loadMyActivityPage()">
-        <ion-icon name="ios-analytics" item-left></ion-icon>
-        My Activity
-      </button>
-      <button ion-item (click)="getAuthKeyThenLoadPage('billing')">
-        <ion-icon name="ios-card" item-left></ion-icon>
-        Billing
-      </button>
-      <button ion-item (click)="loadUrl('https://plugn.io/contact')">
-        <ion-icon name="help-circle" item-left></ion-icon>
-        Help and Support
-      </button>
-      <button ion-item (click)="logout()">
-        <ion-icon name="ios-log-out" item-left></ion-icon>
-        Logout
-      </button>
-    </ion-list>
-  </ion-content>
-</ion-menu>
-
-
 <!-- Menu Right -->
 <ion-menu #menuRight *ngIf="accounts.activeAccount"
   side="right" type="overlay" [content]="loggedInContent">
@@ -123,6 +66,63 @@
   </ion-footer>
 </ion-menu>
 
-<ion-nav #loggedInContent
-  swipeBackEnabled="true"
-  [root]="rootPage"></ion-nav>
+<ion-split-pane>
+  <!-- Menu Left -->
+  <ion-menu #menuLeft side="left" type="overlay" [content]="loggedInContent">
+    <ion-header>
+      <ion-toolbar text-center style="height:auto;">
+        <img margin style='height:45px;' src="assets/brand/logo-dark.png" />
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+
+      <ion-list>
+        <ion-list-header>Managed Accounts</ion-list-header>
+
+        <div *ngIf="accounts.managedAccounts">
+          <button ion-item *ngFor="let account of accounts.managedAccounts" (click)="loadInstagramAccount(account); menuLeft.close();">
+            <ion-avatar item-left>
+              <img src="{{ account.user_profile_pic }}" onError="this.src='assets/user.png';">
+            </ion-avatar>
+            @{{ account.user_name }}
+            <ion-badge item-right color="danger" *ngIf="account.unhandledCount > 0">
+              {{ account.unhandledCount }}
+            </ion-badge>
+          </button>
+        </div>
+
+        <button ion-item (click)="loadAddAccountPage()">
+          <ion-avatar item-left>
+            <img src="assets/insta-logo.png">
+          </ion-avatar>
+          Add Instagram Account
+        </button>
+      </ion-list>
+
+
+      <ion-list>
+        <ion-list-header>Personal</ion-list-header>
+
+        <button ion-item (click)="loadMyActivityPage()">
+          <ion-icon name="ios-analytics" item-left></ion-icon>
+          My Activity
+        </button>
+        <button ion-item (click)="getAuthKeyThenLoadPage('billing')">
+          <ion-icon name="ios-card" item-left></ion-icon>
+          Billing
+        </button>
+        <button ion-item (click)="loadUrl('https://plugn.io/contact')">
+          <ion-icon name="help-circle" item-left></ion-icon>
+          Help and Support
+        </button>
+        <button ion-item (click)="logout()">
+          <ion-icon name="ios-log-out" item-left></ion-icon>
+          Logout
+        </button>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-nav #loggedInContent swipeBackEnabled="true" [root]="rootPage" main></ion-nav>
+
+</ion-split-pane>
