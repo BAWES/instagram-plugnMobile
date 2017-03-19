@@ -1,6 +1,6 @@
 // Core
 import { Component, ApplicationRef } from '@angular/core';
-import { NavController, AlertController, Events } from 'ionic-angular';
+import { NavController, AlertController, Events, Platform } from 'ionic-angular';
 // Services
 import { AuthService } from '../../../providers/auth.service';
 import { KeyboardService } from '../../../providers/keyboard.service';
@@ -23,6 +23,9 @@ export class RegisterPage {
   // Disable submit button if loading response
   public isLoading = false;
 
+  // If PWA / Browser App
+  public isPWA = false;
+
   // Event Handlers to Unsubscribe from 
   private _keyboardToggleHandler;
 
@@ -34,7 +37,8 @@ export class RegisterPage {
     private _alertCtrl: AlertController,
     private _events: Events,
     public keyboard: KeyboardService,
-    private _ref:ApplicationRef
+    private _ref:ApplicationRef,
+    private _platform: Platform
     ){
       // Initialize the Registration Form
       this.signupForm = this._fb.group({
@@ -42,6 +46,11 @@ export class RegisterPage {
         email: ["", [Validators.required, CustomValidator.emailValidator]],
         password: ["", Validators.required]
       }); 
+
+      // If target is Browser/PWA > Switch to normal Auth url 
+      if(this._platform.is("core") || this._platform.is("mobileweb")){
+        this.isPWA = true;
+      }
   }
 
   ionViewDidEnter() {
