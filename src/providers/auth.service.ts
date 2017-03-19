@@ -373,7 +373,7 @@ export class AuthService {
         });
 
         // Keep track of browser if closed
-        this._browserCloseEvents = this._browser.on("exit").first().subscribe(resp => {
+        this._browserCloseEvents = this._browser.on("exit").subscribe(resp => {
           // Browser closed, unsubscribe from previous observables
           this._browserLoadEvents.unsubscribe();
           this._browserCloseEvents.unsubscribe();
