@@ -1,6 +1,5 @@
 {
   "name": "Plugn",
   "app_id": "7e4f1778",
-  "v2": true,
-  "typescript": true
+  "type": "ionic-angular"
 }

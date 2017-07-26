@@ -1,7 +1,15 @@
 import { NgModule, ErrorHandler } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { HttpModule } from '@angular/http';
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+import { IonicStorageModule } from '@ionic/storage';
 
+// Ionic Native
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+
+// App imports
 import { MyApp } from './app.component';
 
 // Start Pages [Logged Out]
@@ -144,6 +152,8 @@ export const toDeclare = [
   declarations: toDeclare,
   entryComponents: pages,
   imports: [
+    BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp, {
       // Global Config
       tabsHideOnSubPages: true,
@@ -157,10 +167,15 @@ export const toDeclare = [
           }
       }
     }),
-    CloudModule.forRoot(cloudSettings)
+    CloudModule.forRoot(cloudSettings),
+    IonicStorageModule.forRoot()
   ],
   providers: [
+    // Ionic Native 
+    StatusBar,
+    SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    // custom
     AuthService, //Handles all Authorization
     KeyboardService, //Handles all Keyboard Activity
     HardwareBackButtonService, //Handles Hardware back button

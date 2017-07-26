@@ -1,7 +1,6 @@
 import { Directive, ElementRef, Input } from '@angular/core';
 import { Content, Platform } from 'ionic-angular';
 import { Keyboard } from 'ionic-native';
-import { Subscription } from 'rxjs/rx';
 
 
 /**
@@ -39,8 +38,8 @@ import { Subscription } from 'rxjs/rx';
 export class KeyboardAttachDirective {
   @Input('keyboardAttach') content: Content;
 
-  private onShowSubscription: Subscription;
-  private onHideSubscription: Subscription;
+  private onShowSubscription: any;
+  private onHideSubscription: any;
 
   constructor(
     private elementRef: ElementRef,
