@@ -35,108 +35,71 @@
     <img src='assets/brand/loader.gif'>
   </div>
 
-  <!-- When content available -->
-  <div *ngIf="!conversations.isLoading || conversations.refresherLoading">
+  <!-- Search Input -->
+  <ion-toolbar no-border *ngIf="accounts.activeAccount?.user_status == 10">
+    <ion-searchbar
+      [(ngModel)]="searchInput"
+      (ionInput)="searchFilter($event)"
+      debounce=250>
+    </ion-searchbar>
+  </ion-toolbar>
 
-    <!-- Search Input -->
-    <ion-toolbar no-border *ngIf="accounts.activeAccount?.user_status == 10">
-      <ion-searchbar
-        [(ngModel)]="searchInput"
-        (ionInput)="searchFilter($event)"
-        debounce=250>
-      </ion-searchbar>
-    </ion-toolbar>
+  <!-- Display Instagram Access Token Expired Message -->
+  <div padding *ngIf="accounts.activeAccount?.user_status == 30" style='text-align:center;'>
+    <ion-icon style='font-size:3em;' name="build"></ion-icon>
+    <h2 style='margin-top:0;'>Fix Account Access</h2>
+    <p>There's a slight problem connecting to your Instagram account.
+      Don't worry though, it's very quick to fix.
+    </p>
+    <p *ngIf="!accounts.isActiveAccountAdmin">
+      All you need to do is ask the Admin of @{{ accounts.activeAccount.user_name }} to reconnect 
+      their Instagram account.
+    </p>
+    <p *ngIf="accounts.isActiveAccountAdmin">
+      All you need to do is reconnect your Instagram account.
+    </p>
 
-    <!-- Display Instagram Access Token Expired Message -->
-    <div padding *ngIf="accounts.activeAccount?.user_status == 30" style='text-align:center;'>
-      <ion-icon style='font-size:3em;' name="build"></ion-icon>
-      <h2 style='margin-top:0;'>Fix Account Access</h2>
-      <p>There's a slight problem connecting to your Instagram account.
-        Don't worry though, it's very quick to fix.
-      </p>
-      <p *ngIf="!accounts.isActiveAccountAdmin">
-        All you need to do is ask the Admin of @{{ accounts.activeAccount.user_name }} to reconnect 
-        their Instagram account.
-      </p>
-      <p *ngIf="accounts.isActiveAccountAdmin">
-        All you need to do is reconnect your Instagram account.
-      </p>
+    <button ion-button *ngIf="accounts.isActiveAccountAdmin" (click)="loadUrl('instagram')">
+      Reconnect @{{ accounts.activeAccount.user_name }}
+    </button>
+  </div>
 
-      <button ion-button *ngIf="accounts.isActiveAccountAdmin" (click)="loadUrl('instagram')">
-        Reconnect @{{ accounts.activeAccount.user_name }}
-      </button>
-    </div>
+  <!-- Display Billing Expired Message -->
+  <div *ngIf="accounts.activeAccount?.user_status == 25" style='text-align:center; padding-top:2em;'>
+    <ion-icon style='font-size:3em;' name="ios-card-outline"></ion-icon>
+    <h2 style='margin-top:0;'>Subscription Expired</h2>
+    <p *ngIf="!accounts.isActiveAccountAdmin">
+      Subscription has expired for the admin of @{{ accounts.activeAccount.user_name }}.
+      You'll regain access once its admin subscribes.
+    </p>
+    <p *ngIf="accounts.isActiveAccountAdmin">
+      Your subscription as an admin has expired.
+      Subscribe now to keep using Plugn on @{{ accounts.activeAccount.user_name }}.
+    </p>
+    <button ion-button *ngIf="accounts.isActiveAccountAdmin"
+      (click)="loadUrl('billing')">
+      Subscribe
+    </button>
+  </div>
 
-    <!-- Display Billing Expired Message -->
-    <div *ngIf="accounts.activeAccount?.user_status == 25" style='text-align:center; padding-top:2em;'>
-      <ion-icon style='font-size:3em;' name="ios-card-outline"></ion-icon>
-      <h2 style='margin-top:0;'>Subscription Expired</h2>
-      <p *ngIf="!accounts.isActiveAccountAdmin">
-        Subscription has expired for the admin of @{{ accounts.activeAccount.user_name }}.
-        You'll regain access once its admin subscribes.
-      </p>
-      <p *ngIf="accounts.isActiveAccountAdmin">
-        Your subscription as an admin has expired.
-        Subscribe now to keep using Plugn on @{{ accounts.activeAccount.user_name }}.
-      </p>
-      <button ion-button *ngIf="accounts.isActiveAccountAdmin"
-        (click)="loadUrl('billing')">
-        Subscribe
-      </button>
-    </div>
+  <!-- Display Message if No Conversations -->
+  <h3 padding text-center align-center
+    *ngIf="(accounts.activeAccount?.user_status == 10) && conversations.conversationList && conversations.conversationList.length == 0">
+    There seems to be no active conversations on your account
+  </h3>
 
-    <!-- Display Message if No Conversations -->
-    <h3 padding text-center align-center
-      *ngIf="(accounts.activeAccount?.user_status == 10) && conversations.conversationList && conversations.conversationList.length == 0">
-      There seems to be no active conversations on your account
-    </h3>
+  <!-- Unhandled Conversations -->
+  <ion-list class="unhandled" [virtualScroll]="conversations.unhandledConversations" approxItemHeight="100px">
 
-    <!-- Unhandled Conversations -->
-    <ion-list class="unhandled" *ngIf="(accounts.activeAccount?.user_status == 10) && conversations.unhandledConversations && conversations.unhandledConversations.length > 0">
-      <ion-list-header>
-        Unhandled Conversations
-      </ion-list-header>
+    <ion-list-header>
+      Unhandled Conversations
+    </ion-list-header>
 
-      <ion-item-sliding #slidingItem *ngFor="let conversationItem of conversations.unhandledConversations;trackBy:conversationItem?.comment_by_username">
-        <button ion-item detail-none
-          (click)="loadConversationDetail(conversationItem)">
-
-          <ion-avatar item-left>
-            <img src="{{ conversationItem.comment_by_photo }}" onError="this.src='assets/user.png';">
-          </ion-avatar>
-
-          <h3 class='elipse'>{{ conversationItem.comment_by_fullname }}</h3>
-          <p>@{{ conversationItem.comment_by_username }}</p>
-          <p>{{ conversationItem.comment_text }}</p>
-
-          <ion-note item-right>{{ conversationItem.comment_datetime }}</ion-note>
-          <ion-badge color="danger">{{ conversationItem.unhandledCount }}</ion-badge>
-        </button>
-
-        <!-- Right Sliding Options -->
-        <ion-item-options side="right">
-
-          <button ion-button (click)="handleConversation(conversationItem)" color="primary">
-            <!-- Show icon by default -->
-            <ion-icon name="checkmark" *ngIf="!conversationItem.isLoading"></ion-icon>
-            <!-- Show Loading Spinner if being submitted -->
-            <ion-spinner *ngIf="conversationItem.isLoading"></ion-spinner>
-            Handle
-          </button>
-
-        </ion-item-options>
-      </ion-item-sliding>
-
-    </ion-list>
-
-    <!-- Conversations -->
-    <ion-list *ngIf="(accounts.activeAccount?.user_status == 10) && conversations.handledConversations && conversations.handledConversations.length > 0">
-      <ion-list-header>
-        Conversations
-      </ion-list-header>
-
+    <ion-item-sliding #slidingItem 
+      *virtualItem="let conversationItem"
+      virtualTrackBy="conversationItem?.comment_by_username">
+      
       <button ion-item detail-none
-        *ngFor="let conversationItem of conversations.handledConversations;trackBy:conversationItem?.comment_by_username"
         (click)="loadConversationDetail(conversationItem)">
 
         <ion-avatar item-left>
@@ -148,10 +111,48 @@
         <p>{{ conversationItem.comment_text }}</p>
 
         <ion-note item-right>{{ conversationItem.comment_datetime }}</ion-note>
+        <ion-badge color="danger">{{ conversationItem.unhandledCount }}</ion-badge>
       </button>
 
-    </ion-list>
+      <!-- Right Sliding Options -->
+      <ion-item-options side="right">
 
-  </div>
+        <button ion-button (click)="handleConversation(conversationItem)" color="primary">
+          <!-- Show icon by default -->
+          <ion-icon name="checkmark" *ngIf="!conversationItem.isLoading"></ion-icon>
+          <!-- Show Loading Spinner if being submitted -->
+          <ion-spinner *ngIf="conversationItem.isLoading"></ion-spinner>
+          Handle
+        </button>
+
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+
+  <!-- Handled Conversations -->
+  <ion-list [virtualScroll]="conversations.handledConversations" approxItemHeight="100px">
+    
+    <ion-list-header>
+      Conversations
+    </ion-list-header>
+
+    <button ion-item detail-none
+      *virtualItem="let conversationItem"
+      virtualTrackBy="conversationItem?.comment_by_username"
+      (click)="loadConversationDetail(conversationItem)">
+
+      <ion-avatar item-left>
+        <img src="{{ conversationItem.comment_by_photo }}" onError="this.src='assets/user.png';">
+      </ion-avatar>
+
+      <h3 class='elipse'>{{ conversationItem.comment_by_fullname }}</h3>
+      <p>@{{ conversationItem.comment_by_username }}</p>
+      <p>{{ conversationItem.comment_text }}</p>
+
+      <ion-note item-right>{{ conversationItem.comment_datetime }}</ion-note>
+    </button>
+
+  </ion-list>
 
 </ion-content>
